@@ -1,7 +1,4 @@
-package careercup.CallbackExample;
-
-import java.util.List;
-import java.util.function.Function;
+package careercup.Example.CallbackExample;
 
 // Created by zhenlu on 6/5/17.
 

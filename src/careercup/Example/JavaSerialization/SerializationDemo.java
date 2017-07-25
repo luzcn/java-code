@@ -1,4 +1,4 @@
-package careercup.JavaSerialization;
+package careercup.Example.JavaSerialization;
 
 // Created by zhenlu on 6/6/17.
 
