@@ -67,3 +67,4 @@ fabric.properties
 
 # user specified
 /src/Main.java
+.DS_Store
