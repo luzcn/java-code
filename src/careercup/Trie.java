@@ -3,8 +3,6 @@ package careercup;
 // Created by zhenlu on 1/13/17.
 
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
-
 import java.util.ArrayList;
 
 public class Trie {
