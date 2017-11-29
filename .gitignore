@@ -66,5 +66,5 @@ crashlytics-build.properties
 fabric.properties
 
 # user specified
-/src/Main.java
 .DS_Store
+/src/Program.java

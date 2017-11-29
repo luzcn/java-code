@@ -37,7 +37,6 @@ public class Trie {
         if (word == null || word.isEmpty())
             return false;
 
-
         TrieNode current = root;
 
         for (int i = 0; i < word.length(); i++) {
@@ -46,8 +45,7 @@ public class Trie {
 
             if (current.children.get(index) != null) {
                 current = current.children.get(index);
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -60,14 +58,11 @@ public class Trie {
         ArrayList<TrieNode> children = new ArrayList<>(); // only consider lowercase alphabet
         int wordCount = 0;
 
-
         // constructor
         TrieNode() {
             for (int i = 0; i < 26; i++) {
                 children.add(null);
             }
-
         }
-
     }
 }

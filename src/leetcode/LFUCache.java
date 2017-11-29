@@ -3,7 +3,7 @@ package leetcode;
 
 // Design and implement a data structure for Least Frequently Used (LFU) cache.
 // It should support the following operations: get and put.
-
+//
 //  get(key) - Get the value of the key if the key exists in the cache, otherwise return -1.
 //  put(key, value) - Set or insert the value if the key is not already present.
 //
@@ -15,10 +15,6 @@ package leetcode;
 //Follow up:
 //Could you do both operations in O(1) time complexity?
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.PriorityQueue;
-
 public class LFUCache {
 
     private int capacity = 0;
@@ -27,10 +23,9 @@ public class LFUCache {
 
     }
 
-    public int get(int key){
+    public int get(int key) {
         return 0;
     }
-
 
 
     class CacheData {
