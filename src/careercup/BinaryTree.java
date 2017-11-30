@@ -1,11 +1,16 @@
 package careercup;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
 public class BinaryTree {
 
+    /**
+     * bfs traverse tree
+     */
     public void bfs(TreeNode root) {
         // using a queue
         if (root == null)
@@ -29,6 +34,9 @@ public class BinaryTree {
         }
     }
 
+    /**
+     * dfs tree
+     */
 
     public void dfs(TreeNode root) {
         // pre-order
@@ -42,6 +50,9 @@ public class BinaryTree {
         dfs(root.right);
     }
 
+    /**
+     * In-order traverse iterative solution
+     */
     public void inOrderIterative(TreeNode root) {
         if (root == null)
             return;
@@ -67,19 +78,19 @@ public class BinaryTree {
     }
 
 
-    public void binaryTreeLevelOrder(TreeNode root) {
+    public List<List<Integer>> binaryTreeLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+
         if (root == null)
-            return;
+            return result;
 
         Queue<TreeNode> que = new LinkedList<>();
         Queue<TreeNode> queTemp = new LinkedList<>();
-
-        que.add(root);
+        List<Integer> levelList = new ArrayList<>();
 
         while (!que.isEmpty()) {
             TreeNode current = que.poll();
-
-            System.out.println(current.val);
+            levelList.add(current.val);
 
             if (current.left != null) {
                 queTemp.add(current.left);
@@ -91,14 +102,18 @@ public class BinaryTree {
 
             if (que.isEmpty()) {
                 que = queTemp;
+                result.add(levelList);
+
                 queTemp = new LinkedList<>();
+                levelList = new ArrayList<>();
             }
         }
+        return result;
     }
 
     public boolean isValidBST(TreeNode root) {
 
-        // use in-order iterative solution
+        // use in-order iterative traverse
         if (root == null) {
             return true;
         }
@@ -128,4 +143,6 @@ public class BinaryTree {
         }
         return true;
     }
+
+
 }
