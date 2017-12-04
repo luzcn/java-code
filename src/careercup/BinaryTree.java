@@ -37,7 +37,6 @@ public class BinaryTree {
     /**
      * dfs tree
      */
-
     public void dfs(TreeNode root) {
         // pre-order
         if (root == null) {
