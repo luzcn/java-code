@@ -1,13 +1,16 @@
-import leetcode.LongestRepeatingCharacterReplacement;
+import leetcode.WordPattern2;
+
 
 public class Program {
 
 
     public static void main(String[] args) {
 
-        LongestRepeatingCharacterReplacement lr = new LongestRepeatingCharacterReplacement();
+        WordPattern2 wp = new WordPattern2();
 
-        System.out.println(lr.characterReplacement("AAAAAAAA", 0));
+        System.out.println(wp.wordPatternMatch("aabb",
+                "xyzabcxzyabc"));
+
     }
 
 }
