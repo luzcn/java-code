@@ -1,16 +1,14 @@
-import leetcode.WordPattern2;
+import leetcode.CombinationSum;
 
 
 public class Program {
 
 
     public static void main(String[] args) {
+        CombinationSum cs = new CombinationSum();
+        int[] nums = {1};
 
-        WordPattern2 wp = new WordPattern2();
-
-        System.out.println(wp.wordPatternMatch("aabb",
-                "xyzabcxzyabc"));
-
+        System.out.println(cs.combinationSum2(nums, 1));
     }
 
 }

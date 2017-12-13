@@ -8,7 +8,7 @@ package leetcode;
  * <p>
  * Note: You may assume that n is not less than 2 and not larger than 58.
  */
-public class IntegerBreaker {
+public class integerBreaker {
 
     public int integerBreak(int n) {
 
