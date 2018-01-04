@@ -8,32 +8,29 @@ import java.util.List;
 
 
 public class Subsets {
+    private List<List<Integer>> result = new ArrayList<>();
+    private List<Integer> current = new ArrayList<>();
+
     public List<List<Integer>> getSubset(int[] nums) {
-
-        List<List<Integer>> result = new ArrayList<>();
-
         // sort the input
         Arrays.sort(nums);
-        dfs(nums, result, new ArrayList<>(), 0);
-        return result;
+        dfs(nums, 0);
+
+        return this.result;
     }
 
 
     public List<List<Integer>> subsetWithDup(int[] nums) {
-
-        List<List<Integer>> result = new ArrayList<>();
-        ArrayList<Boolean> visited = new ArrayList<>(nums.length);
         Arrays.sort(nums);
+        boolean[] visited = new boolean[nums.length];
+        dfsWithDup(nums, visited, 0);
 
-
-        dfsWithDup(nums, result, new ArrayList<>(), visited, 0);
         return result;
-
     }
 
 
-    private void dfs(int[] nums, List<List<Integer>> result, ArrayList<Integer> current, int index) {
-        result.add(new ArrayList<>(current));
+    private void dfs(int[] nums, int index) {
+        this.result.add(new ArrayList<>(this.current));
 
         if (index >= nums.length) {
             return;
@@ -42,17 +39,13 @@ public class Subsets {
         for (int i = index; i < nums.length; i++) {
             current.add(nums[i]);
 
-            dfs(nums, result, current, i + 1);
+            dfs(nums, i + 1);
 
             current.remove(current.size() - 1);
         }
     }
 
-    private void dfsWithDup(int[] nums,
-                            List<List<Integer>> result,
-                            ArrayList<Integer> current,
-                            ArrayList<Boolean> visited,
-                            int index) {
+    private void dfsWithDup(int[] nums, boolean[] visited, int index) {
 
         result.add(new ArrayList<>(current));
 
@@ -63,19 +56,18 @@ public class Subsets {
 
         for (int i = index; i < nums.length; i++) {
 
-            if (!visited.get(i)) {
-                if (i != index && nums[i - 1] == nums[i] && !visited.get(i - 1))
+            if (!visited[i]) {
+                if (i != index && nums[i - 1] == nums[i] && !visited[i - 1])
                     continue;
 
-                visited.set(i, true);
+                visited[i] = true;
                 current.add(nums[i]);
 
-                dfsWithDup(nums, result,current, visited, i + 1);
+                dfsWithDup(nums, visited, i + 1);
 
-                current.remove(current.size()-1);
-                visited.set(i, false);
+                current.remove(current.size() - 1);
+                visited[i] = false;
             }
         }
-
     }
 }
