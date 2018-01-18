@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Design a data structure that supports all following operations in average O(1) time.
+ * Design a data structure that supports all following operations in average O(1) startTime.
  * <p>
  * insert(val): Inserts an item val to the set if not already present.
  * remove(val): Removes an item val from the set if present.

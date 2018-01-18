@@ -1,28 +1,10 @@
-import leetcode.AllOOneDataStructure;
+import leetcode.SortCharactersByFrequency;
 
 public class Program {
 
     public static void main(String[] args) {
-        AllOOneDataStructure ds = new AllOOneDataStructure();
-
-        ds.inc("h");
-        ds.inc("w");
-        ds.inc("h");
-        ds.dec("w");
-
-        ds.inc("h");
-        ds.inc("leet");
-
-        System.out.println(ds.getMaxKey());
-
-        ds.dec("h");
-        ds.dec("h");
-        ds.dec("h");
-
-
-        System.out.println(ds.getMaxKey());
+        SortCharactersByFrequency tf = new SortCharactersByFrequency();
+        // String[] words = {"i", "love", "leetcode", "i", "love", "coding"};
+        System.out.println(tf.frequencySort("loveleetcode"));
     }
 }
-
-// ["AllOne","inc","inc","inc","dec","inc","inc","getMaxKey","dec","dec","dec","getMaxKey"]
-//    [[],["hello"],["world"],["hello"],["world"],["hello"],["leet"],[],["hello"],["hello"],["hello"],[]]

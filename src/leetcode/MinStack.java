@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 
 /**
- * Design a dataStack that supports push, pop, top, and retrieving the minimum element in constant time.
+ * Design a dataStack that supports push, pop, top, and retrieving the minimum element in constant startTime.
  * <p>
  * push(x) -- Push element x onto dataStack.
  * pop() -- Removes the element on top of the dataStack.

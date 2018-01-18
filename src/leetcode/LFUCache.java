@@ -13,28 +13,82 @@ package leetcode;
 // the least recently used key would be evicted.
 
 //Follow up:
-//Could you do both operations in O(1) time complexity?
+//Could you do both operations in O(1) startTime complexity?
+
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 
 public class LFUCache {
 
-    private int capacity = 0;
+    private Map<Integer, Integer> mapKeyValue;
+    private Map<Integer, Integer> mapKeyFrequency;
+    private Map<Integer, LinkedHashSet<Integer>> mapFrequencySets;
 
-    public void put(int key, int value) {
+    private int min;
+    private int capacity;
 
+    public LFUCache(int capacity) {
+        this.capacity = capacity;
+        this.mapKeyValue = new HashMap<>();
+        this.mapKeyFrequency = new HashMap<>();
+        this.min = 1;
+        this.mapFrequencySets = new HashMap<>();
+
+        mapFrequencySets.put(1, new LinkedHashSet<>());
     }
 
     public int get(int key) {
-        return 0;
+        if (!mapKeyValue.containsKey(key)) {
+            return -1;
+        }
+
+        int value = mapKeyValue.get(key);
+        int frequency = mapKeyFrequency.get(key);
+
+        // update frequency
+        mapKeyFrequency.put(key, frequency + 1);
+        mapFrequencySets.get(frequency).remove(key);
+
+        if (min == frequency && mapFrequencySets.get(frequency).isEmpty()) {
+            min++;
+        }
+
+        // update frequency and keys map
+        if (!mapFrequencySets.containsKey(frequency + 1)) {
+            mapFrequencySets.put(frequency + 1, new LinkedHashSet<>());
+        }
+
+        mapFrequencySets.get(frequency + 1).add(key);
+
+        return value;
     }
 
+    public void put(int key, int value) {
+        if (capacity <= 0)
+            return;
 
-    class CacheData {
-        int key, value, frequency;
+        if (mapKeyValue.containsKey(key)) {
 
-        CacheData(int key, int value, int freq) {
-            this.key = key;
-            this.value = value;
-            frequency = freq;
+            // update key value
+            mapKeyValue.put(key, value);
+
+            get(key);
+
+            return;
         }
+
+        if (mapKeyValue.size() >= capacity) {
+            // remove the min frequency keys
+
+            int keyToRemove = mapFrequencySets.get(min).iterator().next();
+            mapFrequencySets.get(min).remove(keyToRemove);
+            mapKeyValue.remove(keyToRemove);
+            mapKeyFrequency.remove(keyToRemove);
+        }
+        mapKeyValue.put(key, value);
+        mapKeyFrequency.put(key, 1);
+        min = 1;
+        mapFrequencySets.get(1).add(key);
     }
 }

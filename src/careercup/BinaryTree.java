@@ -76,6 +76,31 @@ public class BinaryTree {
         }
     }
 
+    /**
+     * pre-order traverse iterative solution
+     */
+    public void preOrderIterative(TreeNode root) {
+        if (root == null)
+            return;
+
+        Stack<TreeNode> stack = new Stack<>();
+
+        stack.add(root);
+
+        while (!stack.isEmpty()){
+            TreeNode current = stack.pop();
+            System.out.println(current.val);
+
+            if (current.right != null){
+                stack.push(current.right);
+            }
+
+            if (current.left != null){
+                stack.push(current.left);
+            }
+        }
+
+    }
 
     public List<List<Integer>> binaryTreeLevelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
