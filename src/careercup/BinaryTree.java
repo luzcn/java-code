@@ -87,15 +87,15 @@ public class BinaryTree {
 
         stack.add(root);
 
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode current = stack.pop();
             System.out.println(current.val);
 
-            if (current.right != null){
+            if (current.right != null) {
                 stack.push(current.right);
             }
 
-            if (current.left != null){
+            if (current.left != null) {
                 stack.push(current.left);
             }
         }
@@ -168,5 +168,34 @@ public class BinaryTree {
         return true;
     }
 
+
+    /**
+     * Delete Node from BinarySearch Tree
+     */
+    public TreeNode deleteNode(TreeNode node, int target) {
+
+        if (node == null) {
+            return null;
+        }
+
+        if (node.val == target) {
+            if (node.right != null) {
+                TreeNode current = node.right;
+                while (current.left != null) {
+                    current = current.left;
+                }
+                current.left = node.left;
+
+                return node.right;
+            } else {
+                return node.left;
+            }
+        }
+
+        node.left = deleteNode(node.left, target);
+        node.right = deleteNode(node.right, target);
+
+        return node;
+    }
 
 }

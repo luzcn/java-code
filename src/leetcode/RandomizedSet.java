@@ -53,6 +53,11 @@ public class RandomizedSet {
             return false;
         }
 
+        // the solution is:
+        // 1. find the index of the value
+        // 2. copy the last element to this index, and update the last element in the hashmap
+        // 3. remove the last element, remove the val from the hashmap
+
         // find the index that needs to remove
         int index = mapValueIndex.get(val);
 
@@ -60,6 +65,8 @@ public class RandomizedSet {
         if (index < dataList.size() - 1) {
             // copy the last element to the current need to remove index
             int lastElement = dataList.get(dataList.size() - 1);
+
+            // update the data list
             dataList.set(index, lastElement);
 
             // update the map
