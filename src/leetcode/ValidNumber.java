@@ -13,7 +13,15 @@ package leetcode;
 public class ValidNumber {
     public boolean isNumber(String s) {
 
+        s = s.trim();
+        if (s.isEmpty()) {
+            return false;
+        }
+
+        String regPattern = "[+-]?\\d*(\\.\\d+)?([Ee][+-]?\\d+)?";
+
+        return java.util.regex.Pattern.matches(regPattern, s);
+
         // TODO: use state machine solution
-        return false;
     }
 }

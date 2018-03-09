@@ -1,5 +1,7 @@
 package careercup;
 
+import leetcode.TreeNode;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class BinaryTree {
     }
 
     /**
-     * dfs tree
+     * dfs recursive tree
      */
     public void dfs(TreeNode root) {
         // pre-order
@@ -198,4 +200,38 @@ public class BinaryTree {
         return node;
     }
 
+    public TreeNode constructBinaryTree(String s) {
+        String[] data = s.split(",");
+
+        if (data.length == 0)
+            return null;
+
+        TreeNode current = null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(data[0]));
+        queue.add(root);
+
+
+        for (int i = 1; i < data.length; i++) {
+
+            TreeNode node = null;
+            if (!data[i].equals("null")) {
+                node = new TreeNode(Integer.parseInt(data[i]));
+            }
+
+            if (current == null) {
+                current = queue.poll();
+                current.left = node;
+            } else {
+                current.right = node;
+                current = null;
+            }
+
+            if (node != null) {
+                queue.add(node);
+            }
+        }
+
+        return root;
+    }
 }
