@@ -20,26 +20,27 @@ public class LongestSubstringwithAtMostTwoDistinctCharacters {
         int counter = 0;
 
         while (end < s.length()) {
+
             char c = s.charAt(end);
-            if (!map.containsKey(c) || map.get(c) == 0) {
-                map.put(c, 1);
+            if (map.getOrDefault(c, 0) == 0) {
                 counter++;
+                map.put(c, 1);
             } else {
                 map.put(c, map.get(c) + 1);
             }
-            end++;
 
             while (counter > k) {
+                // --map[s[begin++]] == 0
+                char first = s.charAt(begin++);
+                map.put(first, map.get(first) - 1);
 
-                if (map.get(s.charAt(begin)) == 1) {
+                if (map.get(first) == 0) {
                     counter--;
                 }
-
-                map.put(s.charAt(begin), map.get(s.charAt(begin)) - 1);
-                begin++;
             }
 
-            maxLength = Math.max(maxLength, end - begin);
+            maxLength = Math.max(maxLength, end - begin + 1);
+            end++;
         }
 
         return maxLength;

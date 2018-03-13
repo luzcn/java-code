@@ -11,7 +11,8 @@ package leetcode;
  */
 public class MinimumSizeSubarraySum {
 
-    // two pointer solution, the array has all positive numbers
+    // the question says all numbers are positive
+    // we can use two pointer, similar to sliding window
     public int minSubArrayLen(int s, int[] nums) {
 
         int begin = 0;
