@@ -33,4 +33,24 @@ public class RomanToInteger {
 
         return result;
     }
+
+
+    public String IntegerToRoman(int num) {
+        String[] roman = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] value = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+
+        while (i < value.length) {
+            if (num >= value[i]) {
+                result.append(roman[i]);
+                num -= value[i];
+            } else {
+                i++;
+            }
+        }
+
+        return result.toString();
+    }
 }

@@ -50,7 +50,7 @@ public class MaximumLengthOfRepeatedSubarray {
         HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 
         for (int j = 0; j < B.length; j++) {
-            map.computeIfAbsent(B[j], (x) -> new ArrayList<>()).add(j);
+            map.computeIfAbsent(B[j], key -> new ArrayList<>()).add(j);
         }
 
         for (int i = 0; i < A.length; i++) {

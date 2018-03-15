@@ -35,9 +35,20 @@ public class MergeIntervals {
             }
         }
 
+        // don't forget add the "first" to result list
         result.add(new Interval(first.start, first.end));
 
         return result;
+    }
+
+    private boolean isOverlap(Interval l1, Interval l2) {
+
+        // take the compliment, => l1.end >= l2.start && l1.start <= l2.end
+        if (l1.end < l2.start || l1.start > l2.end) {
+            return false;
+        }
+
+        return true;
     }
 
     private class Interval {
