@@ -1,14 +1,17 @@
-import leetcode.CourseSchedule2;
+import leetcode.MergeSortedArray;
 
 public class Program {
 
     public static void main(String[] args) {
-        // -1, 0, 1, 2, -1, -4
+        MergeSortedArray ms = new MergeSortedArray();
+        int[] nums1 = new int[]{17, 23, 49, 121, 0, 0, 0, 0, 0, 0, 0, 0};
+        int[] nums2 = new int[]{1, 18, 31, 76, 90, 180};
 
-        CourseSchedule2 cs = new CourseSchedule2();
-        int[][] edges = new int[][]{{0, 1}, {0, 2}, {1, 3}, {2, 3}, {4, 5}};
 
-        int[] res = cs.findOrder(8, edges);
+        ms.merge(nums1, 4, nums2, 6);
 
+        for (int n : nums1) {
+            System.out.println(n);
+        }
     }
 }
