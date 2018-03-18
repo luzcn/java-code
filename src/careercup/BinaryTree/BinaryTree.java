@@ -200,6 +200,9 @@ public class BinaryTree {
         return node;
     }
 
+    /**
+     * construct a binary tree as leetcode  style
+     */
     public TreeNode constructBinaryTree(String s) {
         String[] data = s.split(",");
 
