@@ -1,4 +1,4 @@
-package careercup.LinkedList;
+package datastructure.LinkedList;
 
 import leetcode.ListNode;
 

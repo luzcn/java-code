@@ -1,4 +1,4 @@
-package careercup.BinaryTree;
+package datastructure.BinaryTree;
 
 import leetcode.TreeNode;
 

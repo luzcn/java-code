@@ -1,4 +1,4 @@
-package careercup;
+package datastructure;
 
 // Created by zhenlu on 1/13/17.
 
