@@ -21,6 +21,6 @@ package leetcode;
 public class TaskScheduler {
 
     public int schedule() {
-
+        return 0;
     }
 }
