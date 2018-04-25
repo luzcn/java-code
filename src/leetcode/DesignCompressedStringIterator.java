@@ -52,8 +52,9 @@ public class DesignCompressedStringIterator {
 
     public char next() {
 
-        if (!hasNext())
+        if (!hasNext()) {
             return ' ';
+        }
 
         if (this.count > 0) {
             this.count--;
@@ -70,6 +71,8 @@ public class DesignCompressedStringIterator {
         }
 
         index = i;
+
+        // need to -1 here, because we used this character
         this.count = length - 1;
 
         return this.current;

@@ -48,6 +48,9 @@ public class CombinationSum {
         }
     }
 
+
+    // now the input candidates array may contain duplicates.
+    // and each number can only be used once.
     private void dfs2(int[] candidates, int target, int index, int sum) {
         if (sum == target) {
             this.result.add(new ArrayList<>(this.current));
