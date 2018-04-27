@@ -21,7 +21,6 @@ import java.util.Map;
  */
 public class DecodeWays {
 
-
     private int dfs(String s, Map<String, Integer> map) {
         if (map.containsKey(s)) {
             return map.get(s);
