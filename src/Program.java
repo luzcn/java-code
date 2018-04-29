@@ -1,12 +1,17 @@
-import leetcode.CombinationSum;
-import leetcode.CombinationSum4;
+import design.DesignTinyUrl;
 
 public class Program {
 
     public static void main(String[] args) {
 
-        CombinationSum4 cs = new CombinationSum4();
+        DesignTinyUrl dt = new DesignTinyUrl();
 
-        System.out.println(cs.combinationSum4(new int[]{1, 2, 3}, 4));
+        String url = "http://www.google.com/abc";
+
+        System.out.println(dt.decode(dt.encode(url)));
+        System.out.println(dt.decode(dt.encode(url)));
+        System.out.println(dt.decode(dt.encode(url)));
+        System.out.println(dt.decode(dt.encode(url)));
+
     }
 }

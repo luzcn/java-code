@@ -29,6 +29,6 @@ public class LargestNumber {
             res.append(i);
         }
 
-        return res.toString();
+        return res.toString().charAt(0) == '0' ? "0" : res.toString();
     }
 }

@@ -1,6 +1,5 @@
 package leetcode;
 
-
 // Design and implement a data structure for Least Frequently Used (LFU) cache.
 // It should support the following operations: get and put.
 //
@@ -21,21 +20,43 @@ import java.util.Map;
 
 public class LFUCache {
 
-    private Map<Integer, Integer> mapKeyValue;
-    private Map<Integer, Integer> mapKeyFrequency;
-    private Map<Integer, LinkedHashSet<Integer>> mapFrequencySets;
+    private int cap;
 
+    // key -> value hashmap
+    private Map<Integer, Integer> mapKeyValue = new HashMap<>();
+
+    // key -> frequency hashmap
+    private Map<Integer, Integer> mapKeyFrequency = new HashMap<>();
+
+    // frequency -> list of keys hahsmap
+    private Map<Integer, LinkedHashSet<Integer>> mapFrequencyKeySet = new HashMap<>();
+
+    // the least frequency
     private int min;
-    private int capacity;
 
     public LFUCache(int capacity) {
-        this.capacity = capacity;
-        this.mapKeyValue = new HashMap<>();
-        this.mapKeyFrequency = new HashMap<>();
+        this.cap = capacity;
         this.min = 1;
-        this.mapFrequencySets = new HashMap<>();
+    }
 
-        mapFrequencySets.put(1, new LinkedHashSet<>());
+    private void updateFrequency(int key) {
+        // get the frequency of this key
+        int frequency = mapKeyFrequency.get(key);
+
+        // increase frequency by 1
+        mapKeyFrequency.put(key, frequency + 1);
+
+        // remove this key from the frequency mapping list
+        mapFrequencyKeySet.get(frequency).remove(key);
+
+        // and add the key to new frequency mapping list
+        mapFrequencyKeySet.computeIfAbsent(frequency + 1, k -> new LinkedHashSet<>()).add(key);
+
+        // update the min value
+        if (min == frequency && mapFrequencyKeySet.get(frequency).isEmpty()) {
+            // mapFrequencyKeySet.remove(frequency);
+            min++;
+        }
     }
 
     public int get(int key) {
@@ -43,52 +64,42 @@ public class LFUCache {
             return -1;
         }
 
+        // get value
         int value = mapKeyValue.get(key);
-        int frequency = mapKeyFrequency.get(key);
 
-        // update frequency
-        mapKeyFrequency.put(key, frequency + 1);
-        mapFrequencySets.get(frequency).remove(key);
-
-        if (min == frequency && mapFrequencySets.get(frequency).isEmpty()) {
-            min++;
-        }
-
-        // update frequency and keys map
-        if (!mapFrequencySets.containsKey(frequency + 1)) {
-            mapFrequencySets.put(frequency + 1, new LinkedHashSet<>());
-        }
-
-        mapFrequencySets.get(frequency + 1).add(key);
+        this.updateFrequency(key);
 
         return value;
     }
 
     public void put(int key, int value) {
-        if (capacity <= 0)
+
+        if (this.cap <= 0) {
             return;
+        }
 
         if (mapKeyValue.containsKey(key)) {
-
-            // update key value
             mapKeyValue.put(key, value);
 
-            get(key);
+            this.updateFrequency(key);
 
             return;
         }
 
-        if (mapKeyValue.size() >= capacity) {
-            // remove the min frequency keys
+        if (mapKeyValue.size() >= this.cap) {
+            // remove the leaset frequency key,
+            // if there are multiple keys, remove the first inserted
+            int keyToRemove = mapFrequencyKeySet.get(min).iterator().next();
+            mapFrequencyKeySet.get(min).remove(keyToRemove);
 
-            int keyToRemove = mapFrequencySets.get(min).iterator().next();
-            mapFrequencySets.get(min).remove(keyToRemove);
             mapKeyValue.remove(keyToRemove);
             mapKeyFrequency.remove(keyToRemove);
         }
+
         mapKeyValue.put(key, value);
         mapKeyFrequency.put(key, 1);
+
+        mapFrequencyKeySet.computeIfAbsent(1, k -> new LinkedHashSet<>()).add(key);
         min = 1;
-        mapFrequencySets.get(1).add(key);
     }
 }
