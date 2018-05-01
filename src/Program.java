@@ -1,17 +1,19 @@
-import design.DesignTinyUrl;
+import leetcode.SpiralMatrix;
 
 public class Program {
 
     public static void main(String[] args) {
+        SpiralMatrix sm = new SpiralMatrix();
 
-        DesignTinyUrl dt = new DesignTinyUrl();
+        // int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
 
-        String url = "http://www.google.com/abc";
+        int[][] matrix = sm.generateMatrix(4);
 
-        System.out.println(dt.decode(dt.encode(url)));
-        System.out.println(dt.decode(dt.encode(url)));
-        System.out.println(dt.decode(dt.encode(url)));
-        System.out.println(dt.decode(dt.encode(url)));
-
+        for (int[] s : matrix) {
+            for (int i : s) {
+                System.out.print(i + "\t\t");
+            }
+            System.out.println();
+        }
     }
 }
