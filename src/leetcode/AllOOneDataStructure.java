@@ -7,16 +7,17 @@ import java.util.Set;
 
 /**
  * Implement a data structure supporting the following operations:
- * <p>
+ *
  * Inc(Key) - Inserts a new key with value 1. Or increments an existing key by 1. Key is guaranteed to be a non-empty string.
- * <p>
+ *
  * Dec(Key) - If Key's value is 1, remove it from the data structure.
  * Otherwise decrements an existing key by 1.
  * If the key does not exist, this function does nothing. Key is guaranteed to be a non-empty string.
- * <p>
+ *
  * GetMaxKey() - Returns one of the keys with maximal value. If no element exists, return an empty string "".
- * <p>
+ *
  * GetMinKey() - Returns one of the keys with minimal value. If no element exists, return an empty string "".
+ *
  * Challenge: Perform all these in O(1) startTime complexity.
  */
 
@@ -108,7 +109,7 @@ public class AllOOneDataStructure {
     }
 
     /**
-     * Inserts a new key <Key> with value 1. Or increments an existing key by 1.
+     * Inserts a new key with value 1. Or increments an existing key by 1.
      */
     public void inc(String key) {
         if (head == null) {
