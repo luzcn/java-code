@@ -40,11 +40,13 @@ public class CourseSchedule2 {
     private List<Integer> schedule = new ArrayList<>();
 
     private boolean dfs(Map<Integer, List<Integer>> graph, int node, Set<Integer> ancestors, boolean[] visited) {
-        if (ancestors.contains(node))
+        if (ancestors.contains(node)) {
             return false;
+        }
 
-        if (visited[node])
+        if (visited[node]) {
             return true;
+        }
 
         visited[node] = true;
         ancestors.add(node);
@@ -61,29 +63,26 @@ public class CourseSchedule2 {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
-        int[] result = new int[numCourses];
 
         for (int[] edge : prerequisites) {
             // the question says [1,0] means 1 depends on 0, need to finish 0 first
-            // so the directed graph edge is 0->1
-            graph.computeIfAbsent(edge[1], k -> new ArrayList<>()).add(edge[0]);
+            // so the directed graph edge is 1->0 and the bottom up
+            graph.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(edge[1]);
         }
 
         boolean[] visited = new boolean[numCourses];
         Set<Integer> ancestors = new HashSet<>();
 
         for (int i = 0; i < numCourses; i++) {
-            if (visited[i])
+            if (visited[i]) {
                 continue;
+            }
 
-            if (!dfs(graph, i, ancestors, visited))
-                return result;
+            if (!dfs(graph, i, ancestors, visited)) {
+                return new int[0];
+            }
         }
 
-        for (int n : this.schedule) {
-            result[--numCourses] = n;
-        }
-
-        return result;
+        return this.schedule.stream().mapToInt(x -> x).toArray();
     }
 }

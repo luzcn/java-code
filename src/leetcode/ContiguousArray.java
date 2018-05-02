@@ -1,7 +1,6 @@
 package leetcode;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Given a binary array, find the maximum length of a contiguous subarray with equal number of 0 and 1.
@@ -17,7 +16,7 @@ import java.util.Map;
  */
 public class ContiguousArray {
 
-    private int findBruteForce(int[] nums) {
+    public int findBruteForce(int[] nums) {
         int maxLength = 0;
 
         for (int i = 0; i < nums.length; i++) {
@@ -39,27 +38,37 @@ public class ContiguousArray {
         return maxLength;
     }
 
+    // use and auxiliary variable to count 1 and 0, when find 1, increase by 1, found 0, decrease by 1
+    // when we see count == 0, which means we found subarray [0...i] has equal numbers of 1 and 0
+    // and if we see the count twice, it means subarray [j...i] also has equal numbers of 1 and 0
+    // we can use a hashmap to save the count and index
     public int findMaxLength(int[] nums) {
         if (nums.length < 2) {
             return 0;
         }
 
         int n = nums.length;
-
-        // auxiliary array to save the count of 1 from [0...i]
         int maxLength = 0;
-        Map<Integer, Integer> map = new HashMap<>();
-        int ones = 0;
+        int count = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 1) {
-                ones++;
-                map.put(ones, i);
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0) {
+                count--;
+            } else {
+                count++;
             }
 
-            int zeros = i + 1 - ones;
-            if (map.containsKey(Math.abs(ones - zeros))) {
-                maxLength = Math.max(maxLength, i - map.get(Math.abs(ones - zeros)));
+            if (count == 0) {
+                maxLength = Math.max(maxLength, i + 1);
+            } else if (map.containsKey(count)){
+                maxLength = Math.max(maxLength, i - map.get(count));
+            }
+
+            // need to find the max length,
+            // so if the count already in the map, no need to update.
+            if (!map.containsKey(count)) {
+                map.put(count, i);
             }
         }
         return maxLength;
