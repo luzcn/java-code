@@ -40,6 +40,7 @@ public class BinaryTreeVerticalOrderTraversal {
     // right sub tree, key + 1;
     // save the key and list of node values in sorted hash map
     // but guarantee the top down order is a problem
+    // and I don't know how to solve it yet.
     private void dfs(TreeNode node, int key) {
         if (node == null) {
             return;

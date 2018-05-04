@@ -1,12 +1,12 @@
 package datastructure.BinaryTree;
 
-import leetcode.TreeNode;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
+
+import leetcode.TreeNode;
 
 public class BinaryTree {
 
@@ -15,8 +15,9 @@ public class BinaryTree {
      */
     public void bfs(TreeNode root) {
         // using a queue
-        if (root == null)
+        if (root == null) {
             return;
+        }
 
         Queue<TreeNode> que = new LinkedList<>();
 
@@ -55,8 +56,9 @@ public class BinaryTree {
      * In-order traverse iterative solution
      */
     public void inOrderIterative(TreeNode root) {
-        if (root == null)
+        if (root == null) {
             return;
+        }
 
         Stack<TreeNode> stack = new Stack<>();
 
@@ -82,8 +84,9 @@ public class BinaryTree {
      * pre-order traverse iterative solution
      */
     public void preOrderIterative(TreeNode root) {
-        if (root == null)
+        if (root == null) {
             return;
+        }
 
         Stack<TreeNode> stack = new Stack<>();
 
@@ -107,8 +110,9 @@ public class BinaryTree {
     public List<List<Integer>> binaryTreeLevelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
 
-        if (root == null)
+        if (root == null) {
             return result;
+        }
 
         Queue<TreeNode> que = new LinkedList<>();
         Queue<TreeNode> queTemp = new LinkedList<>();
@@ -158,8 +162,9 @@ public class BinaryTree {
             } else if (!stack.isEmpty()) {
                 current = stack.pop();
 
-                if (prev != null && prev.val >= current.val)
+                if (prev != null && prev.val >= current.val) {
                     return false;
+                }
 
                 prev = current;
                 current = current.right;
@@ -204,16 +209,17 @@ public class BinaryTree {
      * construct a binary tree as leetcode  style
      */
     public TreeNode constructBinaryTree(String s) {
+        // split by none-word
         String[] data = s.split(",");
 
-        if (data.length == 0)
+        if (data.length == 0) {
             return null;
+        }
 
         TreeNode current = null;
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(Integer.parseInt(data[0]));
         queue.add(root);
-
 
         for (int i = 1; i < data.length; i++) {
 
