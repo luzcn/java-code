@@ -57,12 +57,13 @@ public class AccountsMerge {
         // e.g. root(account2.id) = root(map.get(email))
         for (int index = 0; index < accounts.size(); index++) {
             List<String> account = accounts.get(index);
-            // String name = account.get(0);
 
             for (int j = 1; j < account.size(); j++) {
                 String email = account.get(j);
 
                 if (!mapEmailToID.containsKey(email)) {
+                    // if the email is not in the map,
+                    // add the email with the root vaalue
                     mapEmailToID.put(email, root(index));
                 } else {
                     // update the id
@@ -71,7 +72,7 @@ public class AccountsMerge {
             }
         }
 
-        // now, in the id[] array, any items have the same id, they are in the same set
+        // now, in the id[] array, any items have the same root(index), they are in the same set
         for (int index = 0; index < accounts.size(); index++) {
             List<String> account = accounts.get(index);
 
@@ -80,6 +81,8 @@ public class AccountsMerge {
             }
         }
 
+        // iterate through the id to emails map,
+        // merge all the emails with the same id and the corresponding name.
         for (Map.Entry<Integer, TreeSet<String>> entry : mapIdToEmail.entrySet()) {
             int id = root(entry.getKey());
             String name = accounts.get(id).get(0);
