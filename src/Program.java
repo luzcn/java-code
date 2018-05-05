@@ -1,33 +1,15 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import leetcode.ListNode;
-import leetcode.SwapNodesInPairs;
+import leetcode.LongestWordInDictionaryThroughDeleting;
 
 public class Program {
 
     public static void main(String[] args) {
-        SwapNodesInPairs sw = new SwapNodesInPairs();
+        LongestWordInDictionaryThroughDeleting lw = new LongestWordInDictionaryThroughDeleting();
+        List<String> words = Arrays.asList("ba", "ab", "a", "b");
 
-        int[] nums = new int[]{1, 2, 3, 4};
+        System.out.println(lw.findLongestWord("bab", words));
 
-        List<ListNode> nodes = new ArrayList<>();
-
-        nodes.add(new ListNode(nums[0]));
-
-        for (int i = 1; i < nums.length; i++) {
-            ListNode newNode = new ListNode(nums[i]);
-
-            nodes.get(i - 1).next = newNode;
-
-            nodes.add(newNode);
-        }
-
-        ListNode p = sw.swapPairs(nodes.get(0));
-
-        while (p != null) {
-            System.out.println(p.val);
-            p = p.next;
-        }
     }
 }
