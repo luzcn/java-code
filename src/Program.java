@@ -9,6 +9,7 @@ public class Program {
         LongestWordInDictionaryThroughDeleting lw = new LongestWordInDictionaryThroughDeleting();
         List<String> words = Arrays.asList("ba", "ab", "a", "b");
 
+
         System.out.println(lw.findLongestWord("bab", words));
 
     }

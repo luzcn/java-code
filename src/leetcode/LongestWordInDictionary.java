@@ -29,6 +29,8 @@ package leetcode;
 
 public class LongestWordInDictionary {
 
+    // Trie + dfs
+
     private TrieNode root = new TrieNode();
     private String longestWord = "";
 
@@ -37,8 +39,11 @@ public class LongestWordInDictionary {
             return;
         }
 
-        if (node.wordCount > 0 && s.length() > longestWord.length()) {
-            longestWord = s;
+        if (node.wordCount > 0) {
+            if (s.length() > longestWord.length() || (s.length() == longestWord.length()
+                    && s.compareTo(longestWord) < 0)) {
+                longestWord = s;
+            }
         }
 
         for (char c = 'a'; c <= 'z'; c++) {
@@ -94,3 +99,5 @@ public class LongestWordInDictionary {
         }
     }
 }
+
+
