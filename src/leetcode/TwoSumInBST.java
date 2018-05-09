@@ -21,11 +21,13 @@ public class TwoSumInBST {
     private TreeNode root;
 
     private TreeNode binarySearch(TreeNode node, int t) {
-        if (node == null)
+        if (node == null) {
             return null;
+        }
 
-        if (node.val == t)
+        if (node.val == t) {
             return node;
+        }
 
         if (node.val < t) {
             return binarySearch(node.right, t);
@@ -37,23 +39,21 @@ public class TwoSumInBST {
 
     // for every node in BST, if we found targetNode is not null and not the node itself
     // we can return true. O(nlogn) time complexity
-    private boolean inorder(TreeNode node, int t) {
-        if (node == null)
+    private boolean dfs(TreeNode node, int t) {
+        if (node == null) {
             return false;
+        }
 
-        boolean left = inorder(node.left, t);
         TreeNode targetNode = binarySearch(root, t - node.val);
         if (targetNode != null && targetNode != node) {
             return true;
         }
-        boolean right = inorder(node.right, t);
-
-        return left || right;
+        return dfs(node.left, t) || dfs(node.right, t);
     }
 
     public boolean findTarget(TreeNode root, int k) {
         this.root = root;
 
-        return inorder(root, k);
+        return dfs(root, k);
     }
 }

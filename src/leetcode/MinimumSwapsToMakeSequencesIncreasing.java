@@ -39,11 +39,19 @@ public class MinimumSwapsToMakeSequencesIncreasing {
         for (int i = 1; i < A.length; i++) {
             int n2 = Integer.MAX_VALUE, s2 = Integer.MAX_VALUE;
 
+
+            // if we have A[i - 1] < A[i] && B[i - 1] < B[i],
+            // we can keep both i-1 and i unswap, so n2 = n1;
+            // or we can swap both i-1 and i, so s2 = s1 + 1;
             if (A[i - 1] < A[i] && B[i - 1] < B[i]) {
                 n2 = Math.min(n2, n1);
                 s2 = Math.min(s2, s1 + 1);
             }
 
+
+            // if we have A[i - 1] < B[i] && B[i - 1] < A[i],
+            // then, we can swap i-1, and not swap i, so n2 = min(n2, s1);
+            // or, keep i-1 but swap i, so s2 = min(s2, n1 + 1);
             if (A[i - 1] < B[i] && B[i - 1] < A[i]) {
                 n2 = Math.min(n2, s1);
                 s2 = Math.min(s2, n1 + 1);
