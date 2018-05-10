@@ -1,51 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
+import datastructure.BinaryTree.BinaryTree;
+import leetcode.ConvertBSTtoGreaterTree;
+import leetcode.TreeNode;
 
 public class Program {
 
     public static void main(String[] args) {
 
-        Program program = new Program();
-        List<List<Integer>> res = program.permute(new int[]{1, 2, 3});
+        ConvertBSTtoGreaterTree cs = new ConvertBSTtoGreaterTree();
 
-        res.forEach(System.out::println);
+        BinaryTree bt = new BinaryTree();
+        TreeNode root = bt.constructBinaryTree("5,2,13,1");
+
+        cs.convertBST(root);
+
+        bt.preOrderIterative(root);
 
     }
 
-    private List<List<Integer>> result = new ArrayList<>();
-    private List<Integer> current = new ArrayList<>();
-
-    private void dfs(int[] nums, boolean[] visited) {
-
-        if (this.current.size() == nums.length) {
-            this.result.add(new ArrayList<>(current));
-            return;
-        }
-
-        for (int i = 0; i < nums.length; i++) {
-            if (visited[i]) {
-                continue;
-            }
-
-            visited[i] = true;
-            current.add(nums[i]);
-
-            dfs(nums, visited);
-            current.remove(current.size() - 1);
-            visited[i] = false;
-        }
-    }
-
-
-    public List<List<Integer>> permute(int[] nums) {
-
-        if (nums == null || nums.length == 0) {
-            return this.result;
-        }
-
-        boolean[] visited = new boolean[nums.length];
-        dfs(nums, visited);
-
-        return this.result;
-    }
 }

@@ -25,11 +25,13 @@ public class NumberOfIslands {
     public void dfs(char[][] grid, boolean[][] visited, int x, int y) {
 
         // not valid [x,y] index
-        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length)
+        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
             return;
+        }
 
-        if (visited[x][y])
+        if (visited[x][y]) {
             return;
+        }
 
         visited[x][y] = true;
         dfs(grid, visited, x - 1, y);
@@ -57,6 +59,16 @@ public class NumberOfIslands {
         }
 
         return count;
-
     }
+
+    // follow up, if the bord is large, cannot fit in memory
+    // thought: we can load the bord row by row and use union-find
+    public int countIslands2(char[][] grid) {
+        int count = 0;
+        int m = grid.length;
+        int n = grid[0].length;
+
+        return count;
+    }
+
 }

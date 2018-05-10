@@ -1,6 +1,7 @@
 package datastructure.BinaryTree;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -82,6 +83,11 @@ public class BinaryTree {
 
     /**
      * pre-order traverse iterative solution
+     *
+     * use stack to simulate the recursive
+     *
+     * 1. if the stack is not empty, pop the top element
+     * 2. save the right node if not null then left node
      */
     public void preOrderIterative(TreeNode root) {
         if (root == null) {
@@ -107,6 +113,49 @@ public class BinaryTree {
 
     }
 
+
+    /**
+     * Post order non-recursive traverse
+     *
+     * Similar to pre-order, but push left child first
+     *
+     * after save the traverse result in a list, reverse it and return
+     */
+    public List<Integer> postOrderIterative(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+
+        List<Integer> res = new ArrayList<>();
+
+        // also use stack
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode current = stack.pop();
+            res.add(current.val);
+
+            // push the left child first
+            if (current.left != null) {
+                stack.push(current.left);
+            }
+
+            if (current.right != null) {
+                stack.push(current.right);
+            }
+        }
+
+        // reverse the node traverse sequence
+        Collections.reverse(res);
+        return res;
+    }
+
+    /**
+     * Level order
+     *
+     * similar to BFS, but use two queue to save the level information
+     */
     public List<List<Integer>> binaryTreeLevelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
 
@@ -141,6 +190,9 @@ public class BinaryTree {
         return result;
     }
 
+    /**
+     * Check if a Binary Search Tree is valid
+     */
     public boolean isValidBST(TreeNode root) {
 
         // use in-order iterative traverse
