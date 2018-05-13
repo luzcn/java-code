@@ -1,23 +1,13 @@
-import java.util.ArrayList;
-
-import datastructure.LinkedList.ReverseLinkedList;
-import leetcode.ListNode;
+import leetcode.SummaryRanges;
 
 
 public class Program {
 
     public static void main(String[] args) {
+        SummaryRanges ea = new SummaryRanges();
 
-        var rs = new ReverseLinkedList();
-        var head = ListNode.buildList(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
-
-        var p = rs.reverseInRange(head, 1, 9);
-
-        while (p != null) {
-            System.out.println(p.val);
-
-            p = p.next;
-        }
+        System.out.println(ea.summaryRanges(new int[]{1,3,5,7,9,10,11,18
+        }));
 
     }
 
