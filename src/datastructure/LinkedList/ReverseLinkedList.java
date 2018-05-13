@@ -57,32 +57,67 @@ public class ReverseLinkedList {
      * Given m, n satisfy the following condition:
      * 1 ≤ m ≤ n ≤ length of list.
      */
-    public ListNode reverse2(ListNode head, int m, int n) {
-        if (m > n || head == null) {
-            return null;
+    public ListNode reverseInRange(ListNode head, int m, int n) {
+        if (m >= n || head == null) {
+            return head;
         }
 
         ListNode preM = null;
-        ListNode after = null;
+        ListNode afterN = null;
+        ListNode nodeM = null;
 
         int count = 1;
         ListNode p = head;
 
+        // find the node previous node at m
+        // and when count == n, p is the node at n, which would be the new head of reversed m to n list
         while (p != null && count < n) {
             if (count < m) {
                 preM = p;
-            } else {
-
             }
 
             p = p.next;
             count++;
         }
-        // node after n th node, could be null
-        after = p.next;
 
+        // if preM is null, the input m is 1
+        // need to reverse the list from beginning to node at n
+        // so, the node "prev" which is the head of reversed list will be the new head to return
+        // otherwise, return the original head.
+        if (preM != null) {
+            nodeM = preM.next;
+        } else {
+            nodeM = head;
+        }
 
-        return null;
+        // if p is null, n is the end node of original list
+        // there is no "afterN" node.
+        if (p != null) {
+            afterN = p.next;
+            p.next = null;
+        }
 
+        // reverse the list from m to n
+        // prev will be the new head
+        ListNode prev = null;
+        p = nodeM;
+        while (p != null) {
+            ListNode temp = p.next;
+            p.next = prev;
+            prev = p;
+            p = temp;
+        }
+
+        // rebuild the list
+        if (preM != null) {
+            preM.next = prev;
+        }
+        nodeM.next = afterN;
+
+        if (m == 1) {
+            return prev;
+        } else {
+            return head;
+        }
     }
 }
