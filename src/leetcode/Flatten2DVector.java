@@ -33,11 +33,12 @@ public class Flatten2DVector implements Iterator<Integer> {
             return;
         }
 
+        // find the first non-empty list
         while (rowIterator.hasNext()) {
-            List<Integer> nextLevel = rowIterator.next();
-            if (nextLevel != null && nextLevel.size() > 0) {
-                columnIterator = nextLevel.iterator();
-                return;
+            columnIterator = rowIterator.next().iterator();
+
+            if (columnIterator.hasNext()) {
+                break;
             }
         }
     }

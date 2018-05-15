@@ -26,15 +26,17 @@ import java.util.Map;
  */
 public class ArrayNesting {
 
+    // brute force with visited helper array
     public int arrayNesting(int[] nums) {
-        if (nums.length == 0)
+        if (nums.length == 0) {
             return 0;
+        }
 
         int n = nums.length;
         int maxLength = 0;
+        boolean[] visited = new boolean[n];
 
         for (int i = 0; i < n; i++) {
-            boolean[] visited = new boolean[n];
             int current = 0;
             int j = i;
 

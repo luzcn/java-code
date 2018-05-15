@@ -82,9 +82,14 @@ public class ShortestPath {
         Arrays.fill(distance, Integer.MAX_VALUE);
         distance[start] = 0;
 
-        for (int count = 0; count < n; count++) {
+        // the first element is node number, second is distance, sort the min heap by distance
+        PriorityQueue<int[]> candidates = new PriorityQueue<>(Comparator.comparingInt(x -> x[1]));
+        candidates.add(new int[]{start, 0});
 
-            int u = findMin(distance, visited);
+        while (!candidates.isEmpty()) {
+
+            int u = candidates.poll()[1];
+
             visited[u] = true;
 
             for (int v = 0; v < n; v++) {
@@ -97,14 +102,16 @@ public class ShortestPath {
                     // need to update the distance of v node
 
                     distance[v] = distance[u] + graph[u][v];
+                    candidates.add(new int[]{v, distance[v]});
                 }
             }
         }
-        return distance;
 
+        return distance;
     }
 
     // find the index of node which has minimum distance
+    // or we can use PriorityQueue
     private int findMin(int[] distance, boolean[] visited) {
         int minIndex = 0;
         int minValue = Integer.MAX_VALUE;

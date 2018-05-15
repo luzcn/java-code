@@ -15,7 +15,7 @@ import java.util.*;
 public class CheapestFlightsWithinKStops {
 
     // graph problem, bfs
-    // Dijkstra's shortest path
+    // Dijkstra's shortest path with priority queue
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
 
         // build the graph?!
@@ -25,39 +25,40 @@ public class CheapestFlightsWithinKStops {
             graph[edge[0]][edge[1]] = edge[2];
         }
 
-        boolean[] visited = new boolean[n];
-        int[] distance = new int[n];
-        Arrays.fill(distance, Integer.MAX_VALUE);
-        distance[src] = 0;
+        // check if the ndoe is visited,
+        // cannot use a boolean array here, because bfs will update the shortest distance,
+        // which maybe not useful to reach the destination
+        Set<Integer> best = new HashSet();
 
-        for (int count = 0; count < K; count++) {
-            int u = findMin(distance, visited);
-            visited[u] = true;
+        // x[0] distance, x[1] node number, x[2] stops
+        PriorityQueue<int[]> candidates = new PriorityQueue<>(Comparator.comparingInt(x -> x[0]));
+        candidates.add(new int[]{0, src, 0});
+
+        while (!candidates.isEmpty()) {
+            int[] info = candidates.poll();
+
+            int cost = info[0];
+            int u = info[1];
+            int stops = info[2];
+
+            int key = stops * 1000 + u;
+            if (stops > K + 1 || best.contains(key)) {
+                continue;
+            }
+
+            if (u == dst) {
+                return cost;
+            }
 
             for (int v = 0; v < n; v++) {
-                if (!visited[v] && graph[u][v] > 0 && distance[u] != Integer.MAX_VALUE
-                        && distance[u] + graph[u][v] < distance[v]) {
-                    // update distance[v]
-                    distance[v] = distance[u] + graph[u][v];
+                if (graph[u][v] > 0) {
+                    if (!best.contains((stops + 1) * 1000 + v)) {
+                        candidates.offer(new int[]{cost + graph[u][v], v, stops + 1});
+                    }
                 }
             }
         }
-
-        return distance[dst] == Integer.MAX_VALUE ? -1 : distance[dst];
+        return -1;
     }
 
-
-    private int findMin(int[] dist, boolean[] visited) {
-        int minValue = Integer.MAX_VALUE;
-        int minIndex = 0;
-
-        for (int i = 0; i < dist.length; i++) {
-            if (!visited[i] && dist[i] < minValue) {
-                minValue = dist[i];
-                minIndex = i;
-            }
-        }
-
-        return minIndex;
-    }
 }

@@ -1,22 +1,13 @@
-import java.util.*;
-
-import leetcode.FindMedianFromDataStream;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class Program {
 
     public static void main(String[] args) {
-        FindMedianFromDataStream fs = new FindMedianFromDataStream();
 
-        fs.addNum(-1);
-        fs.addNum(-2);
+        HashMap<Integer, Integer> t = new HashMap<>();
 
-
-        fs.addNum(-3);
-        // fs.addNum(-4);
-        // fs.addNum(-3);
-        System.out.println(fs.findMedian());
-
-
+        Collections.max(t.values());
     }
-
 }
