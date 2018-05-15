@@ -2,16 +2,14 @@ package datastructure.Graph;
 
 import java.util.*;
 
+import leetcode.DataStreamAsDisjointIntervals.Interval;
+
 public class ShortestPath {
-    //  Dijkstra algorithm to compute the shortest distance from source to each vertex.
-    //  Dijkstra’s algorithm doesn’t work for graphs with negative weight edges.
-    //  For graphs with negative weight edges, Bellman–Ford algorithm can be used.
-    //
-    //  O(n^2)
-    //  http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+
 
     // Assume the edge weight is 1 here
-    public int shortestPath(int[][] edges, int start) {
+    // get the minimum distance sum from "start" to other nodes
+    public int shortestPathTotalSum(int[][] edges, int start) {
         //
 
         // construct undirected graph
@@ -62,5 +60,62 @@ public class ShortestPath {
             }
         }
         return totalDistance;
+    }
+
+
+    //  Dijkstra algorithm to compute the shortest distance from source to each vertex.
+    //  Dijkstra’s algorithm doesn’t work for graphs with negative weight edges.
+    //  For graphs with negative weight edges, Bellman–Ford algorithm can be used.
+    //
+    //  O(n^2)
+    //  http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+    public int[] shortestPath(int[][] graph, int start) {
+
+        // input graph is adjacent matrix
+        int n = graph.length;
+
+        // check if the node is visited
+        boolean[] visited = new boolean[n];
+
+        // the dp array to save the distance from start to i so far.
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[start] = 0;
+
+        for (int count = 0; count < n; count++) {
+
+            int u = findMin(distance, visited);
+            visited[u] = true;
+
+            for (int v = 0; v < n; v++) {
+
+                // the node is not visited
+                // there is one edge [u,v]
+                // distance[u] + weight of edge [u,v] is less than current distance[v]
+                if (!visited[v] && graph[u][v] > 0 && distance[u] != Integer.MAX_VALUE
+                        && distance[u] + graph[u][v] < distance[v]) {
+                    // need to update the distance of v node
+
+                    distance[v] = distance[u] + graph[u][v];
+                }
+            }
+        }
+        return distance;
+
+    }
+
+    // find the index of node which has minimum distance
+    private int findMin(int[] distance, boolean[] visited) {
+        int minIndex = 0;
+        int minValue = Integer.MAX_VALUE;
+
+        for (int i = 0; i < distance.length; i++) {
+            if (!visited[i] && distance[i] < minValue) {
+                minIndex = i;
+                minValue = distance[i];
+            }
+        }
+
+        return minIndex;
     }
 }
