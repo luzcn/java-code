@@ -1,13 +1,17 @@
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
+
+import leetcode.TreeNode;
 
 public class Program {
 
     public static void main(String[] args) {
 
-        HashMap<Integer, Integer> t = new HashMap<>();
+        String s = "apple";
+        for (int i = s.length(); i >= 0; i--) {
+            System.out.println(s.substring(i) + "{" + s);
+        }
 
-        Collections.max(t.values());
+        System.out.println(s.indexOf("p"));
     }
+
 }

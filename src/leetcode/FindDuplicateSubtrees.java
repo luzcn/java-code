@@ -31,21 +31,21 @@ public class FindDuplicateSubtrees {
             return "";
         }
 
-        String str = "(";
-        str += inorder(node.left);
+        String subtree = "(";
+        subtree += inorder(node.left);
 
-        str += Integer.toString(node.val);
+        subtree += Integer.toString(node.val);
 
-        str += inorder(node.right);
-        str += ")";
+        subtree += inorder(node.right);
+        subtree += ")";
 
         // found duplicate, but we only need to report once.
-        if (map.containsKey(str) && map.get(str) == 1) {
+        if (map.containsKey(subtree) && map.get(subtree) == 1) {
             result.add(node);
         }
-        map.put(str, map.getOrDefault(str, 0) + 1);
+        map.put(subtree, map.getOrDefault(subtree, 0) + 1);
 
-        return str;
+        return subtree;
     }
 
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {

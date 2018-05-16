@@ -25,6 +25,7 @@ import java.util.Map;
  * Output : ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
  */
 public class LetterCombinationsPhoneNumber {
+
     private final Map<Character, String> letters;
     private final List<String> result;
 
@@ -47,18 +48,18 @@ public class LetterCombinationsPhoneNumber {
     }
 
     private void dfs(String digits, int index, String current) {
-        if (current.length() == digits.length()) {
+        if (index == digits.length()) {
             this.result.add(current);
             return;
         }
 
-        for (int i = index; i < digits.length(); i++) {
-            String letter = this.letters.get(digits.charAt(i));
+        // for (int i = index; i < digits.length(); i++) {
+        String letter = this.letters.get(digits.charAt(index));
 
-            for (int j = 0; j < letter.length(); j++) {
-                dfs(digits, i + 1, current + letter.charAt(j));
-            }
+        for (char c : letter.toCharArray()) {
+            dfs(digits, index + 1, current + c);
         }
+        // }
     }
 
     public List<String> letterCombinations(String digits) {

@@ -115,5 +115,6 @@ public class ValidWordSquare {
     // The order of output does not matter (just the order of words in each word square matters).
     public List<List<String>> wordSquares(String[] words) {
 
+        return null;
     }
 }
