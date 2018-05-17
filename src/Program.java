@@ -1,17 +1,19 @@
 import java.util.*;
 
-import leetcode.TreeNode;
+import leetcode.EvaluateDivision;
 
 public class Program {
 
     public static void main(String[] args) {
 
-        String s = "apple";
-        for (int i = s.length(); i >= 0; i--) {
-            System.out.println(s.substring(i) + "{" + s);
-        }
+        EvaluateDivision ed = new EvaluateDivision();
 
-        System.out.println(s.indexOf("p"));
+        String[][] equations = new String[][]{{"a", "b"}, {"b", "c"}};
+        double[] values = new double[]{2.0, 3.0};
+        String[][] queries = new String[][]{{"a", "c"}, {"a", "a"}, {"a", "e"}, {"x", "x"}};
+
+        Arrays.stream(ed.calcEquation(equations, values, queries)).forEach(System.out::println);
+
     }
 
 }
