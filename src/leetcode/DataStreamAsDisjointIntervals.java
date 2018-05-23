@@ -101,7 +101,7 @@ public class DataStreamAsDisjointIntervals {
     }
 
 
-    public class Interval {
+    private class Interval {
 
         public int start;
         public int end;
