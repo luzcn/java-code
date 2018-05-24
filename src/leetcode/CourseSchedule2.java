@@ -1,10 +1,13 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -59,6 +62,52 @@ public class CourseSchedule2 {
 
         schedule.add(node);
         return true;
+    }
+
+
+    private int[] bfs(int numCourses, int[][] prerequisites) {
+        // build graph
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        int[] inDegree = new int[numCourses];
+        List<Integer> result = new ArrayList<>();
+
+        for (int[] edge : prerequisites) {
+            // the question says [1,0] means 1 depends on 0, need to finish 0 first
+            // so the directed graph edge is 1->0 and the bottom up
+            graph.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(edge[1]);
+
+            // update the indegree
+            inDegree[edge[1]]++;
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+
+            // find all the node with 0 in-degree
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+
+            for (int child : graph.getOrDefault(node, new ArrayList<>())) {
+                inDegree[child]--;
+
+                if (inDegree[child] == 0) {
+                    queue.add(child);
+                }
+            }
+            result.add(node);
+        }
+
+        Collections.reverse(result);
+        if (result.size() != numCourses) {
+            return new int[0];
+        }
+
+        return result.stream().mapToInt(x -> x).toArray();
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {

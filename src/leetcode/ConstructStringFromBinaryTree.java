@@ -46,6 +46,7 @@ public class ConstructStringFromBinaryTree {
             return Integer.toString(node.val);
         }
 
+        // if right child is null, we should skip the ()
         if (node.right == null) {
             return node.val + "(" + dfs(node.left) + ")";
         }
