@@ -18,8 +18,8 @@ public class TotalHammingDistance {
 
     // the brute force solution is check each pair of numbers and sum all the xor results
     // it takes O(n^2*32)
-    // we can create an array bit[] with 32 size,
-    // for each number, we count the bit of 1 in each bit position
+    // we can create an array bit[] with size 32,
+    // for each position i, we count the bit of 1 at ith bit position of all numbers
     // and sum up all the bit 1 count for all the numbers
     // now, bit[0] is the total number of bit 1, then n - bit[0] is the total number of 0.
     // so the hamming distance at bit position 0, is bit[0]*(n-bit[0]).
@@ -31,12 +31,11 @@ public class TotalHammingDistance {
 
         int[] bitOfOne = new int[32];
 
-        for (int n : nums) {
-            int i = 0;
-            while (n > 0) {
-                bitOfOne[i] += (n & 1);
-                n >>= 1;
-                i++;
+        for (int i = 0; i < 32; i++) {
+            for (int n : nums) {
+                if (((n >> i) & 1) == 1){
+                    bitOfOne[i]++;
+                }
             }
         }
 

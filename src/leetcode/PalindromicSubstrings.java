@@ -51,7 +51,6 @@ public class PalindromicSubstrings {
         }
         int n = s.length();
 
-
         int count = 0;
         boolean[][] dp = new boolean[1000][1000];
 
@@ -70,9 +69,17 @@ public class PalindromicSubstrings {
             }
         }
 
+        // for (int i = n - 3; i >= 0; i--) {
+        //     for (int j = n - 1; j > i; j--) {
+        //         if (dp[i + 1][j - 1] && s.charAt(i) == s.charAt(j)) {
+        //             dp[i][j] = true;
+        //             count++;
+        //         }
+        //     }
+        // }
 
-        for (int i = n - 3; i >= 0; i--) {
-            for (int j = n - 1; j > i; j--) {
+        for (int j = 2; j < n; j++) {
+            for (int i = 0; i < n - 2; i++) {
                 if (dp[i + 1][j - 1] && s.charAt(i) == s.charAt(j)) {
                     dp[i][j] = true;
                     count++;
