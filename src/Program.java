@@ -1,14 +1,13 @@
-import java.util.*;
-
-import leetcode.ValidTriangleNumber;
+import leetcode.NumberOfDistinctIslands;
 
 public class Program {
 
     public static void main(String[] args) {
-        ValidTriangleNumber ms = new ValidTriangleNumber();
+        NumberOfDistinctIslands ns = new NumberOfDistinctIslands();
 
-        System.out.println(ms.triangleNumber(new int[]{2, 2, 3, 4}));
+        int[][] grid = {{1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {0, 0, 0, 1, 1}, {0, 0, 0, 0, 0}};
+
+        System.out.println(ns.numDistinctIslands(grid));
 
     }
-
 }
