@@ -37,13 +37,13 @@ public class UniqueMorseCodeWords {
         HashSet<String> uniqueCode = new HashSet<>();
 
         for (String w : words) {
-            String code = "";
+            StringBuilder code = new StringBuilder();
 
             for (char c : w.toCharArray()) {
-                code += this.MORSE[c - 'a'];
+                code.append(this.MORSE[c - 'a']);
             }
 
-            uniqueCode.add(code);
+            uniqueCode.add(code.toString());
         }
         return uniqueCode.size();
     }

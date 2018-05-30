@@ -32,6 +32,9 @@ public class WordBreak {
         return false;
     }
 
+
+    // dp[i] indicate if substring [0...i] can be split to words in dict
+    // dp[i] == true if there is a dp[j] == true, 0 <= j < i and s.substring(j, i) in dict
     public boolean wordBreakDP(String s, List<String> wordDict){
 
         int n = s.length();

@@ -1,13 +1,14 @@
-import leetcode.NumberOfDistinctIslands;
+import leetcode.ShortestDistanceFromAllBuildings;
 
 public class Program {
 
     public static void main(String[] args) {
-        NumberOfDistinctIslands ns = new NumberOfDistinctIslands();
+        ShortestDistanceFromAllBuildings sd = new ShortestDistanceFromAllBuildings();
 
-        int[][] grid = {{1, 0, 0, 0, 0}, {1, 0, 0, 0, 0}, {0, 0, 0, 1, 1}, {0, 0, 0, 0, 0}};
-
-        System.out.println(ns.numDistinctIslands(grid));
+        System.out.println(sd.shortestDistance(new int[][]{{1, 0, 2, 0, 1}, {0, 0, 0, 0, 0}, {0, 0, 1, 0, 0}}));
 
     }
+
 }
+
+// [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]
