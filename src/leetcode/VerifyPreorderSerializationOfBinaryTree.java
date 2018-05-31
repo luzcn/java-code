@@ -16,7 +16,8 @@ import java.util.*;
 // # # # #   # #
 // For example, the above binary tree can be serialized to the string "9,3,4,#,#,1,#,#,2,#,6,#,#", where # represents a null node.
 //
-// Given a string of comma separated values, verify whether it is a correct preorder traversal serialization of a binary tree. Find an algorithm without reconstructing the tree.
+// Given a string of comma separated values, verify whether it is a correct preorder traversal serialization of a binary tree.
+// Find an algorithm without reconstructing the tree.
 //
 // Each comma separated value in the string must be either an integer or a character '#' representing null pointer.
 //

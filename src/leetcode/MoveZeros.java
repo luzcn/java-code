@@ -20,6 +20,7 @@ public class MoveZeros {
 
         int begin = 0;
 
+        // skip the first non-zero numbers
         while (begin < nums.length && nums[begin] != 0) {
             begin++;
         }

@@ -1,14 +1,10 @@
-import leetcode.ShortestDistanceFromAllBuildings;
+import leetcode.ListNode;
+import leetcode.RotateList;
 
 public class Program {
 
     public static void main(String[] args) {
-        ShortestDistanceFromAllBuildings sd = new ShortestDistanceFromAllBuildings();
-
-        System.out.println(sd.shortestDistance(new int[][]{{1, 0, 2, 0, 1}, {0, 0, 0, 0, 0}, {0, 0, 1, 0, 0}}));
 
     }
 
 }
-
-// [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]

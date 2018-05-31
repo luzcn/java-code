@@ -13,7 +13,7 @@ public class PalindromeNumber {
         }
 
         int div = 1;
-        // find the largest dividen number,
+        // find the largest divided number,
         // which can make x / div as a single digit
         while (x / div >= 10) {
             div *= 10;
