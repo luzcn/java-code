@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.HashMap;
+
 /**
  * Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
  */
@@ -24,36 +26,37 @@ public class InorderSuccessorInBST {
         }
 
         // the successor is the parent of p, if p is the left child of its parent.
-        TreeNode x = p;
-        TreeNode y = getParent(root, x, null);
+        // build the parent path;
+        getParent(root, null, p);
 
-        // if p is the right child of its parent, need to keep finding its parent,
-        // util the parent is nullptr or it is left child.
+        TreeNode x = p;
+        TreeNode y = map.get(x);
+
         while (y != null && y.right == x) {
             x = y;
-            y = getParent(root, y, null);
+            y = map.get(x);
         }
 
         return y;
-
     }
 
-    private TreeNode getParent(TreeNode node, TreeNode target, TreeNode parent) {
+    // a hashmap of child-parent mapping
+    private HashMap<TreeNode, TreeNode> map = new HashMap<>();
+
+    private void getParent(TreeNode node, TreeNode parent, TreeNode target) {
         if (node == null) {
-            return null;
+            return;
         }
 
+        map.put(node, parent);
         if (node == target) {
-            return parent;
+            return;
         }
 
-        TreeNode leftSub = getParent(node.left, target, node);
-        TreeNode rightSub = getParent(node.right, target, node);
-
-        if (leftSub != null) {
-            return leftSub;
+        if (node.val < target.val) {
+            getParent(node.right, node, target);
         } else {
-            return rightSub;
+            getParent(node.left, node, target);
         }
     }
 }
