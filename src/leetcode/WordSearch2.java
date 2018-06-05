@@ -29,6 +29,7 @@ import java.util.List;
  * 2. Traverse the given 2d graph, for each searched string, check if it is in the trie
  */
 public class WordSearch2 {
+
     private TrieNode root = new TrieNode();
     private List<String> result = new ArrayList<>();
     private int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
@@ -54,8 +55,9 @@ public class WordSearch2 {
 
     private void dfs(char[][] board, int x, int y, String currentWord, boolean[][] visited, TrieNode currentNode) {
 
-        if (currentNode == null)
+        if (currentNode == null) {
             return;
+        }
 
         if (currentNode.words == 1) {
             result.add(currentWord);
@@ -92,19 +94,18 @@ public class WordSearch2 {
         int n = board[0].length;
         boolean[][] visited = new boolean[m][n];
 
-
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 dfs(board, i, j, "", visited, root);
             }
         }
 
-
         return this.result;
     }
 
 
     private class TrieNode {
+
         TrieNode[] children;
         int words;
 

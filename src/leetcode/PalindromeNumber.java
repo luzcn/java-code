@@ -1,6 +1,7 @@
 package leetcode;
 
 public class PalindromeNumber {
+
     public boolean isPalindrome(int x) {
 
         // Negative number is not palindrome
@@ -26,8 +27,9 @@ public class PalindromeNumber {
             // the last digit
             int last = x % 10;
 
-            if (first != last)
+            if (first != last) {
                 return false;
+            }
 
             // e.g. 234 => 3
             x = (x % div) / 10;

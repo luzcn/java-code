@@ -1,11 +1,11 @@
-import datastructure.Recursion.Combinations;
+import leetcode.PalindromeNumber;
+
 
 public class Program {
 
     public static void main(String[] args) {
-        Combinations ps = new Combinations();
-
-        System.out.println(ps.combine(4, 2));
+        PalindromeNumber sp = new PalindromeNumber();
+        System.out.println(sp.isPalindrome(1410110141));
     }
 
 }

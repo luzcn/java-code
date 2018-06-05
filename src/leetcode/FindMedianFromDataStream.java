@@ -3,7 +3,6 @@ package leetcode;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 
-import leetcode.DataStreamAsDisjointIntervals.Interval;
 
 // Median is the middle value in an ordered integer list.
 // If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.

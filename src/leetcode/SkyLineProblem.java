@@ -65,8 +65,8 @@ public class SkyLineProblem {
         // the [1,1] is redundant
         TreeMap<Integer, Integer> map = new TreeMap<>();
 
+        // don't forget this "0", otherwise we will lose the last endpoint with 0 height
         heap.offer(0);
-        int prev = 0;
 
         for (Point h : height) {
             if (h.isLeft) {
@@ -79,9 +79,9 @@ public class SkyLineProblem {
         }
 
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            // if (!result.isEmpty() && result.get(result.size() - 1)[1] == entry.getValue()) {
-            //     continue;
-            // }
+            if (!result.isEmpty() && result.get(result.size() - 1)[1] == entry.getValue()) {
+                continue;
+            }
             result.add(new int[]{entry.getKey(), entry.getValue()});
         }
 

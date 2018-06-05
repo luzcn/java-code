@@ -2,7 +2,6 @@ package leetcode;
 
 import java.util.*;
 
-import leetcode.DataStreamAsDisjointIntervals.Interval;
 
 // Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums.
 // You are asked to burst all the balloons.

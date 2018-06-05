@@ -2,7 +2,6 @@ package leetcode;
 
 import java.util.*;
 
-import leetcode.DataStreamAsDisjointIntervals.Interval;
 
 // In LeetCode Store, there are some kinds of items to sell. Each item has a price.
 //
