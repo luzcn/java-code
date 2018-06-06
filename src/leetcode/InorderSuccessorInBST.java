@@ -59,4 +59,39 @@ public class InorderSuccessorInBST {
             getParent(node.left, node, target);
         }
     }
+
+
+    // dfs solution
+    private TreeNode prev = null;
+    private TreeNode succ = null;
+
+    private void inorder(TreeNode node, TreeNode p) {
+        if (node == null) {
+            return;
+        }
+
+        inorder(node.left, p);
+        if (prev == p) {
+            succ = node;
+        }
+
+        prev = node;
+        inorder(node.right, p);
+    }
+
+    // or use iterative
+    private TreeNode successor(TreeNode root, TreeNode p) {
+        TreeNode succ = null;
+
+        while (root != null) {
+            if (root.val > p.val) {
+                succ = root;
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+
+        return succ;
+    }
 }

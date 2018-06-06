@@ -4,32 +4,35 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Given a set of candidate numbers (C) (without duplicates) and a target number (T),
- * find all unique combinations in C where the candidate numbers sums to T.
- *
- * The same repeated number may be chosen from C unlimited number of times.
- *
- * Note:
- * All numbers (including target) will be positive integers.
- * The solution set must not contain duplicate combinations.
- * For example, given candidate set [2, 3, 6, 7] and target 7,
- * A solution set is:
- * [
- * [7],
- * [2, 2, 3]
- * ]
- */
+/////
+// Given a set of candidate numbers (C) (without duplicates) and a target number (T),
+// find all unique combinations in C where the candidate numbers sums to T.
+//
+// The same repeated number may be chosen from C unlimited number of times.
+//
+// Note:
+// - All numbers (including target) will be positive integers.
+// - The solution set must not contain duplicate combinations.
+//
+// For example, given candidate set [2, 3, 6, 7] and target 7,
+// A solution set is:
+// [
+// [7],
+// [2, 2, 3]
+// ]
+///
 public class CombinationSum {
 
     private List<List<Integer>> result = new ArrayList<>();
     private List<Integer> current = new ArrayList<>();
 
 
+    // recursive + backtracking
     private void dfs(int[] candidates, int target, int index, int sum) {
 
-        if (index >= candidates.length)
+        if (index >= candidates.length) {
             return;
+        }
 
         if (sum > target) {
             return;
@@ -37,6 +40,7 @@ public class CombinationSum {
 
         if (sum == target) {
             this.result.add(new ArrayList<>(this.current));
+            return;
         }
 
         for (int i = index; i < candidates.length; i++) {
@@ -54,6 +58,7 @@ public class CombinationSum {
     private void dfs2(int[] candidates, int target, int index, int sum) {
         if (sum == target) {
             this.result.add(new ArrayList<>(this.current));
+            return;
         }
 
         if (sum > target) {
@@ -62,7 +67,7 @@ public class CombinationSum {
 
         for (int i = index; i < candidates.length; i++) {
 
-            if (i != index && (candidates[i] == candidates[i - 1])) {
+            if (i > index && (candidates[i] == candidates[i - 1])) {
                 continue;
             }
 

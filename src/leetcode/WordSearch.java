@@ -46,6 +46,8 @@ public class WordSearch {
         return false;
     }
 
+
+    // use board[x][y] xor 256 to avoid extra space
     public boolean exist(char[][] board, String word) {
         int m = board.length;
         int n = board[0].length;

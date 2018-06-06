@@ -24,6 +24,7 @@ package leetcode;
  * Output: "1211"
  */
 public class CountAndSay {
+
     public String countAndSay(int n) {
 
         String number = "1";
@@ -48,6 +49,29 @@ public class CountAndSay {
 
             number = newString.toString();
             n--;
+        }
+
+        return number;
+    }
+
+    public String countAndSay2(int n) {
+
+        String number = "1";
+
+        while (n-- > 1) {
+
+            StringBuilder sb = new StringBuilder();
+
+            int count = 1;
+            for (int i = 0; i < number.length(); i++) {
+                if (i == number.length() - 1 || number.charAt(i) != number.charAt(i + 1)) {
+                    sb.append(count).append(number.charAt(i));
+                    count = 0;
+                }
+                count++;
+            }
+
+            number = sb.toString();
         }
 
         return number;

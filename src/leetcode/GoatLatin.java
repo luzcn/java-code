@@ -47,7 +47,7 @@ public class GoatLatin {
 
         StringBuilder result = new StringBuilder();
         String[] words = s.split("\\W+");
-        Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
+        Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
 
         for (int i = 0; i < words.length; i++) {
             String word = words[i];
@@ -55,7 +55,7 @@ public class GoatLatin {
             char first = word.charAt(0);
             StringBuilder newWord = new StringBuilder();
 
-            if (!vowels.contains(Character.toLowerCase(first))) {
+            if (!vowels.contains(first)) {
                 // the first char is not vowel
                 newWord.append(word.substring(1)).append(first);
             } else {

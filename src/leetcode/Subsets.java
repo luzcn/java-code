@@ -8,6 +8,7 @@ import java.util.List;
 
 
 public class Subsets {
+
     private List<List<Integer>> result = new ArrayList<>();
     private List<Integer> current = new ArrayList<>();
 
@@ -22,8 +23,7 @@ public class Subsets {
 
     public List<List<Integer>> subsetWithDup(int[] nums) {
         Arrays.sort(nums);
-        boolean[] visited = new boolean[nums.length];
-        dfsWithDup(nums, visited, 0);
+        dfsWithDup(nums, 0);
 
         return result;
     }
@@ -45,7 +45,7 @@ public class Subsets {
         }
     }
 
-    private void dfsWithDup(int[] nums, boolean[] visited, int index) {
+    private void dfsWithDup(int[] nums, int index) {
 
         result.add(new ArrayList<>(current));
 
@@ -53,21 +53,17 @@ public class Subsets {
             return;
         }
 
-
         for (int i = index; i < nums.length; i++) {
 
-            if (!visited[i]) {
-                if (i != index && nums[i - 1] == nums[i] && !visited[i - 1])
-                    continue;
-
-                visited[i] = true;
-                current.add(nums[i]);
-
-                dfsWithDup(nums, visited, i + 1);
-
-                current.remove(current.size() - 1);
-                visited[i] = false;
+            if (i > index && nums[i - 1] == nums[i]) {
+                continue;
             }
+
+            current.add(nums[i]);
+
+            dfsWithDup(nums, i + 1);
+
+            current.remove(current.size() - 1);
         }
     }
 }

@@ -3,18 +3,18 @@ package leetcode;
 import java.util.Arrays;
 import java.util.Comparator;
 
-/**
- * Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
- * determine if a person could attend all meetings.
- *
- * For example,
- * Given [[0, 30],[5, 10],[15, 20]],
- * return false.
- *
- * Thoughts:
- * The solution is sort the intervals by start time, and check are there any overlaps
- */
+// Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
+// determine if a person could attend all meetings.
+//
+// For example,
+// Given [[0, 30],[5, 10],[15, 20]],
+// return false.
+//
+// Thoughts:
+// The solution is sort the intervals by start time, and check are there any overlaps
+///
 public class MeetingRooms {
+
     public boolean canAttendMeetings(Interval[] intervals) {
 
         // sort by start time
@@ -30,23 +30,22 @@ public class MeetingRooms {
     }
 
 
-    /**
-     * Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
-     * find the minimum number of conference rooms required.
-     *
-     * For example,
-     * Given [[0, 30],[5, 10],[15, 20]],
-     * return 2.
-     *
-     * Thoughts:
-     * The solution is to find the maximum overlaps among all these interval, or if no overlap, we need at least 1 room
-     * 1. construct 2 arrays S and E, one contains all the start points, another holds all end points
-     * 2. sort them
-     * 3. iterate through the array,
-     * - if we find S[i] < E[j], it means we find an interval or an overlap, we increase the overlap count
-     * - if S[i]<= E[j], one interval is finished, decrease the overlap
-     * 4. the min room number should be the max value of overlaps.
-     */
+    // Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
+    // find the minimum number of conference rooms required.
+    //
+    // For example,
+    // Given [[0, 30],[5, 10],[15, 20]],
+    // return 2.
+    //
+    // Thoughts:
+    // The solution is to find the maximum overlaps among all these interval, or if no overlap, we need at least 1 room
+    // 1. construct 2 arrays S and E, one contains all the start points, another holds all end points
+    // 2. sort them
+    // 3. iterate through the array,
+    // - if we find S[i] < E[j], it means we find an interval or an overlap, we increase the overlap count
+    // - if S[i]<= E[j], one interval is finished, decrease the overlap
+    // 4. the min room number should be the max value of overlaps.
+    ///
     public int minMeetingRooms(Interval[] intervals) {
         int n = intervals.length;
         int[] starts = new int[n];
@@ -78,12 +77,12 @@ public class MeetingRooms {
             minRoom = Math.max(minRoom, overlap);
         }
 
-
         return minRoom;
     }
 
 
     private class Interval {
+
         int start;
         int end;
 

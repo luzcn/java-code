@@ -84,14 +84,16 @@ public class ShortestUnsortedContinuousSubarray {
     // this position should be the minValue correct position after sorted
     // - similarly, we can find the correct position of maxValue
     public int findUnsortedSubarray(int[] nums) {
-        if (nums.length < 2) {
+        int n = nums.length;
+
+        if (n < 2) {
             return 0;
         }
 
         int minValue = Integer.MAX_VALUE;
         int maxValue = Integer.MIN_VALUE;
 
-        for (int i = 0; i < nums.length - 1; i++) {
+        for (int i = 0; i < n - 1; i++) {
             if (nums[i] > nums[i + 1]) {
                 minValue = Math.min(minValue, nums[i + 1]);
                 maxValue = Math.max(maxValue, nums[i]);

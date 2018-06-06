@@ -1,5 +1,9 @@
 package leetcode;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.Stream;
+
 //Given a non-empty binary tree, find the maximum path sum.
 //
 // For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
@@ -46,15 +50,18 @@ public class BinaryTreeMaximumPathSum {
         int leftSub = dfs(node.left);
         int rightSub = dfs(node.right);
 
-        int maxPathThroughCurrent = Math
-                .max(Math.max(node.val, Math.max(leftSub, rightSub) + node.val), node.val + leftSub + rightSub);
+        // int maxPathThroughCurrent = Math
+        //         .max(Math.max(node.val, Math.max(leftSub, rightSub) + node.val), node.val + leftSub + rightSub);
+
+        int currentMaxPath = Stream.of(node.val, leftSub + node.val, rightSub + node.val, leftSub + rightSub + node.val)
+                .max(Comparator.comparingInt(x -> x)).get();
+
         int toReturn = Math.max(node.val, Math.max(leftSub, rightSub) + node.val);
 
-        ans = Math.max(ans, maxPathThroughCurrent);
+        ans = Math.max(ans, currentMaxPath);
 
         return toReturn;
     }
-
 
 
     private int dfs2(TreeNode node) {
