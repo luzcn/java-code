@@ -23,47 +23,35 @@ public class ValidPalindrome2 {
     public boolean validPalindrome(String s) {
 
         s = s.trim();
-        if (s.isEmpty())
+        if (s.isEmpty()) {
             return true;
+        }
 
-        int l = 0;
-        int r = s.length() - 1;
-        boolean canDelete = true;
+        int left = 0;
+        int right = s.length() - 1;
 
-        boolean result1 = true;
-
-        while (l < r) {
-            if (s.charAt(l) == s.charAt(r)) {
-
-                l++;
-                r--;
-            } else if (canDelete) {
-                l++;
-                canDelete = false;
+        while (left < right) {
+            if (s.charAt(left) == s.charAt(right)) {
+                left++;
+                right--;
             } else {
-                result1 = false;
-                break;
+                return isValid(s, left + 1, right) || isValid(s, left, right - 1);
             }
         }
 
-        l = 0;
-        r = s.length() - 1;
-        canDelete = true;
-        boolean result2 = true;
-        while (l < r) {
-            if (s.charAt(l) == s.charAt(r)) {
-                l++;
-                r--;
-            } else if (canDelete) {
-                r--;
-                canDelete = false;
-            } else {
-                result2 = false;
-                break;
-            }
+        return true;
+    }
 
+    private boolean isValid(String s, int left, int right) {
+        while (left < right) {
+            if (s.charAt(left) == s.charAt(right)) {
+                left++;
+                right--;
+            } else {
+                return false;
+            }
         }
 
-        return result1 || result2;
+        return true;
     }
 }

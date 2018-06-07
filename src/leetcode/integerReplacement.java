@@ -27,7 +27,7 @@ import java.util.*;
 // 7 -> 8 -> 4 -> 2 -> 1
 // or
 // 7 -> 6 -> 3 -> 2 -> 1
-public class IntegerReplacement {
+public class integerReplacement {
 
     public int integerReplacementBFS(int n) {
 

@@ -16,34 +16,37 @@ import java.util.List;
 // Explanation:
 // The average value of nodes on level 0 is 3,  on level 1 is 14.5, and on level 2 is 11.
 // Hence return [3, 14.5, 11].
-public class AverageOfLevelsInBinaryTree {
+public class AverageOfLevelsInBinaryTree_637 {
 
-    private List<Double> result = new ArrayList<>();
-    private List<Double> sumInLevel = new ArrayList<>();
-    private List<Double> countInLevel = new ArrayList<>();
-
+    // similar to level-order
+    // but save a double typed array of [sum, count]
+    private List<double[]> res = new ArrayList<>();
 
     private void dfs(TreeNode node, int level) {
-        if (node == null)
+        if (node == null) {
             return;
-
-        if (level >= result.size()) {
-            sumInLevel.add((double) node.val);
-            countInLevel.add(1.0);
-            result.add((double) node.val);
-        } else {
-            sumInLevel.set(level, sumInLevel.get(level) + node.val);
-            countInLevel.set(level, countInLevel.get(level) + 1);
-            result.set(level, sumInLevel.get(level) / countInLevel.get(level));
         }
+
+        if (res.size() == level) {
+            res.add(new double[]{0.0, 0.0});
+        }
+        // sum of nodes on the same level
+        res.get(level)[0] += node.val;
+
+        // node count on same level
+        res.get(level)[1]++;
 
         dfs(node.left, level + 1);
         dfs(node.right, level + 1);
     }
 
     public List<Double> averageOfLevels(TreeNode root) {
-
         dfs(root, 0);
-        return this.result;
+
+        List<Double> averages = new ArrayList<>();
+
+        res.forEach(x -> averages.add((x[0] / x[1])));
+
+        return averages;
     }
 }
