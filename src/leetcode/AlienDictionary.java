@@ -82,7 +82,7 @@ public class AlienDictionary {
     }
 
 
-    private boolean topoSort(Character node, HashSet<Character> ancestor) {
+    private boolean topoSort(char node, HashSet<Character> ancestor) {
         if (ancestor.contains(node)) {
             return false;
         }
@@ -93,7 +93,7 @@ public class AlienDictionary {
 
         this.visited.add(node);
         ancestor.add(node);
-        for (Character child : graph.getOrDefault(node, new HashSet<>())) {
+        for (char child : graph.getOrDefault(node, new HashSet<>())) {
             if (!topoSort(child, ancestor)) {
                 return false;
             }
@@ -126,9 +126,11 @@ public class AlienDictionary {
                     graph.putIfAbsent(words[i].charAt(j), new HashSet<>());
                 }
 
-                // find one edge, do not need to continue search and add edges, othweise, it could make the graph cyclic
+                // find one edge, do not need to continue search and add edges, otherwise, it could make the graph cyclic
                 if (j < m && j < n && words[i - 1].charAt(j) != words[i].charAt(j) && !isFound) {
-                    graph.computeIfAbsent(words[i - 1].charAt(j), k -> new HashSet<>()).add(words[i].charAt(j));
+                    // graph.computeIfAbsent(words[i - 1].charAt(j), k -> new HashSet<>()).add(words[i].charAt(j));
+
+                    graph.get(words[i - 1].charAt(j)).add(words[i].charAt(j));
                     isFound = true;
                 }
             }

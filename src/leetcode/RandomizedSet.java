@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Design a data structure that supports all following operations in average O(1) startTime.
- * <p>
- * insert(val): Inserts an item val to the set if not already present.
- * remove(val): Removes an item val from the set if present.
- * getRandom: Returns a random element from current set of elements. Each element must have the same probability of being returned.
- */
+/////
+// Design a data structure that supports all following operations in average O(1) startTime.
+//
+// - insert(val): Inserts an item val to the set if not already present.
+// - remove(val): Removes an item val from the set if present.
+// - getRandom: Returns a random element from current set of elements.
+//
+// Each element must have the same probability of being returned.
+///
 public class RandomizedSet {
 
     // use two hashmap and one ArrayList, it takes O(1) to remove the last element.

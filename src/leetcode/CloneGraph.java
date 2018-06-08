@@ -61,6 +61,4 @@ public class CloneGraph {
             neighbors = new ArrayList<UndirectedGraphNode>();
         }
     }
-
-    ;
 }

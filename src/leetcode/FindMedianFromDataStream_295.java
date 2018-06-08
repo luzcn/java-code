@@ -1,8 +1,6 @@
 package leetcode;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentMap;
-
+import java.util.PriorityQueue;
 
 // Median is the middle value in an ordered integer list.
 // If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
@@ -24,7 +22,7 @@ import java.util.concurrent.ConcurrentMap;
 // addNum(3)
 // findMedian() -> 2
 
-public class FindMedianFromDataStream {
+public class FindMedianFromDataStream_295 {
 
     // The idea is using two heaps to simulate a balanced binary search tree, because a balanced bst root is the median.
     // the left is maxheap and right is minheap
@@ -39,7 +37,7 @@ public class FindMedianFromDataStream {
     // the right is min heap
     private PriorityQueue<Integer> right = new PriorityQueue<>();
 
-    public FindMedianFromDataStream() {
+    public FindMedianFromDataStream_295() {
 
     }
 
@@ -50,11 +48,10 @@ public class FindMedianFromDataStream {
             return;
         }
 
-
         if (num <= left.peek()) {
             left.add(num);
         } else {
-            left.add(num);
+            right.add(num);
         }
 
         if (right.size() - left.size() > 1) {
