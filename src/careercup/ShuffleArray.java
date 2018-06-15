@@ -50,7 +50,7 @@ public class ShuffleArray {
     // Now consider the array from 0 to n-2 (size reduced by 1), and repeat the process till we hit the first element.
     public void shuffle(int[] nums) {
         for (int i = nums.length - 1; i > 0; i--) {
-            int j = random.nextInt(i);
+            int j = random.nextInt(i + 1);
             swap(nums, i, j);
         }
     }
