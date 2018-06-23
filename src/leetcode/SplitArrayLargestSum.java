@@ -76,10 +76,11 @@ public class SplitArrayLargestSum {
         // get the total range sum
         int[] sums = new int[n + 1];
         for (int i = 1; i <= n; i++) {
-            sums[i] = sums[i - 1] = nums[i - 1];
+            sums[i] = sums[i - 1] + nums[i - 1];
         }
 
         // define dp[i][j] to be the minimum largest subarray sum for splitting nums[0..i] into j parts.
+        // dp[i][j] = min(dp[i][j], max(dp[k][j-1], sum(i,k)) for each 0<= k < i
         int[][] dp = new int[n + 1][m + 1];
         for (int[] row : dp) {
             Arrays.fill(row, Integer.MAX_VALUE);

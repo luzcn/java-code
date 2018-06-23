@@ -18,7 +18,44 @@ import java.util.*;
 // Input: s = "PAYPALISHIRING", numRows = 3
 // Output: "PAHNAPLSIIGYIR"
 public class ZigZagConversion_6 {
+
     public String convert(String s, int numRows) {
 
+        // sort by row
+        // use min(s.length(), numsRows) lists to represent the non-empty rows of the Zig-Zag Pattern
+        // iterate through s from left to right, appending each character to the appropriate row.
+        // - The appropriate row can be tracked using two variables: the current row and the current direction.
+        // The current direction changes only when we moved up to the topmost row or moved down to the bottommost row.
+        if (numRows == 1) {
+            return s;
+        }
+
+        List<StringBuilder> rows = new ArrayList<>();
+        for (int i = 0; i < Math.min(s.length(), numRows); i++) {
+            rows.add(new StringBuilder());
+        }
+        int currentRow = 0;
+        boolean goingDown = false;
+
+        for (char c : s.toCharArray()) {
+            rows.get(currentRow).append(c);
+
+            if (currentRow == 0 || currentRow == numRows - 1) {
+                goingDown = !goingDown;
+
+            }
+            if (goingDown) {
+                currentRow++;
+            } else {
+                currentRow--;
+            }
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (StringBuilder row : rows) {
+            res.append(row);
+        }
+
+        return res.toString();
     }
 }

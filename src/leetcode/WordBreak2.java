@@ -5,21 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
- * add spaces in s to construct a sentence where each word is a valid dictionary word.
- *
- * You may assume the dictionary does not contain duplicate words.
- *
- * Return all such possible sentences.
- *
- * For example, given
- * s = "catsanddog",
- * dict = ["cat", "cats", "and", "sand", "dog"].
- *
- * A solution is ["cats and dog", "cat sand dog"].
- */
+// Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
+// add spaces in s to construct a sentence where each word is a valid dictionary word.
+//
+// You may assume the dictionary does not contain duplicate words.
+//
+// Return all such possible sentences.
+//
+// For example, given
+// s = "catsanddog",
+// dict = ["cat", "cats", "and", "sand", "dog"].
+//
+// A solution is ["cats and dog", "cat sand dog"].
 public class WordBreak2 {
+
+    // dfs + memoization
     private List<String> dfs(String s, List<String> dict, Map<String, List<String>> map) {
         if (map.containsKey(s)) {
             return map.get(s);
@@ -31,15 +31,16 @@ public class WordBreak2 {
             return res;
         }
 
+        // here i <= s.length(), don't forget
         for (int i = 1; i <= s.length(); i++) {
             String prefix = s.substring(0, i);
 
             if (dict.contains(prefix)) {
                 List<String> subList = dfs(s.substring(i), dict, map);
 
-               for (String sub : subList){
-                   res.add(prefix + (sub.isEmpty()? "" :" ") + sub);
-               }
+                for (String sub : subList) {
+                    res.add(prefix + (sub.isEmpty() ? "" : " ") + sub);
+                }
             }
         }
 
@@ -48,9 +49,7 @@ public class WordBreak2 {
     }
 
     public List<String> wordBreak(String s, List<String> wordDict) {
+
         return dfs(s, wordDict, new HashMap<>());
     }
-
-
-
 }

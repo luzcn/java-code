@@ -39,46 +39,25 @@ import java.util.*;
 // - Letters in all strings will be chosen from the set {'A', 'B', 'C', 'D', 'E', 'F', 'G'}.
 public class PyramidTransitionMatrix {
 
-    private String candidates = "ABCDEFG";
+    private HashMap<String, List<Character>> map = new HashMap<>();
 
-    private void permutation(String current, List<String> res, int length, String bottom, HashSet<String> allowed) {
-        if (current.length() == length) {
-            boolean isValid = true;
-            for (int i = 0; i < current.length(); i++) {
-                String block = "" + bottom.charAt(i) + bottom.charAt(i + 1) + current.charAt(i);
-
-                if (!allowed.contains(block)) {
-                    isValid = false;
-                }
-            }
-            if (isValid) {
-                res.add(current);
-            }
-            return;
-        }
-
-        for (int i = 0; i < candidates.length(); i++) {
-            current += candidates.charAt(i);
-
-            permutation(current, res, length, bottom, allowed);
-
-            current = current.substring(0, current.length() - 1);
-        }
-    }
-
-
-    private boolean dfs(int N, String bottom, HashSet<String> allowed) {
-        if (N == 0) {
+    private boolean dfs(String bottom, String current) {
+        if (bottom.length() == 2 && current.length() == 1) {
             return true;
         }
 
-        List<String> topList = new ArrayList<>();
-        permutation("", topList, N, bottom, allowed);
+        if (bottom.length() == current.length() + 1) {
+            return dfs(current, "");
+        }
 
-        for (String top : topList) {
+        int pos = current.length();
+        String prefix = bottom.substring(pos, pos + 2);
 
-            if (dfs(N - 1, top, allowed)) {
-                return true;
+        if (map.containsKey(prefix)) {
+            for (char c : map.get(prefix)) {
+                if (dfs(bottom, current + c)) {
+                    return true;
+                }
             }
         }
 
@@ -87,9 +66,16 @@ public class PyramidTransitionMatrix {
 
     public boolean pyramidTransition(String bottom, List<String> allowed) {
         int n = bottom.length();
-        HashSet<String> allowedSet = new HashSet<>(allowed);
+        // HashSet<String> allowedSet = new HashSet<>(allowed);
 
-        return dfs(n - 1, bottom, allowedSet);
+        // pre-process the allowed strings
+        // create a mapping of first 2 chars key and list of last char as value
+        // e.g. "XYD" => "XY"-> ['D']
+        for (String word : allowed) {
+            map.computeIfAbsent(word.substring(0, 2), k -> new ArrayList<>()).add(word.charAt(2));
+        }
+
+        return dfs(bottom, "");
     }
 
 }

@@ -1,13 +1,15 @@
 import java.util.Arrays;
 
+import leetcode.PourWater_755;
+
 public class Program {
 
     public static void main(String[] args) {
+        PourWater_755 sl = new PourWater_755();
+        int[] heights = {1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1};
 
-        int[] n = {1,23,3};
-        int[] s= Arrays.copyOf(n, 3);
+        var res = sl.pourWater(heights, 5, 5);
 
-        return;
+        Arrays.stream(res).forEach(x -> System.out.print(x + " "));
     }
-
 }
