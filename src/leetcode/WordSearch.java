@@ -21,28 +21,34 @@ package leetcode;
 //
 public class WordSearch {
 
-    private int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    private int[][] dirs = {{1, 0}};
 
-    private boolean dfs(char[][] board, String word, int index, int x, int y, boolean[][] visited) {
-        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
-            return false;
-        }
-
+    private boolean dfs(char[][] board, String word, int index, int i, int j) {
         if (index >= word.length()) {
             return true;
         }
 
-        if (!visited[x][y] && board[x][y] == word.charAt(index)) {
-            visited[x][y] = true;
-
-            for (int[] dir : dirs) {
-                if (dfs(board, word, index + 1, x + dir[0], y + dir[1], visited)) {
-                    return true;
-                }
-            }
-
-            visited[x][y] = false;
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
+            return false;
         }
+
+        if (board[i][j] != word.charAt(index)) {
+            return false;
+        }
+
+        // visited[i][j] = true;
+
+        board[i][j] ^= 256;
+        for (int[] dir : dirs) {
+            int x = i + dir[0];
+            int y = j + dir[1];
+            if (dfs(board, word, index + 1, x, y)) {
+                return true;
+            }
+        }
+        board[i][j] ^= 256;
+        // visited[i][j] = false;
+
         return false;
     }
 
@@ -52,7 +58,7 @@ public class WordSearch {
         int m = board.length;
         int n = board[0].length;
 
-        boolean[][] visited = new boolean[m][n];
+        // boolean[][] visited = new boolean[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (board[i][j] == word.charAt(0)) {
@@ -60,7 +66,7 @@ public class WordSearch {
                         return true;
                     }
 
-                    if (dfs(board, word, 0, i, j, visited)) {
+                    if (dfs(board, word, 0, i, j)) {
                         return true;
                     }
                 }

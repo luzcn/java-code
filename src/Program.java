@@ -1,15 +1,14 @@
 import java.util.Arrays;
 
-import leetcode.PourWater_755;
+import leetcode.PalindromePairs_336;
 
 public class Program {
 
     public static void main(String[] args) {
-        PourWater_755 sl = new PourWater_755();
-        int[] heights = {1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1};
+        PalindromePairs_336 ps = new PalindromePairs_336();
 
-        var res = sl.pourWater(heights, 5, 5);
+        var res = ps.palindromePairs(new String[]{"a", ""});
 
-        Arrays.stream(res).forEach(x -> System.out.print(x + " "));
+        System.out.println(res);
     }
 }

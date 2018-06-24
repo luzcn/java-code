@@ -36,7 +36,7 @@ public class PalindromePairs_336 {
                 if (isPalindrome(first)) {
 
                     String rev = (new StringBuilder(second)).reverse().toString();
-                    if (map.get(rev) != null) {
+                    if (map.get(rev) != null && map.get(rev) != i) {
                         // prefix is palindrome, need to make the string as rev + word, so add the rev index first
                         res.add(Arrays.asList(map.get(rev), i));
                     }
@@ -46,7 +46,7 @@ public class PalindromePairs_336 {
                 // the prefix could be the entire word string
                 if (second.length() > 0 && isPalindrome(second)) {
                     String rev = (new StringBuilder(first)).reverse().toString();
-                    if (map.get(rev) != null) {
+                    if (map.get(rev) != null && map.get(rev) != i) {
                         res.add(Arrays.asList(i, map.get(rev)));
                     }
                 }

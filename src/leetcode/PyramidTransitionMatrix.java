@@ -46,6 +46,7 @@ public class PyramidTransitionMatrix {
             return true;
         }
 
+        // finished the current level, use current as next iteration bottom string
         if (bottom.length() == current.length() + 1) {
             return dfs(current, "");
         }
@@ -53,11 +54,9 @@ public class PyramidTransitionMatrix {
         int pos = current.length();
         String prefix = bottom.substring(pos, pos + 2);
 
-        if (map.containsKey(prefix)) {
-            for (char c : map.get(prefix)) {
-                if (dfs(bottom, current + c)) {
-                    return true;
-                }
+        for (char c : map.getOrDefault(prefix, new ArrayList<>())) {
+            if (dfs(bottom, current + c)) {
+                return true;
             }
         }
 
