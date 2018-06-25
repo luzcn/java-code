@@ -29,11 +29,6 @@ public class CombinationSum {
 
     // recursive + backtracking
     private void dfs(int[] candidates, int target, int index, int sum) {
-
-        if (index >= candidates.length) {
-            return;
-        }
-
         if (sum > target) {
             return;
         }

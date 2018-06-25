@@ -36,7 +36,7 @@ public class CuttingRod {
         }
 
         // dp[i] indicate the max value at i-th position
-        // dp[i] = max (prices[i], dp[j] + d[i-j]) for all 0<= j < i
+        // dp[i] = max (prices[i], dp[j] + dp[i-j]) for all 0 <= j < i
         int[] dp = new int[n];
         dp[0] = prices[0];
 

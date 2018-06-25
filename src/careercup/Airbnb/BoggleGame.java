@@ -1,4 +1,4 @@
-package careercup;
+package careercup.Airbnb;
 
 import java.util.*;
 
