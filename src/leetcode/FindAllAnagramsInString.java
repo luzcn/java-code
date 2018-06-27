@@ -53,6 +53,7 @@ public class FindAllAnagramsInString {
         return true;
     }
 
+    // brute force solution O(len(s) * len(p)) time
     public List<Integer> findAnagrams(String s, String p) {
 
         List<Integer> result = new ArrayList<>();

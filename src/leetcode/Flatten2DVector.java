@@ -55,8 +55,24 @@ public class Flatten2DVector implements Iterator<Integer> {
         return value;
     }
 
+    public Integer peek() {
+        Iterator<Integer> current = columnIterator;
+
+        int value = this.columnIterator.next();
+
+        this.columnIterator = current;
+        return value;
+
+    }
+
     @Override
     public boolean hasNext() {
         return rowIterator.hasNext() || (columnIterator != null && columnIterator.hasNext());
+    }
+
+    public void remove() {
+        this.columnIterator.remove();
+
+        // this.columnIterator.next();
     }
 }

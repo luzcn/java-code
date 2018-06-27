@@ -78,7 +78,7 @@ public class MaximalRectangle {
             for (int j = 1; j <= n; j++) {
                 if (matrix[i - 1][j - 1] == '1') {
                     // since it requires square, we need to check (i-1,j), (i-1,j-1) and (i, j-1)
-                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1]));
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
 
                     result = Math.max(result, dp[i][j]);
                 }

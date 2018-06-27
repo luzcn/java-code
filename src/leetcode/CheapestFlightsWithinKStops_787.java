@@ -12,7 +12,7 @@ import java.util.*;
 // n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
 // src = 0, dst = 2, k = 1
 // Output: 200
-public class CheapestFlightsWithinKStops {
+public class CheapestFlightsWithinKStops_787 {
 
     // graph problem, bfs
     // Dijkstra's shortest path with priority queue
@@ -50,11 +50,10 @@ public class CheapestFlightsWithinKStops {
                 return cost;
             }
 
+            best.add(key);
             for (int v = 0; v < n; v++) {
                 if (graph[u][v] > 0) {
-                    if (!best.contains((stops + 1) * 1000 + v)) {
-                        candidates.offer(new int[]{cost + graph[u][v], v, stops + 1});
-                    }
+                    candidates.offer(new int[]{cost + graph[u][v], v, stops + 1});
                 }
             }
         }

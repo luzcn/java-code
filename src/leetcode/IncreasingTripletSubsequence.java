@@ -55,10 +55,11 @@ public class IncreasingTripletSubsequence {
 
         int small = Integer.MAX_VALUE, large = Integer.MAX_VALUE;
 
+        // 1,1,1,1,1 is not valid
         for (int n : nums) {
-            if (n < small) {
+            if (n <= small) {
                 small = n;
-            } else if (n < large) {
+            } else if (n <= large) {
                 large = n;
             } else {
                 // find the triplet n > large > small
