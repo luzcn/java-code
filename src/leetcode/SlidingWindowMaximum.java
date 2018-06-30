@@ -39,7 +39,7 @@ public class SlidingWindowMaximum {
 
         // double queue
         // the element is index from the input array
-        Deque<Integer> queue = new LinkedList<>();
+        Deque<Integer> queue = new ArrayDeque<>();
 
         // processing the first k elements
         for (int i = 0; i < k; i++) {

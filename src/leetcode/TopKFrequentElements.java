@@ -29,12 +29,17 @@ public class TopKFrequentElements {
             map.put(n, map.getOrDefault(n, 0) + 1);
         }
 
-        for (int n : map.keySet()) {
-            minHeap.offer(n);
+        // for (int n : map.keySet()) {
+        //     minHeap.offer(n);
+        //
+        //     if (minHeap.size() > k) {
+        //         minHeap.poll();
+        //     }
+        // }
 
-            if (minHeap.size() > k) {
-                minHeap.poll();
-            }
+        minHeap.addAll(map.keySet());
+        while (minHeap.size() > k) {
+            minHeap.poll();
         }
 
         while (!minHeap.isEmpty()) {

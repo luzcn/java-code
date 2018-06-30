@@ -42,7 +42,7 @@ import java.util.*;
 // - The number of rows and columns of grid will each be in the range [1, 200].
 // - Each grid[i][j] will be either 0 or 1.
 // - The number of 1s in the grid will be at most 6000.
-public class NumberOfCornerRectangles {
+public class NumberOfCornerRectangles_750 {
 
     // brute force solution
     // O(n^4) time

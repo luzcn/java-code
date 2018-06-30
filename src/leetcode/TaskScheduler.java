@@ -3,6 +3,8 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /////
@@ -72,5 +74,61 @@ public class TaskScheduler {
         }
 
         return idles + tasks.length;
+    }
+
+
+    // output the schedule list
+    public String schedule(char[] tasks, int n) {
+        StringBuilder res = new StringBuilder();
+
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char c : tasks) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        PriorityQueue<Data> queue = new PriorityQueue<>((x, y) -> y.freq - x.freq);
+        int length = tasks.length;
+
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            queue.add(new Data(entry.getKey(), entry.getValue()));
+        }
+
+        while (!queue.isEmpty()) {
+            List<Data> temp = new ArrayList<>();
+
+            for (int i = 0; i <= n; i++) {
+                if (queue.isEmpty()) {
+                    res.append('#');
+                    continue;
+                }
+
+                Data task = queue.poll();
+                res.append(task.id);
+                task.freq--;
+                if (task.freq > 0) {
+                    temp.add(task);
+                }
+
+                if (--length == 0) {
+                    break;
+                }
+            }
+
+            queue.addAll(temp);
+        }
+        // System.out.println(res.toString());
+
+        return res.toString();
+    }
+
+    private class Data {
+
+        char id;
+        int freq;
+
+        Data(char t, int f) {
+            id = t;
+            freq = f;
+        }
     }
 }

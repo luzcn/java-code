@@ -25,7 +25,7 @@ import java.util.*;
 //
 // The input is always valid.
 // You may assume that evaluating the queries will result in no division by zero and there is no contradiction.
-public class EvaluateDivision {
+public class EvaluateDivision_399 {
     // thought:
     // this actually a graph problem
     // we maintain a list

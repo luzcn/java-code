@@ -48,6 +48,28 @@ public class JumpGame {
         return false;
     }
 
+    // dp[i]表示达到i位置时剩余的步数
+    // 到达当前位置的剩余步数跟什么有关呢，其实是跟上一个位置的剩余步数和上一个位置的跳力有关，
+    // 这里的跳力就是原数组中每个位置的数字，因为其代表了以当前位置为起点能到达的最远位置。
+    //
+    // 所以当前位置的剩余步数（dp值）和当前位置的跳力中的较大那个数决定了当前能到的最远距离，
+    // 而下一个位置的剩余步数（dp值）就等于当前的这个较大值减去1，因为需要花一个跳力到达下一个位置，
+    // 所以我们就有状态转移方程了：dp[i] = max(dp[i - 1], nums[i - 1]) - 1，
+    public boolean canJumpDP(int[] nums) {
+        int n = nums.length;
+
+        int[] dp = new int[n];
+        for (int i = 1; i < n; i++) {
+            dp[i] = Math.max(dp[i - 1], nums[i - 1]) - 1;
+
+            if (dp[i] < 0) {
+                return false;
+            }
+        }
+
+        return dp[n - 1] >= 0;
+    }
+
 
     /////
     // Given an array of non-negative integers, you are initially positioned at the first index of the array.
