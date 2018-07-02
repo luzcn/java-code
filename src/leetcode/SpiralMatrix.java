@@ -47,7 +47,7 @@ public class SpiralMatrix {
 
             // if there is only row or one column,
             // no need to print repeat
-            if (left == right || top == bottom) {
+            if (left > right || top > bottom) {
                 break;
             }
 

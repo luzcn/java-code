@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-/**
- * Given a binary search tree (BST) with duplicates,
- * find all the mode(s) (the most frequently occurred element) in the given BST.
- *
- * Assume a BST is defined as follows:
- *
- * - The left subtree of a node contains only nodes with keys less than or equal to the node's key.
- * - The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
- * - Both the left and right subtrees must also be binary search trees.
- */
+// Given a binary search tree (BST) with duplicates,
+// find all the mode(s) (the most frequently occurred element) in the given BST.
+//
+// Assume a BST is defined as follows:
+//
+// - The left subtree of a node contains only nodes with keys less than or equal to the node's key.
+// - The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
+// - Both the left and right subtrees must also be binary search trees.
+///
 public class FindModeInBST {
 
     private TreeNode prev = null;
@@ -22,8 +21,9 @@ public class FindModeInBST {
     private int maxCount = 1;
 
     private void inorder(TreeNode node) {
-        if (node == null)
+        if (node == null) {
             return;
+        }
 
         inorder(node.left);
 
@@ -48,12 +48,11 @@ public class FindModeInBST {
     }
 
 
-    /**
-     * Use stack, O(n) space
-     */
+    // Use stack, O(n) space
     private void findIterative(TreeNode root) {
-        if (root == null)
+        if (root == null) {
             return;
+        }
 
         Stack<TreeNode> stack = new Stack<>();
         TreeNode current = root;
@@ -82,17 +81,14 @@ public class FindModeInBST {
 
                 prev = current;
                 current = current.right;
-            } else
+            } else {
                 break;
+            }
         }
-
-
     }
 
-    /**
-     * Use Morris tree traverse
-     * O(1) space
-     */
+    // Use Morris tree traverse
+    // O(1) space
     private void findMorrisTree(TreeNode root) {
         TreeNode current = root;
         TreeNode pre = null;
@@ -116,20 +112,19 @@ public class FindModeInBST {
                 } else {
                     pre.right = null;
 
-                    if (current.val == pre.val){
+                    if (current.val == pre.val) {
                         count++;
                     } else {
                         count = 1;
                     }
 
-                    if (count > maxCount){
+                    if (count > maxCount) {
                         maxCount = count;
                         this.modes.clear();
                         this.modes.add(current.val);
-                    } else if (count == maxCount){
+                    } else if (count == maxCount) {
                         this.modes.add(current.val);
                     }
-
 
                     // print out current value
                     current = current.right;

@@ -47,17 +47,20 @@ public class AsteroidCollision_735 {
         }
 
         // use stack
-        Stack<Integer> stack = new Stack<>();
+        LinkedList<Integer> stack = new LinkedList<>();
 
         for (int n : asteroids) {
             if (n > 0) {
+                // any positive number cannot case any collision
                 stack.push(n);
             } else {
+                // indicate if current asteroid is exploded, if not, need to add this value to stack
                 boolean exploded = false;
-                while (!stack.isEmpty() && stack.peek() > 0) {
-                    if (stack.peek() < 0 - n) {
+                while (!stack.isEmpty() && stack.getLast() > 0) {
+
+                    if (stack.getLast() < 0 - n) {
                         stack.pop();
-                    } else if (stack.peek() == 0 - n) {
+                    } else if (stack.getLast() == 0 - n) {
                         stack.pop();
                         exploded = true;
                         break;
@@ -66,18 +69,50 @@ public class AsteroidCollision_735 {
                         break;
                     }
                 }
+
                 if (!exploded) {
                     stack.push(n);
                 }
             }
         }
 
-        List<Integer> res = new ArrayList<>();
-        while (!stack.isEmpty()) {
-            res.add(stack.pop());
-        }
-
-        Collections.reverse(res);
-        return res.stream().mapToInt(x -> x).toArray();
+        return stack.stream().mapToInt(x -> x).toArray();
     }
+
+
+    // public int[] asteroidCollision(int[] asteroids) {
+    //     int n = asteroids.length;
+    //     if (n == 0) {
+    //         return new int[0];
+    //     }
+    //
+    //     Deque<Integer> stack = new ArrayDeque<>();
+    //
+    //     for (int a : asteroids) {
+    //         if (a > 0) {
+    //             // positive number cannot cause any collision, directly add to the stack
+    //             stack.addLast(a);
+    //             continue;
+    //         }
+    //
+    //         while (!stack.isEmpty() && stack.getLast() > 0 && stack.getLast() < -a) {
+    //
+    //             // stack peek element is positive and less than current asteroid size (absolute value)
+    //             // need to remove this peek element from the stack
+    //             stack.pollLast();
+    //         }
+    //
+    //         if (!stack.isEmpty() || stack.getLast() == -a) {
+    //             // if the peek element equals the current asteroid size,
+    //             // need to remove from stack
+    //             stack.pollLast();
+    //         } else if (stack.isEmpty() || stack.getLast() < 0) {
+    //
+    //             stack.addLast(a);
+    //         }
+    //     }
+    //
+    //     return stack.stream().mapToInt(x -> x).toArray();
+    // }
+
 }
