@@ -13,8 +13,6 @@ package leetcode;
 // However, your reversed string should not contain leading or trailing spaces.
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 // You need to reduce multiple spaces between two words to a single space in the reversed string.
