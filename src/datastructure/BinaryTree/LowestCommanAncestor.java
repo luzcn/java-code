@@ -26,6 +26,15 @@ public class LowestCommanAncestor {
     }
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
+        // some edge case
+        if (p == q) {
+            return p;
+        }
+
+        if (p == null || q == null) {
+            return null;
+        }
         return LCA(root, p, q);
     }
 }

@@ -40,15 +40,18 @@ public class FindMostFrequentInBST {
             res.add(node.val);
         }
 
+        prev = node;
+
         inOrder(node.right);
     }
 
     public int[] findMoseFrequent(TreeNode root) throws RuntimeException {
 
         if (root == null) {
-            throw new RuntimeException("not valid");
+            throw new IllegalArgumentException("not valid");
         }
 
+        inOrder(root);
         return res.stream().mapToInt(x -> x).toArray();
     }
 }

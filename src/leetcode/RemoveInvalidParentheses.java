@@ -1,6 +1,8 @@
 package leetcode;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -91,12 +93,18 @@ public class RemoveInvalidParentheses {
     // when we see minimum/shortest, usually BFS is easier than DFS
     // bfs needs to use a queue to save the candidate data.
     private void bfs(String s) {
-        Queue<String> queue = new LinkedList<>();
+        Deque<String> queue = new ArrayDeque<>();
         Set<String> visited = new HashSet<>();
-        queue.add(s);
+        queue.addLast(s);
 
         while (!queue.isEmpty()) {
-            String current = queue.remove();
+            String current = queue.removeFirst();
+
+            if (visited.contains(current)) {
+                continue;
+            }
+
+            visited.add(current);
 
             if (isValid(current)) {
                 // always save the longest string
@@ -113,10 +121,7 @@ public class RemoveInvalidParentheses {
                 if (c == '(' || c == ')') {
                     String candidate = current.substring(0, i) + current.substring(i + 1);
 
-                    if (!visited.contains(candidate)) {
-                        visited.add(candidate);
-                        queue.add(candidate);
-                    }
+                    queue.addLast(candidate);
                 }
             }
         }

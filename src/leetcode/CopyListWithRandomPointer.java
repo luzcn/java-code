@@ -18,9 +18,10 @@ public class CopyListWithRandomPointer {
 
         RandomListNode p = head;
         while (p != null) {
-            RandomListNode newNode = new RandomListNode(p.label);
-            map.putIfAbsent(p, newNode);
+            // RandomListNode newNode = new RandomListNode(p.label);
+            // map.putIfAbsent(p, newNode);
 
+            map.put(p, new RandomListNode(p.label));
             p = p.next;
         }
 

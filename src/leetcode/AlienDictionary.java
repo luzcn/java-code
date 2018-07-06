@@ -72,8 +72,8 @@ public class AlienDictionary {
         this.buildGraph(words);
 
         // topological sort
-        for (Map.Entry<Character, HashSet<Character>> entry : graph.entrySet()) {
-            if (!this.topoSort(entry.getKey(), new HashSet<>())) {
+        for (char c : graph.keySet()) {
+            if (!this.topoSort(c, new HashSet<>())) {
                 return "";
             }
         }

@@ -35,7 +35,8 @@ public class SlidingWindowMaximum {
             return nums;
         }
 
-        List<Integer> res = new ArrayList<>();
+        // List<Integer> res = new ArrayList<>();
+        int[] res = new int[n - k + 1];
 
         // double queue
         // the element is index from the input array
@@ -49,24 +50,25 @@ public class SlidingWindowMaximum {
             queue.addLast(i);
         }
         // add the max number of first window into result
-        res.add(nums[queue.getFirst()]);
+        res[0] = nums[queue.getFirst()];
 
         for (int i = k; i < n; i++) {
             while (!queue.isEmpty() && nums[queue.getLast()] <= nums[i]) {
                 queue.removeLast();
             }
+            queue.addLast(i);
 
             // the max number may be out the sliding window size
-            while (!queue.isEmpty() && queue.getFirst() <= i - k) {
+            // don't need while here, because each time move 1 step ahead
+            // only the first element may be expired.
+            if (queue.getFirst() <= i - k) {
                 queue.removeFirst();
             }
 
-            queue.addLast(i);
-
             // add the max number into result
-            res.add(nums[queue.getFirst()]);
+            res[i - k + 1] = nums[queue.getFirst()];
         }
 
-        return res.stream().mapToInt(x -> x).toArray();
+        return res;
     }
 }

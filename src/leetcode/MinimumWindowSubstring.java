@@ -30,20 +30,14 @@ public class MinimumWindowSubstring {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        int count = t.length();
+        int count = 0;
         int begin = 0;
         int end = 0;
         int minLength = Integer.MAX_VALUE;
         int index = 0;
 
         while (end < s.length()) {
-            char c = s.charAt(end++);
-
-            if (map.containsKey(c) && map.get(c) > 0) {
-                // if the character c is from string t and still available to use
-                // reduce the count
-                count--;
-            }
+            char c = s.charAt(end);
 
             // decrease the frequency of c
             // no matter it's from string t or not
@@ -51,21 +45,29 @@ public class MinimumWindowSubstring {
             // others will be negative
             map.put(c, map.getOrDefault(c, 0) - 1);
 
+            if (map.get(c) >= 0) {
+                // if the character c is from string t and still available to use
+                // reduce the count
+                count++;
+            }
 
-            while(count == 0) {
+            end++;
+
+            while (count == t.length()) {
+
                 if (end - begin < minLength) {
                     minLength = end - begin;
                     index = begin;
                 }
 
                 // update the map, try to move "begin" as far as possible
-                char first = s.charAt(begin++);
-
-                if (map.get(first) == 0) {
-                    count++;
-                }
-
+                char first = s.charAt(begin);
                 map.put(first, map.get(first) + 1);
+
+                if (map.get(first) > 0) {
+                    count--;
+                }
+                begin++;
             }
         }
 

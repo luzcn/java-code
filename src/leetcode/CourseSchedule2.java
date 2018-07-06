@@ -41,9 +41,12 @@ import java.util.Set;
 public class CourseSchedule2 {
 
     private List<Integer> schedule = new ArrayList<>();
+    private Map<Integer, List<Integer>> graph = new HashMap<>();
+    private boolean[] visited;
+    private boolean[] ancestors;
 
-    private boolean dfs(Map<Integer, List<Integer>> graph, int node, Set<Integer> ancestors, boolean[] visited) {
-        if (ancestors.contains(node)) {
+    private boolean dfs(int node) {
+        if (ancestors[node]) {
             return false;
         }
 
@@ -52,15 +55,15 @@ public class CourseSchedule2 {
         }
 
         visited[node] = true;
-        ancestors.add(node);
-        for (int n : graph.getOrDefault(node, new ArrayList<>())) {
-            if (!dfs(graph, n, ancestors, visited)) {
+        ancestors[node] = true;
+        for (int next : graph.getOrDefault(node, new ArrayList<>())) {
+            if (!dfs(next)) {
                 return false;
             }
         }
-        ancestors.remove(node);
-
+        ancestors[node] = false;
         schedule.add(node);
+
         return true;
     }
 
@@ -111,23 +114,20 @@ public class CourseSchedule2 {
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-
         for (int[] edge : prerequisites) {
             // the question says [1,0] means 1 depends on 0, need to finish 0 first
             // so the directed graph edge is 1->0 and the bottom up
             graph.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(edge[1]);
         }
-
-        boolean[] visited = new boolean[numCourses];
-        Set<Integer> ancestors = new HashSet<>();
+        visited = new boolean[numCourses];
+        ancestors = new boolean[numCourses];
 
         for (int i = 0; i < numCourses; i++) {
             if (visited[i]) {
                 continue;
             }
 
-            if (!dfs(graph, i, ancestors, visited)) {
+            if (!dfs(i)) {
                 return new int[0];
             }
         }

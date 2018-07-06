@@ -25,22 +25,22 @@ public class MissingNumber {
         for (int i = 0; i < nums.length; i++) {
             int value = nums[i];
 
-            while (value >= 0 && value < n && nums[value] != value) {
+            while (value > 0 && value <= n && nums[value - 1] != value) {
                 // if the value is in the range [0...n-1], swap the value and nums[value]
                 // otherwise don't move it.
-                int temp = nums[value];
-                nums[value] = value;
+                int temp = nums[value - 1];
+                nums[value - 1] = value;
                 value = temp;
             }
         }
 
         int i = 0;
         for (; i < n; i++) {
-            if (nums[i] != i) {
+            if (nums[i] != i + 1) {
                 break;
             }
         }
 
-        return i;
+        return i + 1;
     }
 }

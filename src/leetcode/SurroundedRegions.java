@@ -25,8 +25,13 @@ public class SurroundedRegions {
     private static final int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
     private void dfs(char[][] board, int x, int y) {
-        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] == '2' || board[x][y] == 'X')
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
             return;
+        }
+
+        if (board[x][y] != 'O') {
+            return;
+        }
 
         board[x][y] = '2';
 
@@ -36,19 +41,21 @@ public class SurroundedRegions {
     }
 
     public void solve(char[][] board) {
-        if (board.length == 0)
+        if (board.length == 0) {
             return;
+        }
 
         int m = board.length;
         int n = board[0].length;
-
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 // first and last columns
                 // first and last rows
                 if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
-                    dfs(board, i, j);
+                    if (board[i][j] == 'O') {
+                        dfs(board, i, j);
+                    }
                 }
             }
         }
