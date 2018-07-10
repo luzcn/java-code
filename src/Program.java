@@ -1,17 +1,27 @@
-import leetcode.NextGreaterElement_503_556;
+import java.util.*;
+
+import careercup.Lyft.DesignExcel;
 
 public class Program {
 
     public static void main(String[] args) {
+        // A1=B1+C1
+        // B1 = C2 - D1
+        // C2 = 1
+        // D1 = -1
+        // C1 = 12
 
-        NextGreaterElement_503_556 ns = new NextGreaterElement_503_556();
+        List<String> expressions = new ArrayList<>();
 
-        var s = ns.nextGreaterElements(new int[]{1, 2, 3, 2, 1});
+        expressions.add("A1=B1+C1");
+        expressions.add("B1=C2-D1");
+        expressions.add("C2=1");
+        expressions.add("C1=12");
 
-        for (int n : s) {
-            System.out.print(n + " ");
+        DesignExcel ms = new DesignExcel(expressions);
+
+        for (String exp : expressions) {
+            ms.compute(exp);
         }
     }
-
-
 }
