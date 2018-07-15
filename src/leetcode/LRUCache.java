@@ -99,3 +99,76 @@ public class LRUCache {
 //        this.capacity = cap;
 //    }
 //}
+
+// class LRUCache {
+//
+//     private DNode head;
+//     private DNode tail;
+//     private int capacity;
+//     private HashMap<Integer, DNode> map = new HashMap<>();
+//
+//     public LRUCache(int capacity) {
+//         head = null;
+//         tail = null;
+//         this.capacity = capacity;
+//     }
+//
+//     public int get(int key) {
+//         if (map.get(key) == null) {
+//             return -1;
+//         }
+//
+//         DNode node = map.get(key);
+//         int value = node.value;
+//
+//         remove(node);
+//         add(node);
+//
+//         return value;
+//     }
+//
+//     public void put(int key, int value) {
+//         if (this.capacity  <= 0) {
+//             return;
+//         }
+//
+//         if (map.size() == 1) {
+//             tail = head;
+//         }
+//
+//
+//     }
+//
+//
+//     private class DNode {
+//         DNode prev;
+//         DNode next;
+//
+//         int key;
+//         int value;
+//
+//         DNode(int k, int v) {
+//             key = k;
+//             value = v;
+//         }
+//
+//     }
+//
+//     private void add(DNode node) {
+//         node.next = head;
+//         head = node;
+//     }
+//
+//     private void remove(DNode node) {
+//         if (node.prev != null ) {
+//             node.prev.next = next;
+//         }
+//
+//         if (node.next != null) {
+//             node.next.prev = node.prev;
+//         }
+//
+//         node.next = null;
+//         node.prev = null;
+//     }
+// }

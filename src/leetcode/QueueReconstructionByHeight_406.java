@@ -20,7 +20,7 @@ import java.util.*;
 //
 // Output:
 // [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
-public class QueueReconstructionByHeight {
+public class QueueReconstructionByHeight_406 {
 
     public int[][] reconstructQueue(int[][] people) {
         int m = people.length;

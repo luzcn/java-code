@@ -3,32 +3,44 @@ package leetcode;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Given a nested list of integers, implement an iterator to flatten it.
- *
- * Each element is either an integer, or a list -- whose elements may also be integers or other lists.
- *
- * Example 1:
- * Given the list [[1,1],2,[1,1]],
- *
- * By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
- *
- * Example 2:
- * Given the list [1,[4,[6]]],
- *
- * By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
- */
-
+// Given a nested list of integers, implement an iterator to flatten it.
+//
+// Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+//
+// Example 1:
+// Given the list [[1,1],2,[1,1]],
+//
+// By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
+//
+// Example 2:
+// Given the list [1,[4,[6]]],
+//
+// By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
 
 public class NestedIterator implements Iterator<Integer> {
 
-    NestedInteger[] ni;
-    NestedIterator curIterator = null;
-    int index = -1;
+    // use two variable: int index and "NestedIterator currentIterator"
+    // 1. save the given List<NestedInteger> into a member field "ni".
+    // 2. if ni[index] is an integer, keep the currentIterator as null
+    // 3. when call the next() function, need to move currentIterator to next NestedInteger which is non-empty list
+    // so the hasNext condition is index < ni.length && (currentIterator != null && currentIterator.hasNext());
+
+    private NestedInteger[] ni;
+    private NestedIterator currentIterator;
+    private int index;
 
     public NestedIterator(List<NestedInteger> nestedList) {
-        ni = (NestedInteger[]) nestedList.toArray(new NestedInteger[nestedList.size()]);
+        // ni = (NestedInteger[]) nestedList.toArray(new NestedInteger[nestedList.size()]);
+        int n = nestedList.size();
+
+        ni = new NestedInteger[n];
+        for (int i = 0; i < n; i++) {
+            ni[i] = nestedList.get(i);
+        }
+
         index = 0;
+        currentIterator = null;
+
         moveToNext();
     }
 
@@ -37,11 +49,11 @@ public class NestedIterator implements Iterator<Integer> {
         while (index < ni.length && !ni[index].isInteger()) {
 
             // make the current iterator point to the current  reading list
-            // if the current reading list is a sigle integer, keep the current iterator as null
+            // if the current reading list is a single integer, keep the current iterator as null
             NestedIterator next = new NestedIterator(ni[index].getList());
 
             if (next.hasNext()) {
-                curIterator = next;
+                currentIterator = next;
                 break;
             }
             index++;
@@ -51,10 +63,10 @@ public class NestedIterator implements Iterator<Integer> {
     @Override
     public Integer next() {
         Integer value = null;
-        if (curIterator != null) {
-            value = curIterator.next();
+        if (currentIterator != null) {
+            value = currentIterator.next();
 
-            if (curIterator.hasNext()) {
+            if (currentIterator.hasNext()) {
                 // the current list is not finished reading yet,
                 // no need to update current iterator
                 return value;
@@ -64,7 +76,7 @@ public class NestedIterator implements Iterator<Integer> {
             value = ni[index].getInteger();
         }
 
-        curIterator = null;
+        currentIterator = null;
         index++;
         moveToNext();
 
@@ -73,7 +85,8 @@ public class NestedIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        return (this.index < this.ni.length || (curIterator != null && curIterator.hasNext()));
+
+        return this.index < this.ni.length || (currentIterator != null && currentIterator.hasNext());
     }
 
     private interface NestedInteger {

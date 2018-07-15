@@ -220,29 +220,29 @@ public class RangeSumQuery {
         }
 
 
-        private SegmentTreeNode buildSegmentTree(int[][] matrix, int row1, int col1, int row2, int col2) {
-            if (row1 > row2 || col1 > col2) {
+        private SegmentTreeNode buildSegmentTree(int[][] matrix, int r1, int c1, int r2, int c2) {
+            if (r1 > r2 || c1 > c2) {
                 return null;
             }
 
-            if (row1 == row2 && col1 == col2) {
-                return new SegmentTreeNode(row1, col1, row2, col2, matrix[row1][col1]);
+            if (r1 == r2 && c1 == c2) {
+                return new SegmentTreeNode(r1, c1, r2, c2, matrix[r1][c1]);
             }
 
-            int midRow = row1 + (row2 - row1) / 2;
-            int midCol = col1 + (col2 - col1) / 2;
+            int mr = r1 + (r2 - r1) / 2;
+            int mc = c1 + (c2 - c1) / 2;
 
-            SegmentTreeNode node1 = buildSegmentTree(matrix, row1, col1, midRow, midCol);
-            SegmentTreeNode node2 = buildSegmentTree(matrix, row1, midCol + 1, midRow, col2);
-            SegmentTreeNode node3 = buildSegmentTree(matrix, midRow + 1, col1, row2, midCol);
-            SegmentTreeNode node4 = buildSegmentTree(matrix, midRow + 1, midCol + 1, row2, col2);
+            SegmentTreeNode node1 = buildSegmentTree(matrix, r1, c1, mr, mc);
+            SegmentTreeNode node2 = buildSegmentTree(matrix, r1, mc + 1, mr, c2);
+            SegmentTreeNode node3 = buildSegmentTree(matrix, mr + 1, c1, r2, mc);
+            SegmentTreeNode node4 = buildSegmentTree(matrix, mr + 1, mc + 1, r2, c2);
 
             int value1 = node1 == null ? 0 : node1.value;
             int value2 = node2 == null ? 0 : node2.value;
             int value3 = node3 == null ? 0 : node3.value;
             int value4 = node4 == null ? 0 : node4.value;
 
-            SegmentTreeNode root = new SegmentTreeNode(row1, col1, row2, col2, value1 + value2 + value3 + value4);
+            SegmentTreeNode root = new SegmentTreeNode(r1, c1, r2, c2, value1 + value2 + value3 + value4);
             root.children[0] = node1;
             root.children[1] = node2;
             root.children[2] = node3;
@@ -251,19 +251,20 @@ public class RangeSumQuery {
             return root;
         }
 
-        private int query(int row1, int col1, int row2, int col2, SegmentTreeNode node) {
-            if (row1 > node.endRow || row2 < node.startRow || col1 > node.endCol || col2 < node.startCol) {
+        private int query(int r1, int c1, int r2, int c2, SegmentTreeNode node) {
+            if (r1 > node.endRow || r2 < node.startRow || c1 > node.endCol || c2 < node.startCol) {
                 return 0;
             }
 
-            if (node.startRow >= row1 && node.endRow <= row2 && node.startCol >= col1 && node.endCol <= col2) {
+            if (node.startRow >= r1 && node.endRow <= r2 && node.startCol >= c1 && node.endCol <= c2) {
+                // the node is inside the query range
                 return node.value;
             }
 
-            int sub1 = query(row1, col1, row2, col2, node.children[0]);
-            int sub2 = query(row1, col1, row2, col2, node.children[1]);
-            int sub3 = query(row1, col1, row2, col2, node.children[2]);
-            int sub4 = query(row1, col1, row2, col2, node.children[3]);
+            int sub1 = query(r1, c1, r2, c2, node.children[0]);
+            int sub2 = query(r1, c1, r2, c2, node.children[1]);
+            int sub3 = query(r1, c1, r2, c2, node.children[2]);
+            int sub4 = query(r1, c1, r2, c2, node.children[3]);
 
             return sub1 + sub2 + sub3 + sub4;
         }

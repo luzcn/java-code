@@ -74,4 +74,29 @@ public class MedianOfTwoSortedArrays {
         }
         return 0.0;
     }
+
+
+    // public double findMedianSortedArrays(int[] A, int[] B) {
+    //     int m = A.length;
+    //     int n = B.length;
+    //
+    //     int[] num1 = A;
+    //     int[] num2 = B;
+    //
+    //     if (m > n) {
+    //         m = B.length;
+    //         n = A.length;
+    //         num1 = B;
+    //         num2 = A;
+    //     }
+    //
+    //
+    //     int left = 0;
+    //     int right = m;
+    //
+    //     while (left <= right) {
+    //
+    //     }
+    //
+    // }
 }

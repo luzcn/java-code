@@ -1,15 +1,16 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Given an unsorted array nums, reorder it in-place such that nums[0] <= nums[1] >= nums[2] <= nums[3]....
- *
- * For example, given nums = [3, 5, 2, 1, 6, 4], one possible answer is [1, 6, 2, 5, 3, 4].
- */
+/////
+// Given an unsorted array nums, reorder it in-place such that nums[0] <= nums[1] >= nums[2] <= nums[3]....
+//
+// For example, given nums = [3, 5, 2, 1, 6, 4], one possible answer is [1, 6, 2, 5, 3, 4].
+///
 public class WiggleSort {
 
     // O(n) solution
@@ -56,38 +57,43 @@ public class WiggleSort {
     }
 
 
-    /**
-     * Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
-     *
-     * Example:
-     * (1) Given nums = [1, 5, 1, 1, 6, 4], one possible answer is [1, 4, 1, 5, 1, 6].
-     * (2) Given nums = [1, 3, 2, 2, 3, 1], one possible answer is [2, 3, 1, 3, 1, 2].
-     *
-     * Note:
-     * You may assume all input has valid answer.
-     *
-     * Follow Up:
-     * Can you do it in O(n) time and/or in-place with O(1) extra space?
-     */
+    /////
+    // Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
+    //
+    // Example:
+    // (1) Given nums = [1, 5, 1, 1, 6, 4], one possible answer is [1, 4, 1, 5, 1, 6].
+    // (2) Given nums = [1, 3, 2, 2, 3, 1], one possible answer is [2, 3, 1, 3, 1, 2].
+    //
+    // Note:
+    // You may assume all input has valid answer.
+    //
+    // Follow Up:
+    // Can you do it in O(n) time and/or in-place with O(1) extra space?
+    ///
     public void wiggleSort2(int[] nums) {
 
         // sort the input array in increasing order
         // let s pointing to the middle of the sorted array, and k pointing the last element
         // iterate through the input array, if we have
-        List<Integer> sorted = Arrays.stream(nums).boxed().sorted(Comparator.comparingInt(x -> x))
-                .collect(Collectors.toList());
+        // List<Integer> sorted = Arrays.stream(nums).boxed().sorted(Comparator.comparingInt(x -> x))
+        //         .collect(Collectors.toList());
 
-        int s = nums.length % 2 == 0 ? nums.length / 2 - 1 : nums.length / 2;
-        int k = nums.length - 1;
+        int n = nums.length;
+        int[] sorted = nums.clone();
+
+        Arrays.sort(sorted);
+
+        int s = n % 2 == 0 ? n / 2 - 1 : n / 2;
+        int k = n - 1;
 
         for (int i = 0; i < nums.length; i++) {
             if (i % 2 == 0) {
                 // even number position
                 // we use the first half smaller numbers
-                nums[i] = sorted.get(s--);
+                nums[i] = sorted[s--];
             } else {
                 // use the second half larger numbers.
-                nums[i] = sorted.get(k--);
+                nums[i] = sorted[k--];
             }
         }
     }

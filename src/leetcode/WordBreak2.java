@@ -1,7 +1,8 @@
 package leetcode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +33,11 @@ public class WordBreak2 {
         }
 
         // here i <= s.length(), don't forget
-        for (int i = 1; i <= s.length(); i++) {
-            String prefix = s.substring(0, i);
+        for (int i = 0; i < s.length(); i++) {
+            String prefix = s.substring(0, i + 1);
 
             if (dict.contains(prefix)) {
-                List<String> subList = dfs(s.substring(i), dict, map);
+                List<String> subList = dfs(s.substring(i + 1), dict, map);
 
                 for (String sub : subList) {
                     res.add(prefix + (sub.isEmpty() ? "" : " ") + sub);
@@ -48,8 +49,43 @@ public class WordBreak2 {
         return res;
     }
 
-    public List<String> wordBreak(String s, List<String> wordDict) {
 
-        return dfs(s, wordDict, new HashMap<>());
+    private List<String> res = new ArrayList<>();
+    private HashSet<String> dict;
+
+    // dfs and use dp to prune unnecessary computation
+    // it must use "start" index, because access the dp array is using the index
+    private void dfsAndDP(String s, int start, List<String> current, boolean[] canBreak) {
+        if (start >= s.length()) {
+            res.add(String.join(" ", current));
+            return;
+        }
+
+        for (int i = start; i < s.length(); i++) {
+            String prefix = s.substring(start, i + 1);
+
+            if (dict.contains(prefix) && canBreak[i + 1]) {
+                current.add(prefix);
+                int sizeBeforeChange = res.size();
+
+                dfsAndDP(s, i + 1, current, canBreak);
+                current.remove(current.size() - 1);
+
+                if (res.size() == sizeBeforeChange) {
+                    // no solution found
+                    canBreak[i + 1] = false;
+                }
+            }
+        }
+    }
+
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        dict = new HashSet<>(wordDict);
+        boolean[] canBreak = new boolean[s.length() + 1];
+        Arrays.fill(canBreak, true);
+
+        dfsAndDP(s, 0, new ArrayList<>(), canBreak);
+
+        return res;
     }
 }

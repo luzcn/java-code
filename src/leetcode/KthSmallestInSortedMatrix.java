@@ -88,9 +88,21 @@ public class KthSmallestInSortedMatrix {
         }
 
         // the heap stores an array with 3 elements: value, x and y index
-        PriorityQueue<int[]> maxHeap = new PriorityQueue<>(Comparator.comparingInt(x -> x[0]));
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((x, y) -> y - x);
 
+        int m = matrix.length;
+        int n = matrix[0].length;
 
-        return 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                maxHeap.add(matrix[i][j]);
+
+                if (maxHeap.size() > k) {
+                    maxHeap.poll();
+                }
+            }
+        }
+
+        return maxHeap.peek();
     }
 }

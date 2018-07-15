@@ -2,17 +2,17 @@ package leetcode;
 
 import java.util.Stack;
 
-/**
- * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1,
- * find the area of largest rectangle in the histogram.
- */
-public class LargestRectangleInHistogram {
+// Given n non-negative integers representing the histogram's bar height where the width of each bar is 1,
+// find the area of largest rectangle in the histogram.
+///
+public class LargestRectangleInHistogram_84 {
 
     // DP idea
     // - For each bar, extends in left and right two direction
     // - increase the count if found larger number, else stops.
     // - left[i] = the longest distance can extend in left direction
     // - right[i] = the longest distance thant can extend in right direction
+    //
     // so, the rectangle area of each bar is height[i] * (left[i] + right[i] + 1)
     // Now, the key problem is how to build the left and right array
     // - if use brute force, it takes O(n^2)
@@ -64,7 +64,7 @@ public class LargestRectangleInHistogram {
         }
 
         for (int i = 0; i < n; i++) {
-            maxArea = Math.max(maxArea, heights[i] * (Math.abs(left[i] - right[i]) + 1));
+            maxArea = Math.max(maxArea, heights[i] * (left[i] + right[i] + 1));
         }
 
         return maxArea;

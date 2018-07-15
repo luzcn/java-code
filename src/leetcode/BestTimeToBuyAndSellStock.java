@@ -157,6 +157,29 @@ public class BestTimeToBuyAndSellStock {
         }
 
         return sell;
+
+
+        // int n = prices.length;
+        // if (n == 0) {
+        //     return 0;
+        // }
+        //
+        // int[] hold = new int[n + 1];
+        // int[] sell = new int[n + 1];
+        // hold[0] = -prices[0];
+        //
+        // for (int i = 1; i <= n; i++) {
+        //
+        //     if ( i >= 2) {
+        //         hold[i] = Math.max(hold[i - 1], sell[i-2] - prices[i-1]);
+        //     } else {
+        //         hold[i] = hold[i-1];
+        //     }
+        //
+        //     sell[i] = Math.max(sell[i-1], hold[i-1] + prices[i-1]);
+        // }
+        //
+        // return sell[n];
     }
 
     // 714 Best Time to Buy and Sell Stock with Transaction Fee
