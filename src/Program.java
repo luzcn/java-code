@@ -1,19 +1,12 @@
 import java.util.*;
 
-import leetcode.DesignLinkedList_707;
-
+import leetcode.OpenTheLock_752;
 
 public class Program {
 
     public static void main(String[] args) {
-        int[][] p = {{1, 2, 3}, {1, 2}};
+        OpenTheLock_752 os = new OpenTheLock_752();
 
-        for (int[] s : p) {
-            for (int a : s) {
-                System.out.print(a + " ");
-            }
-
-            System.out.println();
-        }
+        System.out.println(os.openLock(new String[]{"8887","8889","8878","8898","8788","8988","7888","9888"}, "8888"));
     }
 }

@@ -36,6 +36,41 @@ public class BinaryTreeLevelOrderTraversal_102 {
         dfs(node.right, level + 1);
     }
 
+
+    private void bfs(TreeNode root) {
+
+        if (root == null) {
+            return;
+        }
+
+        List<TreeNode> level = new ArrayList<>();
+        List<TreeNode> temp = new ArrayList<>();
+
+        level.add(root);
+
+        while (!level.isEmpty()) {
+            List<Integer> nodeValues = new ArrayList<>();
+
+            for (TreeNode node : level) {
+
+                nodeValues.add(node.val);
+
+                if (node.left != null) {
+                    temp.add(node.left);
+                }
+
+                if (node.right != null) {
+                    temp.add(node.right);
+                }
+            }
+
+            res.add(nodeValues);
+            level = temp;
+            temp = new ArrayList<>();
+        }
+
+    }
+
     public List<List<Integer>> levelOrder(TreeNode root) {
 
         dfs(root, 0);
