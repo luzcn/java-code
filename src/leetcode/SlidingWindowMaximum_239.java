@@ -21,7 +21,7 @@ import java.util.*;
 //  1  3  -1 [-3  5  3] 6  7       5
 //  1  3  -1  -3 [5  3  6] 7       6
 //  1  3  -1  -3  5 [3  6  7]      7
-public class SlidingWindowMaximum {
+public class SlidingWindowMaximum_239 {
 
     // the basic idea is using deque, modify first and last both O(1), data structure
     // for each number, keep removing last element from the deque, if it is  greater than last element,
@@ -42,17 +42,7 @@ public class SlidingWindowMaximum {
         // the element is index from the input array
         Deque<Integer> queue = new ArrayDeque<>();
 
-        // processing the first k elements
-        for (int i = 0; i < k; i++) {
-            while (!queue.isEmpty() && nums[queue.getLast()] <= nums[i]) {
-                queue.removeLast();
-            }
-            queue.addLast(i);
-        }
-        // add the max number of first window into result
-        res[0] = nums[queue.getFirst()];
-
-        for (int i = k; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             while (!queue.isEmpty() && nums[queue.getLast()] <= nums[i]) {
                 queue.removeLast();
             }
@@ -61,12 +51,16 @@ public class SlidingWindowMaximum {
             // the max number may be out the sliding window size
             // don't need while here, because each time move 1 step ahead
             // only the first element may be expired.
-            if (queue.getFirst() <= i - k) {
-                queue.removeFirst();
+            if (i >= k) {
+                if (queue.getFirst() <= i - k) {
+                    queue.removeFirst();
+                }
             }
 
-            // add the max number into result
-            res[i - k + 1] = nums[queue.getFirst()];
+            if (i >= k - 1) {
+                // add the max number into result
+                res[i - k + 1] = nums[queue.getFirst()];
+            }
         }
 
         return res;

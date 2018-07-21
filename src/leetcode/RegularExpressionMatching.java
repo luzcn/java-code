@@ -41,10 +41,12 @@ public class RegularExpressionMatching {
         for (int i = m; i >= 0; i--) {
             for (int j = n - 1; j >= 0; j--) {
 
-                boolean first_match = (i < text.length() && (pattern.charAt(j) == text.charAt(i)
-                        || pattern.charAt(j) == '.'));
+                boolean first_match = i < m && (pattern.charAt(j) == text.charAt(i) || pattern.charAt(j) == '.');
 
-                if (j + 1 < pattern.length() && pattern.charAt(j + 1) == '*') {
+                // we must to put firstMath first,
+                // otherwise, it may lead to index out of boundary error
+                // in first match we already check i < m
+                if (j + 1 < n && pattern.charAt(j + 1) == '*') {
                     dp[i][j] = dp[i][j + 2] || first_match && dp[i + 1][j];
                 } else {
                     dp[i][j] = first_match && dp[i + 1][j + 1];

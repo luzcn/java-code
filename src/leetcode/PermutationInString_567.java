@@ -16,7 +16,7 @@ import java.util.*;
 // Note:
 // - The input strings only contain lower case letters.
 // - The length of both given strings is in range [1, 10,000].
-public class PermutationInString {
+public class PermutationInString_567 {
 
     // if two strings have equivalent char frequency, then there are permutations
     private boolean isAnagram(String s, int[] hasChars) {

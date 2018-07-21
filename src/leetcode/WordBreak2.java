@@ -64,7 +64,7 @@ public class WordBreak2 {
         for (int i = start; i < s.length(); i++) {
             String prefix = s.substring(start, i + 1);
 
-            if (dict.contains(prefix) && canBreak[i + 1]) {
+            if (dict.contains(prefix) && canBreak[i]) {
                 current.add(prefix);
                 int sizeBeforeChange = res.size();
 
@@ -73,7 +73,7 @@ public class WordBreak2 {
 
                 if (res.size() == sizeBeforeChange) {
                     // no solution found
-                    canBreak[i + 1] = false;
+                    canBreak[i] = false;
                 }
             }
         }
@@ -81,7 +81,7 @@ public class WordBreak2 {
 
     public List<String> wordBreak(String s, List<String> wordDict) {
         dict = new HashSet<>(wordDict);
-        boolean[] canBreak = new boolean[s.length() + 1];
+        boolean[] canBreak = new boolean[s.length()];
         Arrays.fill(canBreak, true);
 
         dfsAndDP(s, 0, new ArrayList<>(), canBreak);

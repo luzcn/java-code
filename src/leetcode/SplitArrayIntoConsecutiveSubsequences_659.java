@@ -24,7 +24,7 @@ import java.util.*;
 // Example 3:
 // Input: [1,2,3,4,4,5]
 // Output: False
-public class SplitArrayIntoConsecutiveSubsequences {
+public class SplitArrayIntoConsecutiveSubsequences_659 {
 
     // for each number n, there are 3 cases:
     // 1. the heap top element peek.last == n, then we create a new Sequence element [n, 1]

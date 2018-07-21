@@ -13,7 +13,7 @@ import java.util.LinkedList;
 // put(key, value) - Set or insert the value if the key is not already present.
 // When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
 
-// LRUCache cache = new LRUCache( 2) /* capacity */;
+// LRUCache_146 cache = new LRUCache_146( 2) /* capacity */;
 //
 // cache.put(1, 1);
 // cache.put(2, 2);
@@ -26,7 +26,8 @@ import java.util.LinkedList;
 // cache.get(3);       // returns 3
 // cache.get(4);       // returns 4
 
-public class LRUCache {
+public class LRUCache_146 {
+
     private int capacity = 0;
 
     // key, index of listData
@@ -34,14 +35,15 @@ public class LRUCache {
     private LinkedList<CacheData> listData = new LinkedList<>();
 
 
-    public LRUCache(int capacity) {
+    public LRUCache_146(int capacity) {
 
         this.capacity = capacity;
     }
 
     public int get(int key) {
-        if (!map.containsKey(key))
+        if (!map.containsKey(key)) {
             return -1;
+        }
 
         int value = map.get(key).value;
         moveToHead(key, value);
@@ -58,8 +60,7 @@ public class LRUCache {
 
             listData.addFirst(new CacheData(key, value));
             map.put(key, listData.peekFirst());
-        }
-        else {
+        } else {
             moveToHead(key, value);
         }
 
@@ -85,90 +86,106 @@ public class LRUCache {
     }
 }
 
-
-//class LRUCache<K, V> extends LinkedHashMap<K, V> {
-//    private  int capacity;
+// LRU with self-defined Double linked list
+// public class LRUCache_146 {
 //
-//    @Override
-//    protected boolean removeEldestEntry(Map.Entry<K,V> eldest){
-//        return size() > capacity;
-//    }
-//
-//    LRUCache(int cap) {
-//        super();
-//        this.capacity = cap;
-//    }
-//}
-
-// class LRUCache {
-//
-//     private DNode head;
-//     private DNode tail;
 //     private int capacity;
-//     private HashMap<Integer, DNode> map = new HashMap<>();
 //
-//     public LRUCache(int capacity) {
-//         head = null;
-//         tail = null;
+//     private DListNode head;
+//     private DListNode tail;
+//     private HashMap<Integer, DListNode> map = new HashMap<>();
+//
+//     public LRUCache_146(int capacity) {
 //         this.capacity = capacity;
+//
+//         head = new DListNode(0, 0);
+//         tail = new DListNode(0, 0);
+//         head.next = tail;
+//         tail.prev = head;
+//
 //     }
 //
 //     public int get(int key) {
+//
 //         if (map.get(key) == null) {
 //             return -1;
 //         }
 //
-//         DNode node = map.get(key);
-//         int value = node.value;
-//
-//         remove(node);
-//         add(node);
-//
+//         int value = map.get(key).value;
+//         moveToHead(key, value);
 //         return value;
 //     }
 //
 //     public void put(int key, int value) {
-//         if (this.capacity  <= 0) {
+//
+//         if (!map.containsKey(key)) {
+//
+//             if (map.size() == this.capacity) {
+//                 // always remove the node before tail
+//                 DListNode toRemove = tail.prev;
+//                 remove(toRemove);
+//             }
+//
+//             add(new DListNode(key, value));
+//             map.put(key, head.next);
+//         } else {
+//             moveToHead(key, value);
+//         }
+//     }
+//
+//     private void moveToHead(int key, int value) {
+//
+//         DListNode toRemove = map.get(key);
+//         remove(toRemove);
+//
+//         add(new DListNode(key, value));
+//         map.put(key, head.next);
+//     }
+//
+//     // always add this new node after head
+//     private void add(DListNode node) {
+//
+//         node.next = head.next;
+//         node.prev = head;
+//
+//         head.next.prev = node;
+//         head.next = node;
+//     }
+//
+//     // always remove the node
+//     private void remove(DListNode toRemove) {
+//         if (tail.prev == head) {
+//             // no data
 //             return;
 //         }
 //
-//         if (map.size() == 1) {
-//             tail = head;
-//         }
+//         DListNode pre = toRemove.prev;
+//         DListNode next = toRemove.next;
 //
+//         pre.next = next;
+//         next.prev = pre;
 //
+//         toRemove.next = null;
+//         toRemove.prev = null;
+//
+//         map.remove(toRemove.key);
 //     }
 //
+//     private class DListNode {
 //
-//     private class DNode {
-//         DNode prev;
-//         DNode next;
+//         DListNode prev;
+//         DListNode next;
 //
 //         int key;
 //         int value;
 //
-//         DNode(int k, int v) {
-//             key = k;
-//             value = v;
+//
+//         DListNode(int key, int value) {
+//             this.key = key;
+//             this.value = value;
+//
+//             prev = null;
+//             next = null;
 //         }
-//
-//     }
-//
-//     private void add(DNode node) {
-//         node.next = head;
-//         head = node;
-//     }
-//
-//     private void remove(DNode node) {
-//         if (node.prev != null ) {
-//             node.prev.next = next;
-//         }
-//
-//         if (node.next != null) {
-//             node.next.prev = node.prev;
-//         }
-//
-//         node.next = null;
-//         node.prev = null;
 //     }
 // }
