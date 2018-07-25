@@ -14,7 +14,7 @@ import java.util.Set;
 // Output: 4
 // Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
 ///
-public class LongestConsecutiveSequence {
+public class LongestConsecutiveSequence_128 {
 
     // - We cannot sort, since it requires O(n) complexity.
     // - A traditional space trade time solution, use a hashmap/hashset
@@ -39,18 +39,18 @@ public class LongestConsecutiveSequence {
             int currentLength = 0;
 
             while (set.contains(temp)) {
+                // remove this number to avoid duplicate check
+                // of any other consecutive number
+                set.remove(temp);
                 temp--;
                 currentLength++;
-
-                // do we need to remove this ?
-                set.remove(temp);
             }
 
             temp = n + 1;
             while (set.contains(temp)) {
+                set.remove(temp);
                 temp++;
                 currentLength++;
-                set.remove(temp);
             }
 
             longestLength = Math.max(longestLength, currentLength);
