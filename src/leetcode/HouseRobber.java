@@ -116,7 +116,7 @@ public class HouseRobber {
         int[] res = new int[2];
         // do not rob current node
         // can rob the children
-        res[0] = Math.max(leftSub[0], leftSub[1]) + Math.min(rightSub[0], rightSub[1]);
+        res[0] = Math.max(leftSub[0], leftSub[1]) + Math.max(rightSub[0], rightSub[1]);
 
         // rob the current node
         // can not rob the children
