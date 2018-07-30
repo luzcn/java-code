@@ -34,11 +34,10 @@ public class LevelOrder {
     }
 
 
-    /**
-     * Given a binary tree, return the bottom-up level order traversal of its nodes' values.
-     * (ie, from left to right, level by level from leaf to root).
-     */
-    //  For example:
+    // Given a binary tree, return the bottom-up level order traversal of its nodes' values.
+    // (ie, from left to right, level by level from leaf to root).
+    //
+    // For example:
     //  Given binary tree [3,9,20,null,null,15,7],
     //       3
     //      / \
@@ -73,13 +72,12 @@ public class LevelOrder {
     }
 
 
-    /**
-     * Binary Tree ZigZag level order
-     * Given a binary tree, return the zigzag level order traversal of its nodes' values.
-     * (ie, from left to right, then right to left for the next level and alternate between).
-     *
-     * https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
-     */
+    // Binary Tree ZigZag level order
+    // Given a binary tree, return the zigzag level order traversal of its nodes' values.
+    // (ie, from left to right, then right to left for the next level and alternate between).
+    //
+    // https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
+    //
     // For example:
     // Given binary tree [3,9,20,null,null,15,7],
     //     3
@@ -94,8 +92,9 @@ public class LevelOrder {
     //   [15,7]
     // ]
     private void dfsZigZag(TreeNode node, int level) {
-        if (node == null)
+        if (node == null) {
             return;
+        }
 
         if (level >= this.result.size()) {
             this.result.add(new ArrayList<>());

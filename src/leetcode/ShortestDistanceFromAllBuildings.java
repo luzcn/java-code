@@ -32,7 +32,50 @@ public class ShortestDistanceFromAllBuildings {
     private int n;
     private int[][] distance;
     private int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
     private static final int INF = Integer.MAX_VALUE;
+
+    private void bfs(int[][] grid, int i, int j) {
+
+        boolean[][] visited = new boolean[m][n];
+        Deque<int[]> queue = new ArrayDeque<>();
+
+        // we need to add the adjacent blocks into the queue first
+        // because current x,y is a building, not need to update
+        for (int[] dir : dirs) {
+            queue.offer(new int[]{i + dir[0], j + dir[1], 1});
+        }
+
+        while (!queue.isEmpty()) {
+            int x = queue.getFirst()[0];
+            int y = queue.getFirst()[1];
+            int dist = queue.getFirst()[2];
+            queue.removeFirst();
+
+            if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y] || grid[x][y] != 0) {
+                continue;
+            }
+
+            visited[x][y] = true;
+
+            if (distance[x][y] != INF) {
+                distance[x][y] += dist;
+            }
+
+            for (int[] dir : dirs) {
+                queue.offer(new int[]{x + dir[0], y + dir[1], dist + 1});
+            }
+        }
+
+        // if some land is not reachable, set to INF
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++) {
+                if (grid[x][y] == 0 && !visited[x][y]) {
+                    distance[x][y] = INF;
+                }
+            }
+        }
+    }
 
     public int shortestDistance(int[][] grid) {
         m = grid.length;
@@ -64,59 +107,5 @@ public class ShortestDistanceFromAllBuildings {
         }
 
         return minDistance == INF ? -1 : minDistance;
-    }
-
-    private void bfs(int[][] grid, int i, int j) {
-
-        boolean[][] visited = new boolean[m][n];
-        Queue<Cell> queue = new LinkedList<>();
-
-        for (int[] dir : dirs) {
-            queue.offer(new Cell(i + dir[0], j + dir[1], 1));
-        }
-
-        while (!queue.isEmpty()) {
-            Cell p = queue.poll();
-            int x = p.x;
-            int y = p.y;
-            int dist = p.distance;
-
-            if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y] || grid[x][y] != 0) {
-                continue;
-            }
-
-            visited[x][y] = true;
-
-            if (distance[x][y] != INF) {
-                distance[x][y] += dist;
-            }
-
-            for (int[] dir : dirs) {
-                queue.offer(new Cell(x + dir[0], y + dir[1], dist + 1));
-            }
-        }
-
-        // if some land is not reachable, set to INF
-        for (int x = 0; x < m; x++) {
-            for (int y = 0; y < n; y++) {
-                if (grid[x][y] == 0 && !visited[x][y]) {
-                    distance[x][y] = INF;
-                }
-            }
-        }
-
-    }
-
-    private class Cell {
-
-        int x;
-        int y;
-        int distance;
-
-        Cell(int i, int j, int dist) {
-            x = i;
-            y = j;
-            distance = dist;
-        }
     }
 }
