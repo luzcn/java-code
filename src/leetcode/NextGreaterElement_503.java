@@ -17,12 +17,18 @@ import java.util.*;
 // The number 2 can't find next greater number;
 // The second 1's next greater number needs to search circularly, which is also 2.
 // Note: The length of given array won't exceed 10000.
-public class NextGreaterElement_503_556 {
+public class NextGreaterElement_503 {
+
+    // similar to next greater 1
+    // use stack, find and save the first greater element on it's right side,
+    // - if cannot find save as null (do not use -1, since -1 can be a correct answer instead of not found)
+    // - for each element, which is null in the saved array, search from [0...i - 1],
+    //   if found larger elemenet, update the array
 
     public int[] nextGreaterElements(int[] nums) {
         int n = nums.length;
 
-        int[] right = new int[n];
+        Integer[] right = new Integer[n];
         Deque<Integer> stack = new ArrayDeque<>();
 
         for (int i = n - 1; i >= 0; i--) {
@@ -33,7 +39,7 @@ public class NextGreaterElement_503_556 {
             }
 
             if (stack.isEmpty()) {
-                right[i] = -1;
+                right[i] = null;
             } else {
                 right[i] = stack.getLast();
             }
@@ -41,14 +47,14 @@ public class NextGreaterElement_503_556 {
             stack.addLast(num);
         }
 
-
         int[] res = new int[n];
         Arrays.fill(res, -1);
         for (int i = 0; i < n; i++) {
-            if (right[i] == -1) {
+            if (right[i] == null) {
                 for (int j = 0; j < i; j++) {
                     if (nums[j] > nums[i]) {
                         res[i] = nums[j];
+                        break;
                     }
                 }
             } else {
