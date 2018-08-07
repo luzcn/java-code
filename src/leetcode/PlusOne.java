@@ -29,10 +29,8 @@ public class PlusOne {
             return new int[0];
         }
 
-        int n = digits.length;
         ArrayList<Integer> result = new ArrayList<>();
-
-        int i = n - 1;
+        int i = digits.length - 1;
 
         while (i >= 0 && digits[i] == 9) {
             result.add(0);

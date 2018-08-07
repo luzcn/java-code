@@ -40,14 +40,25 @@ public class BestTimeToBuyAndSellStock {
 
     public int maxProfit(int[] prices) {
         // buy and sell at most once, k ==1
-        int T_i10 = 0, T_i11 = Integer.MIN_VALUE;
+        // int T_i10 = 0, T_i11 = Integer.MIN_VALUE;
+        //
+        // for (int price : prices) {
+        //     T_i10 = Math.max(T_i10, T_i11 + price);
+        //     T_i11 = Math.max(T_i11, -price);   // here T_i00 is 0
+        // }
+        //
+        // return T_i10;
+
+        int sell = 0;
+        int hold = Integer.MIN_VALUE;
 
         for (int price : prices) {
-            T_i10 = Math.max(T_i10, T_i11 + price);
-            T_i11 = Math.max(T_i11, -price);   // here T_i00 is 0
+            sell = Math.max(sell, hold + price);
+            hold = Math.max(hold, -price);
+
         }
 
-        return T_i10;
+        return sell;
     }
 
     // 122. Best Time to Buy and Sell Stock II
@@ -57,16 +68,29 @@ public class BestTimeToBuyAndSellStock {
         // using the unified pattern, we can see the k is +infinity, so T[i][k-1][0] == T[i][k][0] and T[i][k-1][1] == T[i][k][1]
         // so all we need is save the previous T_ik0
 
-        int T_ik0 = 0, T_ik1 = Integer.MIN_VALUE;
+        // int T_ik0 = 0, T_ik1 = Integer.MIN_VALUE;
+        //
+        // for (int price : prices) {
+        //     int T_ik0_perv = T_ik0;
+        //
+        //     T_ik0 = Math.max(T_ik0, T_ik1 + price);
+        //     T_ik1 = Math.max(T_ik1, T_ik0_perv - price);
+        // }
+        //
+        // return T_ik0;
 
-        for (int price : prices) {
-            int T_ik0_perv = T_ik0;
+        int n = prices.length;
+        int[] sell = new int[n + 1];
+        int[] hold = new int[n + 1];
 
-            T_ik0 = Math.max(T_ik0, T_ik1 + price);
-            T_ik1 = Math.max(T_ik1, T_ik0_perv - price);
+        hold[0] = Integer.MIN_VALUE;
+
+        for (int i = 1; i <= n; i++) {
+            sell[i] = Math.max(sell[i - 1], hold[i - 1] + prices[i - 1]);
+            hold[i] = Math.max(hold[i - 1], sell[i - 1] - prices[i - 1]);
         }
 
-        return T_ik0;
+        return sell[n];
     }
 
     // 123. Best Time to Buy and Sell Stock III
@@ -157,7 +181,6 @@ public class BestTimeToBuyAndSellStock {
         }
 
         return sell;
-
 
         // int n = prices.length;
         // if (n == 0) {

@@ -1,15 +1,27 @@
+import java.util.ArrayList;
 import java.util.Arrays;
-
-import leetcode.NextGreaterElement_556;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 
 public class Program {
 
     public static void main(String[] args) {
 
-        NextGreaterElement_556 ns = new NextGreaterElement_556();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(1, 1);
+        List<Integer> res = new ArrayList<>();
 
-        System.out.println(ns.nextGreaterElement(12));
+        map.computeIfPresent(1, (k, v) -> {
+            if (v > 0) {
+                res.add(k);
+            }
+            return v - 1;
+        });
+
+        System.out.println(map.get(1));
+
     }
 
 }

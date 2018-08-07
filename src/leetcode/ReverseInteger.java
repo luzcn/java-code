@@ -16,18 +16,20 @@ package leetcode;
  * Output: 21
  */
 public class ReverseInteger {
+
     public int reverse(int x) {
-        int ret = 0;
+        int res = 0;
         while (x != 0) {
             // the INT_MAX is 2147483647, if abs(ret) > 214748364, ret*10 will be at least 2147483650 overflow.
             // we do not need to compare == 214748364, because number between 2147483641...2147483647 is still valid.
-            if (Math.abs(ret) > 214748364)
+            if (Math.abs(res) > Integer.MAX_VALUE / 10) {
                 return 0;
+            }
 
-            ret = ret * 10 + x % 10;
+            res = res * 10 + x % 10;
             x /= 10;
         }
 
-        return ret;
+        return res;
     }
 }
