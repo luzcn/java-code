@@ -57,53 +57,60 @@ public class BinaryTreeVerticalOrderTraversal {
         dfs(node.right, key + 1);
     }
 
+    private SortedMap<Integer, List<Integer>> map = new TreeMap<>();
 
-    private void bfs(TreeNode root) {
-        // bfs needs a queue
-        Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+    private List<List<Integer>> bfs(TreeNode root) {
 
-        queue.add(new Pair<>(root, 0));
-
-        while (!queue.isEmpty() && queue.peek() != null) {
-            TreeNode current = queue.peek().first;
-            int key = queue.peek().second;
-            queue.poll();
-
-            map.computeIfAbsent(key, k -> new ArrayList<>()).add(current.val);
-
-            if (current.left != null) {
-                queue.add(new Pair<>(current.left, key - 1));
-            }
-
-            if (current.right != null) {
-                queue.add(new Pair<>(current.right, key + 1));
-            }
+        if (root == null) {
+            return new ArrayList<>();
         }
+
+        // bfs needs a queue
+        List<Data> queue = new ArrayList<>();
+        List<Data> temp = new ArrayList<>();
+
+        queue.add(new Data(0, root));
+
+        while (!queue.isEmpty()) {
+
+            for (Data p : queue) {
+                TreeNode current = p.node;
+                int key = p.key;
+
+                map.computeIfAbsent(key, k -> new ArrayList<>()).add(current.val);
+
+                if (current.left != null) {
+                    temp.add(new Data(key - 1, current.left));
+                }
+
+                if (current.right != null) {
+                    temp.add(new Data(key + 1, current.right));
+                }
+            }
+
+            queue = temp;
+            temp = new ArrayList<>();
+        }
+
+        return new ArrayList<>(map.values());
     }
 
-    private SortedMap<Integer, List<Integer>> map = new TreeMap<>();
 
     public List<List<Integer>> verticalOrder(TreeNode root) {
 
-        List<List<Integer>> result = new ArrayList<>();
+        return bfs(root);
 
-        bfs(root);
-
-        for (Map.Entry<Integer, List<Integer>> values : map.entrySet()) {
-            result.add(values.getValue());
-        }
-
-        return result;
     }
 
-    private class Pair<T, U> {
+    private class Data {
 
-        T first;
-        U second;
+        int key;
+        TreeNode node;
 
-        Pair(T f, U s) {
-            first = f;
-            second = s;
+        Data(int key, TreeNode node) {
+            this.key = key;
+            this.node = node;
         }
     }
+
 }
