@@ -5,7 +5,7 @@ import java.util.*;
 public class SingletonDemo {
 
     public SingletonDemo() {
-        var instance = EagerInitializationSingleton.getInstance();
+        EagerInitializationSingleton instance = EagerInitializationSingleton.getInstance();
     }
 }
 

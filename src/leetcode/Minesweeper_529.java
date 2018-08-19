@@ -111,26 +111,26 @@ public class Minesweeper_529 {
     }
 
 
-    public static void main(String[] args) {
-        char[][] board = {
-                {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-                {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'M'},
-                {'E', 'E', 'M', 'E', 'E', 'E', 'E', 'E'},
-                {'M', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-                {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-                {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-                {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-                {'E', 'E', 'M', 'M', 'E', 'E', 'E', 'E'}};
-
-        Minesweeper_529 program = new Minesweeper_529();
-
-        var res = program.updateBoard(board, new int[]{0, 0});
-
-        for (char[] ans : res) {
-            for (char c : ans) {
-                System.out.print(c + " ");
-            }
-            System.out.println();
-        }
-    }
+    // public static void main(String[] args) {
+    //     char[][] board = {
+    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'M'},
+    //             {'E', 'E', 'M', 'E', 'E', 'E', 'E', 'E'},
+    //             {'M', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+    //             {'E', 'E', 'M', 'M', 'E', 'E', 'E', 'E'}};
+    //
+    //     Minesweeper_529 program = new Minesweeper_529();
+    //
+    //     char[][] res = program.updateBoard(board, new int[]{0, 0});
+    //
+    //     for (char[] ans : res) {
+    //         for (char c : ans) {
+    //             System.out.print(c + " ");
+    //         }
+    //         System.out.println();
+    //     }
+    // }
 }

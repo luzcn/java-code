@@ -22,7 +22,7 @@ package leetcode;
  */
 public class NumberOfIslands {
 
-    public void dfs(char[][] grid, boolean[][] visited, int x, int y) {
+    private void dfs(char[][] grid, int x, int y) {
 
         // not valid [x,y] index
         if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
@@ -33,27 +33,34 @@ public class NumberOfIslands {
             return;
         }
 
-        visited[x][y] = true;
-        dfs(grid, visited, x - 1, y);
-        dfs(grid, visited, x + 1, y);
-        dfs(grid, visited, x, y - 1);
-        dfs(grid, visited, x, y + 1);
+        if (grid[x][y] != '1') {
+            return;
+        }
 
-        // visited[x][y] = false;
+        visited[x][y] = true;
+
+        for (int[] dir : dirs) {
+            dfs(grid, x + dir[0], y + dir[1]);
+        }
     }
+
+    private int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    private boolean[][] visited;
 
     // dfs
     public int countIslands(char[][] grid) {
         int count = 0;
         int m = grid.length;
         int n = grid[0].length;
-        boolean[][] visited = new boolean[m][n];
+        visited = new boolean[m][n];
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+
                 if (!visited[i][j] && grid[i][j] == '1') {
                     count++;
-                    dfs(grid, visited, i, j);
+                    dfs(grid, i, j);
                 }
             }
         }
