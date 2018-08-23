@@ -98,17 +98,38 @@ public class BestTimeToBuyAndSellStock {
     public int maxProfit3(int[] prices) {
         // using the unified pattern
         // now we have 4 variable
-        int T_i20 = 0, T_i21 = Integer.MIN_VALUE, T_i10 = 0, T_i11 = Integer.MIN_VALUE;
+        // int T_i20 = 0, T_i21 = Integer.MIN_VALUE, T_i10 = 0, T_i11 = Integer.MIN_VALUE;
+        //
+        // for (int price : prices) {
+        //     T_i20 = Math.max(T_i20, T_i21 + price);
+        //     T_i21 = Math.max(T_i21, T_i10 - price);
+        //     T_i10 = Math.max(T_i10, T_i11 + price);
+        //     T_i11 = Math.max(T_i11, -price);
+        // }
+        //
+        // return T_i20;
+
+        // sell stock, and this is the second transaction
+        int sell2 = 0;
+
+        // buy stock, the second buy
+        int hold2 = Integer.MIN_VALUE;
+
+        // the first time sell
+        int sell1 = 0;
+
+        // the first time buy
+        int hold1 = Integer.MIN_VALUE;
 
         for (int price : prices) {
-            T_i20 = Math.max(T_i20, T_i21 + price);
-            T_i21 = Math.max(T_i21, T_i10 - price);
-            T_i10 = Math.max(T_i10, T_i11 + price);
-            T_i11 = Math.max(T_i11, -price);
+            sell2 = Math.max(sell2, hold2 + price);
+            hold2 = Math.max(hold2, sell1 - price);
+
+            sell1 = Math.max(sell1, hold1 + price);
+            hold1 = Math.max(hold1, -price);
         }
 
-        return T_i20;
-
+        return sell2;
     }
 
 
