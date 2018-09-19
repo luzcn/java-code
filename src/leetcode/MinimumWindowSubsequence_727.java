@@ -16,45 +16,50 @@ import java.util.*;
 // "bcde" is the answer because it occurs before "bdde" which has the same length.
 // "deb" is not a smaller window because the elements of T in the window must occur in order.
 public class MinimumWindowSubsequence_727 {
-    public String minWindow(String s, String t) {
+    public String minWindow(String S, String T) {
+
+        return minWindowBruteForce(S, T);
+
+    }
 
 
-        HashMap<Character, Integer> map = new HashMap<>();
+    private String minWindowDP(String s, String t) {
+        return null;
+    }
 
-        // for (char c : t.toCharArray()) {
-        //     map.put(c, map.getOrDefault(c, 0) + 1);
-        // }
+    // O(n^2 * m) n is s.length, m is t.length
+    private String minWindowBruteForce(String s, String t) {
 
-
-        int begin = 0;
-        int end = 0;
         int minLength = Integer.MAX_VALUE;
         int index = 0;
-        int count = 0;
 
-        int pos = 0;
-
-        while (end < s.length()) {
-            char c = s.charAt(end++);
-
-            if (c == t.charAt(pos)) {
-                pos++;
-                count++;
-            }
-
-            while (count == t.length()) {
-                if (end - begin < minLength) {
-                    minLength = end - begin;
-                    index = begin;
-                }
-
-                char first = s.charAt(begin++);
-                if (first == t.charAt(0)) {
-                    count--;
+        for (int i = 0; i <= s.length() - t.length(); i++) {
+            for (int j = i + 1; j <= s.length(); j++) {
+                if (isSubSequence(s.substring(i, j), t)) {
+                    if (j - i < minLength) {
+                        index = i;
+                        minLength = j - i;
+                    }
                 }
             }
         }
 
-        return minLength == Integer.MAX_VALUE ? "" : s.substring(index, index + minLength);
+        return s.substring(index, index + minLength);
+    }
+
+    private boolean isSubSequence(String s, String t) {
+        int i = 0;
+        int j = 0;
+        while (i < s.length() && j < t.length()) {
+
+            if (s.charAt(i) == t.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                i++;
+            }
+        }
+
+        return j == t.length();
     }
 }
