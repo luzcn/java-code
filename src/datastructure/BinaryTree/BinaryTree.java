@@ -1,11 +1,6 @@
 package datastructure.BinaryTree;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 import leetcode.TreeNode;
 
@@ -61,31 +56,30 @@ public class BinaryTree {
             return;
         }
 
-        Stack<TreeNode> stack = new Stack<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
 
         TreeNode current = root;
-        boolean done = false;
 
-        while (!done) {
+        while (true) {
             if (current != null) {
-                stack.push(current);
+                stack.addLast(current);
                 current = current.left;
             } else if (!stack.isEmpty()) {
-                current = stack.pop();
+                current = stack.removeLast();
                 System.out.println(current.val);
 
                 current = current.right;
             } else {
-                done = true;
+                break;
             }
         }
     }
 
     /**
      * pre-order traverse iterative solution
-     *
+     * <p>
      * use stack to simulate the recursive
-     *
+     * <p>
      * 1. if the stack is not empty, pop the top element
      * 2. save the right node if not null then left node
      */
@@ -116,9 +110,9 @@ public class BinaryTree {
 
     /**
      * Post order non-recursive traverse
-     *
+     * <p>
      * Similar to pre-order, but push left child first
-     *
+     * <p>
      * after save the traverse result in a list, reverse it and return
      */
     public List<Integer> postOrderIterative(TreeNode root) {
@@ -153,7 +147,7 @@ public class BinaryTree {
 
     /**
      * Level order
-     *
+     * <p>
      * similar to BFS, but use two queue to save the level information
      */
     public List<List<Integer>> binaryTreeLevelOrder(TreeNode root) {
