@@ -28,7 +28,52 @@ import java.util.*;
 // [["", "1", ""],
 //  ["2", "", ""]]
 public class PrintBinaryTree_655 {
-    public List<List<String>> printTree(TreeNode root) {
 
+  List<List<String>> res = new ArrayList<>();
+
+  public List<List<String>> printTree(TreeNode root) {
+
+    if (root == null) {
+      return res;
     }
+
+    // the row size is the height
+    // the column size is 2^h - 1
+
+    int depth = getMaxDepth(root);
+
+    int columnSize = (1 << depth) - 1;
+    for (int i = 0; i < depth; i++) {
+      res.add(new ArrayList<>(Collections.nCopies(columnSize, "")));
+    }
+
+    // level order
+
+    dfs(root, 0, columnSize / 2 );
+    return res;
+  }
+
+
+  private int getMaxDepth(TreeNode node) {
+    if (node == null) {
+      return 0;
+    }
+
+    int leftSub = getMaxDepth(node.left);
+    int rightSub = getMaxDepth(node.right);
+
+    return Math.max(leftSub, rightSub) + 1;
+  }
+
+
+  private void dfs(TreeNode node, int level, int pos) {
+    if (node == null) {
+      return;
+    }
+
+    res.get(level).set(pos, String.valueOf(node.val));
+
+    dfs(node, level + 1, pos - 1);
+    dfs(node, level + 1, pos + 1);
+  }
 }

@@ -1,23 +1,16 @@
+import datastructure.Tree.BinaryTree;
+import leetcode.PrintBinaryTree_655;
 import leetcode.TreeNode;
-
-import java.util.*;
-
-
-
 
 public class Program {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
+    TreeNode root = BinaryTree.constructBinaryTree("1,2");
 
-        // binary tree post order traversal
-        // using stack?
+    PrintBinaryTree_655 printBinaryTree_655 = new PrintBinaryTree_655();
 
-        Deque<TreeNode> stack = new ArrayDeque<>();
+    printBinaryTree_655.printTree(root);
 
-        stack.addLast(null);
-
-
-
-    }
+  }
 }

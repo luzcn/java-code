@@ -1,4 +1,4 @@
-package datastructure.BinaryTree;
+package datastructure.Tree;
 
 import java.util.*;
 

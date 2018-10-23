@@ -73,76 +73,76 @@ package leetcode;
 // - 若是小数点，则必须是第一次出现小数点并且自然数没有出现过，还有前面必须是数字，才能返回true。
 public class ValidNumber_65 {
 
-    public boolean isNumber(String s) {
+  public boolean isNumber(String s) {
 
-        // remove unnecessary space
-        s = s.trim();
+    // remove unnecessary space
+    s = s.trim();
 
-        int n = s.length();
-        if (n == 0) {
-            return false;
-        }
-
-        boolean eExisted = false;
-        boolean digitExisted = false;
-        boolean dotExisted = false;
-
-        // process the first character
-        if (Character.isDigit(s.charAt(0))) {
-            digitExisted = true;
-        } else if (s.charAt(0) == '.') {
-            dotExisted = true;
-        } else if (s.charAt(0) != '+' && s.charAt(0) != '-') {
-            return false;
-        }
-
-        for (int i = 1; i < n - 1; i++) {
-
-            char c = s.charAt(i);
-
-            if (Character.isDigit(c)) {
-                // character is a digit
-                digitExisted = true;
-
-            } else if (c == 'e' || c == 'E') {
-
-                // e/E can only be followed after a digit, and only appear once
-                if (!eExisted && digitExisted && s.charAt(i - 1) != '+' && s.charAt(i - 1) != '-') {
-                    eExisted = true;
-                } else {
-                    return false;
-                }
-
-            } else if (c == '+' || c == '-') {
-                // +, - can only follows e/E
-                if (s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E') {
-                    return false;
-                }
-            } else if (c == '.') {
-                // dot can only occur once and cannot occur after e/E
-                if (dotExisted || eExisted) {
-                    return false;
-                }
-
-                dotExisted = true;
-            } else {
-                return false;
-            }
-        }
-
-        // Process the last char,
-        // it can only be digit or dot,
-        // when it is dot, there should be no dot and e/E before and must follow a digit
-
-        if (s.charAt(n - 1) == '.') {
-            if (dotExisted || eExisted || !digitExisted) {
-                return false;
-            }
-            dotExisted = true;
-        } else if (!Character.isDigit(s.charAt(n - 1))) {
-            return false;
-        }
-
-        return true;
+    int n = s.length();
+    if (n == 0) {
+      return false;
     }
+
+    boolean eExisted = false;
+    boolean digitExisted = false;
+    boolean dotExisted = false;
+
+    // process the first character
+    if (Character.isDigit(s.charAt(0))) {
+      digitExisted = true;
+    } else if (s.charAt(0) == '.') {
+      dotExisted = true;
+    } else if (s.charAt(0) != '+' && s.charAt(0) != '-') {
+      return false;
+    }
+
+    for (int i = 1; i < n - 1; i++) {
+
+      char c = s.charAt(i);
+
+      if (Character.isDigit(c)) {
+        // character is a digit
+        digitExisted = true;
+
+      } else if (c == 'e' || c == 'E') {
+
+        // e/E can only be followed after a digit, and only appear once
+        if (!eExisted && digitExisted && s.charAt(i - 1) != '+' && s.charAt(i - 1) != '-') {
+          eExisted = true;
+        } else {
+          return false;
+        }
+
+      } else if (c == '+' || c == '-') {
+        // +, - can only follows e/E
+        if (s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E') {
+          return false;
+        }
+      } else if (c == '.') {
+        // dot can only occur once and cannot occur after e/E
+        if (dotExisted || eExisted) {
+          return false;
+        }
+
+        dotExisted = true;
+      } else {
+        return false;
+      }
+    }
+
+    // Process the last char,
+    // it can only be digit or dot,
+    // when it is dot, there should be no dot and e/E before and must follow a digit
+
+    if (s.charAt(n - 1) == '.') {
+      if (dotExisted || eExisted || !digitExisted) {
+        return false;
+      }
+      dotExisted = true;
+    } else if (!Character.isDigit(s.charAt(n - 1))) {
+      return false;
+    }
+
+    return true;
+  }
 }
