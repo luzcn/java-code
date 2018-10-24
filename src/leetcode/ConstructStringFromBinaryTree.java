@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // You need to construct a string consists of parenthesis and integers from a binary tree with the preorder traversing way.
 //
 // The null node needs to be represented by empty parenthesis pair "()".
@@ -35,28 +33,28 @@ import java.util.*;
 // except we can't omit the first parenthesis pair to break the one-to-one mapping relationship between the input and the output.
 public class ConstructStringFromBinaryTree {
 
-    // pre-order
-    private String dfs(TreeNode node) {
+  // pre-order
+  private String dfs(TreeNode node) {
 
-        if (node == null) {
-            return "";
-        }
-
-        if (node.left == null && node.right == null) {
-            return Integer.toString(node.val);
-        }
-
-        // if right child is null, we should skip the ()
-        if (node.right == null) {
-            return node.val + "(" + dfs(node.left) + ")";
-        }
-
-        return node.val + "(" + dfs(node.left) + ")(" + dfs(node.right) + ")";
-
+    if (node == null) {
+      return "";
     }
 
-    public String tree2str(TreeNode t) {
-
-        return dfs(t);
+    if (node.left == null && node.right == null) {
+      return Integer.toString(node.val);
     }
+
+    // if right child is null, we should skip the ()
+    if (node.right == null) {
+      return node.val + "(" + dfs(node.left) + ")";
+    }
+
+    return node.val + "(" + dfs(node.left) + ")(" + dfs(node.right) + ")";
+
+  }
+
+  public String tree2str(TreeNode t) {
+
+    return dfs(t);
+  }
 }

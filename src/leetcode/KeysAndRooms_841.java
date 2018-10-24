@@ -1,6 +1,9 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 // There are N rooms and you start in room 0.
 // Each room has a distinct number in 0, 1, 2, ..., N-1, and each room may have some keys to access the next room.
@@ -37,38 +40,38 @@ import java.util.*;
 // The number of keys in all rooms combined is at most 3000.
 public class KeysAndRooms_841 {
 
-    // dfs solution
-    private HashMap<Integer, List<Integer>> graph = new HashMap<>();
-    private HashSet<Integer> visited = new HashSet<>();
+  // dfs solution
+  private HashMap<Integer, List<Integer>> graph = new HashMap<>();
+  private HashSet<Integer> visited = new HashSet<>();
 
-    private void dfs(int node) {
-        if (visited.contains(node)) {
-            return;
-        }
-
-        visited.add(node);
-        for (int next : graph.getOrDefault(node, new ArrayList<>())) {
-            dfs(next);
-        }
+  private void dfs(int node) {
+    if (visited.contains(node)) {
+      return;
     }
 
-    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-        int n = rooms.size();
-
-        if (n == 0) {
-            return true;
-        }
-
-        // build graph
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < rooms.get(i).size(); j++) {
-                graph.computeIfAbsent(i, k -> new ArrayList<>()).add(rooms.get(i).get(j));
-            }
-        }
-
-        // dfs
-        dfs(0);
-
-        return n == visited.size();
+    visited.add(node);
+    for (int next : graph.getOrDefault(node, new ArrayList<>())) {
+      dfs(next);
     }
+  }
+
+  public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+    int n = rooms.size();
+
+    if (n == 0) {
+      return true;
+    }
+
+    // build graph
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < rooms.get(i).size(); j++) {
+        graph.computeIfAbsent(i, k -> new ArrayList<>()).add(rooms.get(i).get(j));
+      }
+    }
+
+    // dfs
+    dfs(0);
+
+    return n == visited.size();
+  }
 }

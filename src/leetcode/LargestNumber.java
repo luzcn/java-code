@@ -11,24 +11,24 @@ import java.util.Arrays;
  */
 public class LargestNumber {
 
-    public String largestNumber(int[] nums) {
+  public String largestNumber(int[] nums) {
 
-        int[] s = Arrays.stream(nums)
-                .boxed()
-                .sorted((a, b) -> {
-                    String r1 = String.valueOf(a) + String.valueOf(b);
-                    String r2 = String.valueOf(b) + String.valueOf(a);
-                    return r2.compareTo(r1);
-                })
-                .mapToInt(i -> i)
-                .toArray();
+    int[] s = Arrays.stream(nums)
+        .boxed()
+        .sorted((a, b) -> {
+          String r1 = String.valueOf(a) + String.valueOf(b);
+          String r2 = String.valueOf(b) + String.valueOf(a);
+          return r2.compareTo(r1);
+        })
+        .mapToInt(i -> i)
+        .toArray();
 
-        StringBuilder res = new StringBuilder();
+    StringBuilder res = new StringBuilder();
 
-        for (int i : s) {
-            res.append(i);
-        }
-
-        return res.toString().charAt(0) == '0' ? "0" : res.toString();
+    for (int i : s) {
+      res.append(i);
     }
+
+    return res.toString().charAt(0) == '0' ? "0" : res.toString();
+  }
 }

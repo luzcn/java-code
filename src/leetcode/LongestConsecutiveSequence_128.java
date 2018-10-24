@@ -16,46 +16,46 @@ import java.util.Set;
 ///
 public class LongestConsecutiveSequence_128 {
 
-    // - We cannot sort, since it requires O(n) complexity.
-    // - A traditional space trade time solution, use a hashmap/hashset
-    // 1. for each number "n" in the given vector:
-    //  - check if the num -1 is in the hashmap, continue as loop if it is in the hashmap
-    //  - check if the num + 1 is in the hashmap, continue as loop if yes.
-    // 2. Trace the longest sequence.
-    public int longestConsecutive(int[] nums) {
-        if (nums.length < 2) {
-            return nums.length;
-        }
-
-        Set<Integer> set = new HashSet<>();
-        int longestLength = 0;
-
-        for (int n : nums) {
-            set.add(n);
-        }
-
-        for (int n : nums) {
-            int temp = n;
-            int currentLength = 0;
-
-            while (set.contains(temp)) {
-                // remove this number to avoid duplicate check
-                // of any other consecutive number
-                set.remove(temp);
-                temp--;
-                currentLength++;
-            }
-
-            temp = n + 1;
-            while (set.contains(temp)) {
-                set.remove(temp);
-                temp++;
-                currentLength++;
-            }
-
-            longestLength = Math.max(longestLength, currentLength);
-        }
-
-        return longestLength;
+  // - We cannot sort, since it requires O(n) complexity.
+  // - A traditional space trade time solution, use a hashmap/hashset
+  // 1. for each number "n" in the given vector:
+  //  - check if the num -1 is in the hashmap, continue as loop if it is in the hashmap
+  //  - check if the num + 1 is in the hashmap, continue as loop if yes.
+  // 2. Trace the longest sequence.
+  public int longestConsecutive(int[] nums) {
+    if (nums.length < 2) {
+      return nums.length;
     }
+
+    Set<Integer> set = new HashSet<>();
+    int longestLength = 0;
+
+    for (int n : nums) {
+      set.add(n);
+    }
+
+    for (int n : nums) {
+      int temp = n;
+      int currentLength = 0;
+
+      while (set.contains(temp)) {
+        // remove this number to avoid duplicate check
+        // of any other consecutive number
+        set.remove(temp);
+        temp--;
+        currentLength++;
+      }
+
+      temp = n + 1;
+      while (set.contains(temp)) {
+        set.remove(temp);
+        temp++;
+        currentLength++;
+      }
+
+      longestLength = Math.max(longestLength, currentLength);
+    }
+
+    return longestLength;
+  }
 }

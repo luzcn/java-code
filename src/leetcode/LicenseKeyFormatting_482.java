@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // You are given a license key represented as a string S which consists only alphanumeric character and dashes.
 // The string is separated into N+1 groups by N dashes.
 //
@@ -27,28 +25,28 @@ import java.util.*;
 // each part has 2 characters except the first part as it could be shorter as mentioned above.
 public class LicenseKeyFormatting_482 {
 
-    public String licenseKeyFormatting(String S, int K) {
+  public String licenseKeyFormatting(String S, int K) {
 
-        String s = S.replace("-", "");
+    String s = S.replace("-", "");
 
-        // int range = s.length() / K;
-        StringBuilder res = new StringBuilder();
-        int count = 0;
+    // int range = s.length() / K;
+    StringBuilder res = new StringBuilder();
+    int count = 0;
 
-        for (int i = s.length() - 1; i >= 0; i--) {
+    for (int i = s.length() - 1; i >= 0; i--) {
 
-            if (Character.isDigit(s.charAt(i))) {
-                res.append(s.charAt(i));
-            } else {
-                res.append(Character.toUpperCase(s.charAt(i)));
-            }
+      if (Character.isDigit(s.charAt(i))) {
+        res.append(s.charAt(i));
+      } else {
+        res.append(Character.toUpperCase(s.charAt(i)));
+      }
 
-            if (++count == K && i != 0) {
-                res.append('-');
-                count = 0;
-            }
-        }
-
-        return res.reverse().toString();
+      if (++count == K && i != 0) {
+        res.append('-');
+        count = 0;
+      }
     }
+
+    return res.reverse().toString();
+  }
 }

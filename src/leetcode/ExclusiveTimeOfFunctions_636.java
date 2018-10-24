@@ -40,47 +40,47 @@ import java.util.Stack;
 ///
 public class ExclusiveTimeOfFunctions_636 {
 
-    private class Interval {
+  private class Interval {
 
-        int id;
-        int startTime;
+    int id;
+    int startTime;
 
-        Interval(int id, int startTime) {
-            this.id = id;
-            this.startTime = startTime;
-        }
+    Interval(int id, int startTime) {
+      this.id = id;
+      this.startTime = startTime;
     }
+  }
 
-    public int[] exclusiveTime(int n, List<String> logs) {
-        int[] result = new int[n];
+  public int[] exclusiveTime(int n, List<String> logs) {
+    int[] result = new int[n];
 
-        Stack<Interval> stack = new Stack<>();
+    Stack<Interval> stack = new Stack<>();
 
-        for (String log : logs) {
-            String[] list = log.split(":");
+    for (String log : logs) {
+      String[] list = log.split(":");
 
-            int id = Integer.valueOf(list[0]);
-            String action = list[1];
-            int time = Integer.valueOf(list[2]);
+      int id = Integer.valueOf(list[0]);
+      String action = list[1];
+      int time = Integer.valueOf(list[2]);
 
-            if (action.equals("start")) {
-                if (!stack.isEmpty()) {
-                    result[stack.peek().id] += time - stack.peek().startTime;
-                }
-                stack.push(new Interval(id, time));
-            } else {
-                // end
-                Interval current = stack.pop();
-                result[current.id] += time - current.startTime + 1;
-
-                // The previous function execution time before this function starts has already been counted.
-                // Now, we only need to count the time between the current function's end time and previous function's end time.
-                // This is done by setting the start time of the previous function to be the end time of current function.
-                if (!stack.isEmpty()) {
-                    stack.peek().startTime = time + 1;
-                }
-            }
+      if (action.equals("start")) {
+        if (!stack.isEmpty()) {
+          result[stack.peek().id] += time - stack.peek().startTime;
         }
-        return result;
+        stack.push(new Interval(id, time));
+      } else {
+        // end
+        Interval current = stack.pop();
+        result[current.id] += time - current.startTime + 1;
+
+        // The previous function execution time before this function starts has already been counted.
+        // Now, we only need to count the time between the current function's end time and previous function's end time.
+        // This is done by setting the start time of the previous function to be the end time of current function.
+        if (!stack.isEmpty()) {
+          stack.peek().startTime = time + 1;
+        }
+      }
     }
+    return result;
+  }
 }

@@ -32,36 +32,36 @@ import java.util.PriorityQueue;
 ///
 public class TopKFrequentWords {
 
-    public List<String> topKFrequent(String[] words, int k) {
-        List<String> result = new LinkedList<>();
-        Map<String, Integer> map = new HashMap<>();
-        PriorityQueue<String> minHeap = new PriorityQueue<>((w1, w2) -> {
-            if (map.get(w1).equals(map.get(w2))) {
-                // return 0 - w1.compareTo(w2);
-                return w2.compareTo(w1);
-            }
+  public List<String> topKFrequent(String[] words, int k) {
+    List<String> result = new LinkedList<>();
+    Map<String, Integer> map = new HashMap<>();
+    PriorityQueue<String> minHeap = new PriorityQueue<>((w1, w2) -> {
+      if (map.get(w1).equals(map.get(w2))) {
+        // return 0 - w1.compareTo(w2);
+        return w2.compareTo(w1);
+      }
 
-            return map.get(w1) - map.get(w2);
-        });
+      return map.get(w1) - map.get(w2);
+    });
 
-        // count the frequency
-        for (String w : words) {
-            map.put(w, map.getOrDefault(w, 0) + 1);
-        }
-
-        for (String word : map.keySet()) {
-            minHeap.offer(word);
-
-            if (minHeap.size() > k) {
-                minHeap.poll();
-            }
-        }
-
-        while (!minHeap.isEmpty()) {
-            result.add(minHeap.poll());
-        }
-
-        Collections.reverse(result);
-        return result;
+    // count the frequency
+    for (String w : words) {
+      map.put(w, map.getOrDefault(w, 0) + 1);
     }
+
+    for (String word : map.keySet()) {
+      minHeap.offer(word);
+
+      if (minHeap.size() > k) {
+        minHeap.poll();
+      }
+    }
+
+    while (!minHeap.isEmpty()) {
+      result.add(minHeap.poll());
+    }
+
+    Collections.reverse(result);
+    return result;
+  }
 }

@@ -20,8 +20,9 @@ package leetcode;
 // Note: "01100", "10011", "11001" will be accepted too.
 
 public class CrackingTheSafe_753 {
-    public String crackSafe(int n, int k) {
 
-        return null;
-    }
+  public String crackSafe(int n, int k) {
+
+    return null;
+  }
 }

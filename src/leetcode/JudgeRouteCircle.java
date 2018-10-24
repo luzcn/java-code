@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
 
 // Initially, there is a Robot at position (0, 0).
 // Given a sequence of its moves, judge if this robot makes a circle, which means it moves back to the original place.
@@ -18,21 +18,21 @@ import java.util.*;
 // Output: false
 public class JudgeRouteCircle {
 
-    // assume the given string only contains "L,R, U, D"
-    public boolean judgeCircle(String moves) {
-        HashMap<Character, int[]> map = new HashMap<>();
-        map.put('U', new int[]{0, -1});
-        map.put('D', new int[]{0, 1});
-        map.put('L', new int[]{-1, 0});
-        map.put('R', new int[]{1, 0});
+  // assume the given string only contains "L,R, U, D"
+  public boolean judgeCircle(String moves) {
+    HashMap<Character, int[]> map = new HashMap<>();
+    map.put('U', new int[]{0, -1});
+    map.put('D', new int[]{0, 1});
+    map.put('L', new int[]{-1, 0});
+    map.put('R', new int[]{1, 0});
 
-        int x = 0, y = 0;
+    int x = 0, y = 0;
 
-        for (char c : moves.toCharArray()) {
-            x += map.get(c)[0];
-            y += map.get(c)[1];
-        }
-
-        return x == 0 && y == 0;
+    for (char c : moves.toCharArray()) {
+      x += map.get(c)[0];
+      y += map.get(c)[1];
     }
+
+    return x == 0 && y == 0;
+  }
 }

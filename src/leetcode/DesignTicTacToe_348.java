@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Design a Tic-tac-toe game that is played between two players on a n x n grid.
 //
 // You may assume the following rules:
@@ -50,84 +48,82 @@ import java.util.*;
 // |X|X|X|
 public class DesignTicTacToe_348 {
 
-    private int[][] board;
+  private int[][] board;
 
-    /**
-     * Initialize your data structure here.
-     */
-    public DesignTicTacToe_348(int n) {
-        board = new int[n][n];
+  /**
+   * Initialize your data structure here.
+   */
+  public DesignTicTacToe_348(int n) {
+    board = new int[n][n];
+  }
+
+  /**
+   * Player {player} makes a move at ({row}, {col}).
+   *
+   * @param row The row of the board.
+   * @param col The column of the board.
+   * @param player The player, can be either 1 or 2.
+   * @return The current winning condition, can be either: 0: No one wins. 1: Player 1 wins. 2:
+   * Player 2 wins.
+   */
+  public int move(int row, int col, int player) {
+    if (board[row][col] == 0) {
+      board[row][col] = player;
     }
 
-    /**
-     * Player {player} makes a move at ({row}, {col}).
-     *
-     * @param row The row of the board.
-     * @param col The column of the board.
-     * @param player The player, can be either 1 or 2.
-     * @return The current winning condition, can be either:
-     * 0: No one wins.
-     * 1: Player 1 wins.
-     * 2: Player 2 wins.
-     */
-    public int move(int row, int col, int player) {
-        if (board[row][col] == 0) {
-            board[row][col] = player;
-        }
-
-        if (win(player)) {
-            return player;
-        }
-
-        return 0;
+    if (win(player)) {
+      return player;
     }
 
-    private boolean win(int p) {
-        int n = this.board.length;
+    return 0;
+  }
 
-        for (int i = 0; i < n; i++) {
-            boolean isRowValid = true;
-            for (int j = 0; j < n; j++) {
-                if (board[i][j] != p) {
-                    isRowValid = false;
-                }
-            }
-            if (isRowValid) {
-                return true;
-            }
-        }
+  private boolean win(int p) {
+    int n = this.board.length;
 
-        for (int j = 0; j < n; j++) {
-            boolean isColumn = true;
-            for (int i = 0; i < n; i++) {
-                if (board[i][j] != p) {
-                    isColumn = false;
-                }
-            }
-            if (isColumn) {
-                return true;
-            }
+    for (int i = 0; i < n; i++) {
+      boolean isRowValid = true;
+      for (int j = 0; j < n; j++) {
+        if (board[i][j] != p) {
+          isRowValid = false;
         }
-
-        boolean isValid = true;
-        for (int i = 0; i < n; i++) {
-            if (board[i][i] != p) {
-                isValid = false;
-                break;
-            }
-        }
-        if (isValid) {
-            return true;
-        }
-
-        isValid = true;
-        for (int i = 0; i < n; i++) {
-            if (board[i][n - 1 - i] != p) {
-                isValid = false;
-                break;
-            }
-        }
-
-        return isValid;
+      }
+      if (isRowValid) {
+        return true;
+      }
     }
+
+    for (int j = 0; j < n; j++) {
+      boolean isColumn = true;
+      for (int i = 0; i < n; i++) {
+        if (board[i][j] != p) {
+          isColumn = false;
+        }
+      }
+      if (isColumn) {
+        return true;
+      }
+    }
+
+    boolean isValid = true;
+    for (int i = 0; i < n; i++) {
+      if (board[i][i] != p) {
+        isValid = false;
+        break;
+      }
+    }
+    if (isValid) {
+      return true;
+    }
+
+    isValid = true;
+    for (int i = 0; i < n; i++) {
+      if (board[i][n - 1 - i] != p) {
+        isValid = false;
+        break;
+      }
+    }
+
+    return isValid;
+  }
 }

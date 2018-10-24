@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
 
 // Design a hit counter which counts the number of hits received in the past 5 minutes.
 //
@@ -37,22 +37,29 @@ import java.util.*;
 // Follow up:
 // - What if the number of hits per second could be very large? Does your design scale?
 public class DesignHitCounter_362 {
-    private HashMap<Integer, Integer> map = new HashMap<>();
 
-    /** Record a hit.
-     @param timestamp - The current timestamp (in seconds granularity). */
-    public void hit(int timestamp) {
-        map.put(timestamp, map.getOrDefault(timestamp, 0) + 1);
+  private HashMap<Integer, Integer> map = new HashMap<>();
+
+  /**
+   * Record a hit.
+   *
+   * @param timestamp - The current timestamp (in seconds granularity).
+   */
+  public void hit(int timestamp) {
+    map.put(timestamp, map.getOrDefault(timestamp, 0) + 1);
+  }
+
+  /**
+   * Return the number of hits in the past 5 minutes.
+   *
+   * @param timestamp - The current timestamp (in seconds granularity).
+   */
+  public int getHits(int timestamp) {
+    int sum = 0;
+    for (int i = timestamp; i > timestamp - 300; i--) {
+      sum += map.getOrDefault(i, 0);
     }
 
-    /** Return the number of hits in the past 5 minutes.
-     @param timestamp - The current timestamp (in seconds granularity). */
-    public int getHits(int timestamp) {
-        int sum = 0;
-        for (int i = timestamp; i > timestamp - 300; i--) {
-            sum += map.getOrDefault(i, 0);
-        }
-
-        return sum;
-    }
+    return sum;
+  }
 }

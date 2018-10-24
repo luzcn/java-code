@@ -4,84 +4,83 @@ package leetcode;
 /**
  * Implement a trie with insert, search, and startsWith methods.
  *
- * Note:
- * You may assume that all inputs are consist of lowercase letters a-z.
+ * Note: You may assume that all inputs are consist of lowercase letters a-z.
  */
 public class ImplementTrie {
 
-    private TrieNode root = new TrieNode();
+  private TrieNode root = new TrieNode();
 
-    /**
-     * Initialize your data structure here.
-     */
-    public ImplementTrie() {
+  /**
+   * Initialize your data structure here.
+   */
+  public ImplementTrie() {
 
+  }
+
+  /**
+   * Inserts a word into the trie.
+   */
+  public void insert(String word) {
+    if (word == null || word.length() == 0) {
+      return;
     }
 
-    /**
-     * Inserts a word into the trie.
-     */
-    public void insert(String word) {
-        if (word == null || word.length() == 0) {
-            return;
-        }
+    TrieNode current = this.root;
+    for (char c : word.toCharArray()) {
+      int index = c - 'a';
 
-        TrieNode current = this.root;
-        for (char c : word.toCharArray()) {
-            int index = c - 'a';
+      if (current.children[index] == null) {
+        current.children[index] = new TrieNode();
+      }
+      current = current.children[index];
+    }
+    // used to indicate if it is a complete word
+    current.wordCount++;
+  }
 
-            if (current.children[index] == null) {
-                current.children[index] = new TrieNode();
-            }
-            current = current.children[index];
-        }
-        // used to indicate if it is a complete word
-        current.wordCount++;
+  /**
+   * Returns if the word is in the trie.
+   */
+  public boolean search(String word) {
+
+    TrieNode current = this.root;
+    for (char c : word.toCharArray()) {
+      int index = c - 'a';
+
+      if (current.children[index] == null) {
+        return false;
+      }
+      current = current.children[index];
     }
 
-    /**
-     * Returns if the word is in the trie.
-     */
-    public boolean search(String word) {
+    return current.wordCount > 0;
+  }
 
-        TrieNode current = this.root;
-        for (char c : word.toCharArray()) {
-            int index = c - 'a';
+  /**
+   * Returns if there is any word in the trie that starts with the given prefix.
+   */
+  public boolean startsWith(String prefix) {
+    TrieNode current = this.root;
+    for (char c : prefix.toCharArray()) {
+      int index = c - 'a';
 
-            if (current.children[index] == null) {
-                return false;
-            }
-            current = current.children[index];
-        }
-
-        return current.wordCount > 0;
+      if (current.children[index] == null) {
+        return false;
+      }
+      current = current.children[index];
     }
 
-    /**
-     * Returns if there is any word in the trie that starts with the given prefix.
-     */
-    public boolean startsWith(String prefix) {
-        TrieNode current = this.root;
-        for (char c : prefix.toCharArray()) {
-            int index = c - 'a';
+    return true;
+  }
 
-            if (current.children[index] == null) {
-                return false;
-            }
-            current = current.children[index];
-        }
+  private class TrieNode {
 
-        return true;
+    TrieNode[] children;
+    int wordCount;
+
+    TrieNode() {
+      wordCount = 0;
+      children = new TrieNode[26];
     }
-
-    private class TrieNode {
-
-        TrieNode[] children;
-        int wordCount;
-
-        TrieNode() {
-            wordCount = 0;
-            children = new TrieNode[26];
-        }
-    }
+  }
 }

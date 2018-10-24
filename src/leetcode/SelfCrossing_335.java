@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // You are given an array x of n positive numbers.
 // You start at point (0,0) and moves x[0] metres to the north, then x[1] metres to the west, x[2] metres to the south, x[3] metres to the east and so on.
 //
@@ -35,29 +33,30 @@ import java.util.*;
 // Return true (self crossing)
 public class SelfCrossing_335 {
 
-    // due to the restriction of counter-clockwise
-    // there are only 3 cases
-    // https://www.programcreek.com/2015/03/leetcode-self-crossing-java/
-    public boolean isSelfCrossing(int[] x) {
-        if (x == null || x.length <= 3) {
-            return false;
-        }
-
-        for (int i = 3; i < x.length; i++) {
-            if (x[i - 3] >= x[i - 1] && x[i - 2] <= x[i]) {
-                return true;
-            }
-
-            if (i >= 4 && x[i - 4] + x[i] >= x[i - 2] && x[i - 3] == x[i - 1]) {
-                return true;
-            }
-
-            if (i >= 5 && x[i - 5] <= x[i - 3] && x[i] <= x[i - 2] && x[i - 1] <= x[i - 3] && x[i - 4] <= x[i - 2]
-                    && x[i - 1] >= x[i - 3] - x[i - 5] && x[i] >= x[i - 2] - x[i - 4]) {
-                return true;
-            }
-        }
-
-        return false;
+  // due to the restriction of counter-clockwise
+  // there are only 3 cases
+  // https://www.programcreek.com/2015/03/leetcode-self-crossing-java/
+  public boolean isSelfCrossing(int[] x) {
+    if (x == null || x.length <= 3) {
+      return false;
     }
+
+    for (int i = 3; i < x.length; i++) {
+      if (x[i - 3] >= x[i - 1] && x[i - 2] <= x[i]) {
+        return true;
+      }
+
+      if (i >= 4 && x[i - 4] + x[i] >= x[i - 2] && x[i - 3] == x[i - 1]) {
+        return true;
+      }
+
+      if (i >= 5 && x[i - 5] <= x[i - 3] && x[i] <= x[i - 2] && x[i - 1] <= x[i - 3]
+          && x[i - 4] <= x[i - 2]
+          && x[i - 1] >= x[i - 3] - x[i - 5] && x[i] >= x[i - 2] - x[i - 4]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }

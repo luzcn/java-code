@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // We are given a list schedule of employees, which represents the working time for each employee.
 //
@@ -25,63 +26,63 @@ import java.util.*;
 // Also, we wouldn't include intervals like [5, 5] in our answer, as they have zero length.
 public class EmployeeFreeTime_759 {
 
-    // line sweeping, find the non-overlapping range
-    // similar to meeting rooms 2
-    public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
-        List<Integer> starts = new ArrayList<>();
-        List<Integer> ends = new ArrayList<>();
+  // line sweeping, find the non-overlapping range
+  // similar to meeting rooms 2
+  public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+    List<Integer> starts = new ArrayList<>();
+    List<Integer> ends = new ArrayList<>();
 
-        for (List<Interval> intervals : schedule) {
-            for (Interval it : intervals) {
-                starts.add(it.start);
-                ends.add(it.end);
-            }
-        }
-
-        starts.sort((x, y) -> x - y);
-        ends.sort((x, y) -> x - y);
-
-        List<Interval> res = new ArrayList<>();
-        int overlap = 0;
-
-        int i = 0;
-        int j = 0;
-
-        while (i < starts.size() && j < ends.size()) {
-            if (starts.get(i) < ends.get(j)) {
-                overlap++;
-                i++;
-            } else {
-                overlap--;
-
-                if (overlap == 0) {
-
-                    if (!starts.get(i).equals(ends.get(j))) {
-                        // [9,9] is not a valid result, although it is not an overlap
-                        res.add(new Interval(j, i));
-                    }
-                }
-                j++;
-            }
-        }
-
-        return res;
+    for (List<Interval> intervals : schedule) {
+      for (Interval it : intervals) {
+        starts.add(it.start);
+        ends.add(it.end);
+      }
     }
 
+    starts.sort((x, y) -> x - y);
+    ends.sort((x, y) -> x - y);
 
-    private class Interval {
+    List<Interval> res = new ArrayList<>();
+    int overlap = 0;
 
-        int start;
-        int end;
+    int i = 0;
+    int j = 0;
 
-        Interval() {
-            start = 0;
-            end = 0;
+    while (i < starts.size() && j < ends.size()) {
+      if (starts.get(i) < ends.get(j)) {
+        overlap++;
+        i++;
+      } else {
+        overlap--;
+
+        if (overlap == 0) {
+
+          if (!starts.get(i).equals(ends.get(j))) {
+            // [9,9] is not a valid result, although it is not an overlap
+            res.add(new Interval(j, i));
+          }
         }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
+        j++;
+      }
     }
+
+    return res;
+  }
+
+
+  private class Interval {
+
+    int start;
+    int end;
+
+    Interval() {
+      start = 0;
+      end = 0;
+    }
+
+    Interval(int s, int e) {
+      start = s;
+      end = e;
+    }
+  }
 }

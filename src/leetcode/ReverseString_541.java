@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given a string and an integer k, you need to reverse the first k characters for every 2k characters
 // counting from the start of the string.
 //
@@ -19,31 +17,31 @@ import java.util.*;
 // - Length of the given string and k will in the range [1, 10000]
 public class ReverseString_541 {
 
-    private StringBuilder res = new StringBuilder();
+  private StringBuilder res = new StringBuilder();
 
-    private void dfs(String s, int k) {
-        if (s.length() < k) {
+  private void dfs(String s, int k) {
+    if (s.length() < k) {
 
-            res.append((new StringBuilder(s)).reverse().toString());
-            return;
-        }
-
-        if (s.length() < 2 * k) {
-            res.append((new StringBuilder(s.substring(0, k))).reverse().toString());
-            res.append(s.substring(k));
-            return;
-        }
-
-        res.append((new StringBuilder(s.substring(0, k))).reverse().toString());
-        res.append(s, k, k + k);
-
-        dfs(s.substring(k + k), k);
+      res.append((new StringBuilder(s)).reverse().toString());
+      return;
     }
 
-    public String reverseStr(String s, int k) {
-
-        dfs(s, k);
-
-        return res.toString();
+    if (s.length() < 2 * k) {
+      res.append((new StringBuilder(s.substring(0, k))).reverse().toString());
+      res.append(s.substring(k));
+      return;
     }
+
+    res.append((new StringBuilder(s.substring(0, k))).reverse().toString());
+    res.append(s, k, k + k);
+
+    dfs(s.substring(k + k), k);
+  }
+
+  public String reverseStr(String s, int k) {
+
+    dfs(s, k);
+
+    return res.toString();
+  }
 }

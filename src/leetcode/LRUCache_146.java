@@ -28,62 +28,62 @@ import java.util.LinkedList;
 
 public class LRUCache_146 {
 
-    private int capacity = 0;
+  private int capacity = 0;
 
-    // key, index of listData
-    private HashMap<Integer, CacheData> map = new HashMap<>();
-    private LinkedList<CacheData> listData = new LinkedList<>();
+  // key, index of listData
+  private HashMap<Integer, CacheData> map = new HashMap<>();
+  private LinkedList<CacheData> listData = new LinkedList<>();
 
 
-    public LRUCache_146(int capacity) {
+  public LRUCache_146(int capacity) {
 
-        this.capacity = capacity;
+    this.capacity = capacity;
+  }
+
+  public int get(int key) {
+    if (!map.containsKey(key)) {
+      return -1;
     }
 
-    public int get(int key) {
-        if (!map.containsKey(key)) {
-            return -1;
-        }
+    int value = map.get(key).value;
+    moveToHead(key, value);
+    return value;
+  }
 
-        int value = map.get(key).value;
-        moveToHead(key, value);
-        return value;
+  public void put(int key, int value) {
+    if (!map.containsKey(key)) {
+      if (map.size() == capacity) {
+        int keyToRemove = listData.peekLast().key;
+        listData.removeLast();
+        map.remove(keyToRemove);
+      }
+
+      listData.addFirst(new CacheData(key, value));
+      map.put(key, listData.peekFirst());
+    } else {
+      moveToHead(key, value);
     }
 
-    public void put(int key, int value) {
-        if (!map.containsKey(key)) {
-            if (map.size() == capacity) {
-                int keyToRemove = listData.peekLast().key;
-                listData.removeLast();
-                map.remove(keyToRemove);
-            }
+  }
 
-            listData.addFirst(new CacheData(key, value));
-            map.put(key, listData.peekFirst());
-        } else {
-            moveToHead(key, value);
-        }
+  private void moveToHead(int key, int value) {
+    CacheData toRemoveData = map.get(key);
+    listData.remove(toRemoveData);
 
+    listData.addFirst(new CacheData(key, value));
+    map.put(key, listData.peekFirst());
+  }
+
+  private class CacheData {
+
+    int key = 0;
+    int value = 0;
+
+    CacheData(int k, int v) {
+      this.key = k;
+      this.value = v;
     }
-
-    private void moveToHead(int key, int value) {
-        CacheData toRemoveData = map.get(key);
-        listData.remove(toRemoveData);
-
-        listData.addFirst(new CacheData(key, value));
-        map.put(key, listData.peekFirst());
-    }
-
-    private class CacheData {
-
-        int key = 0;
-        int value = 0;
-
-        CacheData(int k, int v) {
-            this.key = k;
-            this.value = v;
-        }
-    }
+  }
 }
 
 // LRU with self-defined Double linked list

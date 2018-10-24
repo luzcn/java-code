@@ -14,47 +14,48 @@ import java.util.List;
 public class MissingRanges {
 
 
-    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+  public List<String> findMissingRanges(int[] nums, int lower, int upper) {
 
-        List<String> result = new ArrayList<>();
+    List<String> result = new ArrayList<>();
 
-        if (nums.length == 0) {
-            String range = lower == upper ? String.valueOf(lower) : lower + "->" + upper;
-            result.add(range);
-            return result;
-        }
-
-        int n = nums.length;
-
-        // process the lower to first element
-        int first = nums[0];
-        if (lower < first) {
-            String range = lower == first - 1 ? String.valueOf(lower) : lower + "->" + String.valueOf(first - 1);
-            result.add(range);
-        }
-
-        for (int i = 0; i < n - 1; i++) {
-            int value1 = nums[i];
-            int value2 = nums[i + 1];
-            // the input is sorted array, if these adjacent numbers are equivalent or contiguous, skip
-            if (value1 == value2 || value1 + 1 == value2) {
-                continue;
-            }
-
-            String range = value1 + 1 == value2 - 1 ? String.valueOf(value1 + 1)
-                    : String.valueOf(value1 + 1) + "->" + String.valueOf(value2 - 1);
-
-            result.add(range);
-        }
-
-        // process the last element to the uppder range
-        int last = nums[n - 1];
-        if (last < upper) {
-            String range = last + 1 == upper ? String.valueOf(last + 1)
-                    : String.valueOf(last + 1) + "->" + String.valueOf(upper);
-            result.add(range);
-        }
-
-        return result;
+    if (nums.length == 0) {
+      String range = lower == upper ? String.valueOf(lower) : lower + "->" + upper;
+      result.add(range);
+      return result;
     }
+
+    int n = nums.length;
+
+    // process the lower to first element
+    int first = nums[0];
+    if (lower < first) {
+      String range =
+          lower == first - 1 ? String.valueOf(lower) : lower + "->" + String.valueOf(first - 1);
+      result.add(range);
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+      int value1 = nums[i];
+      int value2 = nums[i + 1];
+      // the input is sorted array, if these adjacent numbers are equivalent or contiguous, skip
+      if (value1 == value2 || value1 + 1 == value2) {
+        continue;
+      }
+
+      String range = value1 + 1 == value2 - 1 ? String.valueOf(value1 + 1)
+          : String.valueOf(value1 + 1) + "->" + String.valueOf(value2 - 1);
+
+      result.add(range);
+    }
+
+    // process the last element to the uppder range
+    int last = nums[n - 1];
+    if (last < upper) {
+      String range = last + 1 == upper ? String.valueOf(last + 1)
+          : String.valueOf(last + 1) + "->" + String.valueOf(upper);
+      result.add(range);
+    }
+
+    return result;
+  }
 }

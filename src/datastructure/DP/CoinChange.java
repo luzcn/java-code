@@ -1,6 +1,6 @@
 package datastructure.DP;
 
-import java.util.*;
+import java.util.Arrays;
 
 // You are given coins of different denominations and a total amount of money amount.
 //
@@ -18,77 +18,77 @@ import java.util.*;
 // Output: -1
 public class CoinChange {
 
-    public int coinChange(int[] coins, int amount) {
+  public int coinChange(int[] coins, int amount) {
 
-        return dfs(coins, 0, amount);
+    return dfs(coins, 0, amount);
+  }
+
+  private int dfs(int[] coins, int pos, int amount) {
+
+    // find a solution
+    if (amount == 0) {
+      return 0;
     }
 
-    private int dfs(int[] coins, int pos, int amount) {
-
-        // find a solution
-        if (amount == 0) {
-            return 0;
-        }
-
-        // no more coins can use
-        if (pos >= coins.length && amount > 0) {
-            return Integer.MAX_VALUE - 1;
-        }
-
-        // too many coins used
-        if (amount < 0) {
-            return Integer.MAX_VALUE - 1;
-        }
-
-        return Math.min(dfs(coins, pos, amount - coins[pos]) + 1, dfs(coins, pos + 1, amount));
+    // no more coins can use
+    if (pos >= coins.length && amount > 0) {
+      return Integer.MAX_VALUE - 1;
     }
 
-    // O(m*n) time, O(m*n) space
-    private int makeChangeDP(int[] coins, int amount) {
-        int m = amount;
-        int n = coins.length;
-
-        int[][] dp = new int[m + 1][n + 1];
-        for (int i = 0; i <= m; i++) {
-            dp[i][0] = Integer.MAX_VALUE - 1;
-        }
-
-        // dp(i,j) indicate the min cost of i money and coins[0..j] coins.
-        // dp[i][j] = min(dp[i-coins[j-1]] + 1, dp[i][j-1]); if i > coins[j-1]
-        // else dp[i][j] = dp[i][j-1], cannot use this coin.
-
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-
-                if (i > coins[j - 1]) {
-                    // current amount > coin value
-                    dp[i][j] = Math.min(dp[i - coins[j - 1]][j] + 1, dp[i][j - 1]);
-                } else {
-                    dp[i][j] = dp[i][j - 1];
-                }
-            }
-        }
-
-        return dp[m][n] == Integer.MAX_VALUE - 1 ? -1 : dp[m][n];
+    // too many coins used
+    if (amount < 0) {
+      return Integer.MAX_VALUE - 1;
     }
 
-    // O(m) space
-    private int makChangeDP2(int[] coins, int amount) {
-        int m = amount;
-        int n = coins.length;
-        int[] dp = new int[m + 1];
-        
-        Arrays.fill(dp, Integer.MAX_VALUE - 1);
-        dp[0] = 0;
+    return Math.min(dfs(coins, pos, amount - coins[pos]) + 1, dfs(coins, pos + 1, amount));
+  }
 
-        for (int i = 1; i <= m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i >= coins[j]) {
-                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
-                }
-            }
-        }
+  // O(m*n) time, O(m*n) space
+  private int makeChangeDP(int[] coins, int amount) {
+    int m = amount;
+    int n = coins.length;
 
-        return dp[m] == Integer.MAX_VALUE - 1 ? -1 : dp[m];
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 0; i <= m; i++) {
+      dp[i][0] = Integer.MAX_VALUE - 1;
     }
+
+    // dp(i,j) indicate the min cost of i money and coins[0..j] coins.
+    // dp[i][j] = min(dp[i-coins[j-1]] + 1, dp[i][j-1]); if i > coins[j-1]
+    // else dp[i][j] = dp[i][j-1], cannot use this coin.
+
+    for (int i = 1; i <= m; i++) {
+      for (int j = 1; j <= n; j++) {
+
+        if (i > coins[j - 1]) {
+          // current amount > coin value
+          dp[i][j] = Math.min(dp[i - coins[j - 1]][j] + 1, dp[i][j - 1]);
+        } else {
+          dp[i][j] = dp[i][j - 1];
+        }
+      }
+    }
+
+    return dp[m][n] == Integer.MAX_VALUE - 1 ? -1 : dp[m][n];
+  }
+
+  // O(m) space
+  private int makChangeDP2(int[] coins, int amount) {
+    int m = amount;
+    int n = coins.length;
+    int[] dp = new int[m + 1];
+
+    Arrays.fill(dp, Integer.MAX_VALUE - 1);
+    dp[0] = 0;
+
+    for (int i = 1; i <= m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (i >= coins[j]) {
+          dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+        }
+      }
+    }
+
+    return dp[m] == Integer.MAX_VALUE - 1 ? -1 : dp[m];
+  }
 }

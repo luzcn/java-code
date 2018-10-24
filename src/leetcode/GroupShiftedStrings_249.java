@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 // Given a string, we can "shift" each of its letter to its successive letter,
 // for example: "abc" -> "bcd". We can keep "shifting" which forms the sequence:
@@ -20,42 +22,42 @@ import java.util.*;
 // ]
 public class GroupShiftedStrings_249 {
 
-    // the idea is find the pattern of each string
-    // and encode these strings
-    // e.g. "xyz" => get the diff of chars s[i+1] - s[i]
+  // the idea is find the pattern of each string
+  // and encode these strings
+  // e.g. "xyz" => get the diff of chars s[i+1] - s[i]
 
-    private String encode(String s) {
-        StringBuilder res = new StringBuilder();
+  private String encode(String s) {
+    StringBuilder res = new StringBuilder();
 
-        for (int i = 1; i < s.length(); i++) {
-            int diff = s.charAt(i) - s.charAt(i - 1);
-            if (diff < 0) {
-                diff += 26;
-            }
+    for (int i = 1; i < s.length(); i++) {
+      int diff = s.charAt(i) - s.charAt(i - 1);
+      if (diff < 0) {
+        diff += 26;
+      }
 
-            res.append('a' + diff);
-        }
-
-        return res.toString();
+      res.append('a' + diff);
     }
 
-    public List<List<String>> groupStrings(String[] strings) {
+    return res.toString();
+  }
 
-        List<List<String>> res = new ArrayList<>();
+  public List<List<String>> groupStrings(String[] strings) {
 
-        if (strings.length == 0) {
-            return res;
-        }
+    List<List<String>> res = new ArrayList<>();
 
-        HashMap<String, List<String>> map = new HashMap<>();
-
-        for (String s : strings) {
-            String code = encode(s);
-
-            map.computeIfAbsent(code, k -> new ArrayList<>()).add(s);
-        }
-
-        res.addAll(map.values());
-        return res;
+    if (strings.length == 0) {
+      return res;
     }
+
+    HashMap<String, List<String>> map = new HashMap<>();
+
+    for (String s : strings) {
+      String code = encode(s);
+
+      map.computeIfAbsent(code, k -> new ArrayList<>()).add(s);
+    }
+
+    res.addAll(map.values());
+    return res;
+  }
 }

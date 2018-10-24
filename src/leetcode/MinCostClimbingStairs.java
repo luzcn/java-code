@@ -1,8 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
-
 // On a staircase, the i-th step has some non-negative cost cost[i] assigned (0 indexed).
 //
 // Once you pay the cost, you can either climb one or two steps.
@@ -24,18 +21,18 @@ import java.util.*;
 // - Every cost[i] will be an integer in the range [0, 999].
 public class MinCostClimbingStairs {
 
-    // DP
-    public int minCostClimbingStairs(int[] cost) {
-        int c1 = cost[0];
-        int c2 = cost[1];
+  // DP
+  public int minCostClimbingStairs(int[] cost) {
+    int c1 = cost[0];
+    int c2 = cost[1];
 
-        for (int i = 2; i < cost.length; i++) {
-            int c = Math.min(c1, c2) + cost[i];
+    for (int i = 2; i < cost.length; i++) {
+      int c = Math.min(c1, c2) + cost[i];
 
-            c1 = c2;
-            c2 = c;
-        }
-
-        return Math.min(c1, c2);
+      c1 = c2;
+      c2 = c;
     }
+
+    return Math.min(c1, c2);
+  }
 }

@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Iterator;
 
 // Given an Iterator class interface with methods: next() and hasNext(), design and implement a PeekingIterator that support the peek() operation -- it essentially peek() at the element that will be returned by the next call to next().
 //
@@ -21,40 +21,40 @@ import java.util.*;
 // but also move the peek to next value if the current iterator still has values available, otherwise set to null
 public class PeekingIterator<T> implements Iterator<T> {
 
-    private Iterator<T> current;
-    T peek = null;
+  private Iterator<T> current;
+  T peek = null;
 
-    public PeekingIterator(Iterator<T> iterator) {
-        // initialize any member here.
-        current = iterator;
-        if (current.hasNext()) {
-            peek = current.next();
-        }
+  public PeekingIterator(Iterator<T> iterator) {
+    // initialize any member here.
+    current = iterator;
+    if (current.hasNext()) {
+      peek = current.next();
+    }
+  }
+
+  // Returns the next element in the iteration without advancing the iterator.
+  public T peek() {
+
+    return this.peek;
+  }
+
+  // hasNext() and next() should behave the same as in the Iterator interface.
+  // Override them if needed.
+  @Override
+  public T next() {
+    T value = peek;
+
+    if (current.hasNext()) {
+      peek = current.next();
+    } else {
+      peek = null;
     }
 
-    // Returns the next element in the iteration without advancing the iterator.
-    public T peek() {
+    return value;
+  }
 
-        return this.peek;
-    }
-
-    // hasNext() and next() should behave the same as in the Iterator interface.
-    // Override them if needed.
-    @Override
-    public T next() {
-        T value = peek;
-
-        if (current.hasNext()) {
-            peek = current.next();
-        } else {
-            peek = null;
-        }
-
-        return value;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return peek != null;
-    }
+  @Override
+  public boolean hasNext() {
+    return peek != null;
+  }
 }

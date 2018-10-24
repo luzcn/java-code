@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
 
 // You are given two arrays (without duplicates) nums1 and nums2 where nums1’s elements are subset of nums2.
 // Find all the next greater numbers for nums1's elements in the corresponding places of nums2.
@@ -17,40 +19,40 @@ import java.util.*;
 //     For number 2 in the first array, there is no next greater number for it in the second array, so output -1.
 public class NextGreaterElement_496 {
 
-    // for all the numbers in nums2, find the next greater number, saved in a hashmap
-    // - use stack
-    // - start from last element,
-    // - if we found stack.peek() < current number remove from the stack,
-    // keep doing this step, until we found a larger one or stack is empty
+  // for all the numbers in nums2, find the next greater number, saved in a hashmap
+  // - use stack
+  // - start from last element,
+  // - if we found stack.peek() < current number remove from the stack,
+  // keep doing this step, until we found a larger one or stack is empty
 
-    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+  public int[] nextGreaterElement(int[] nums1, int[] nums2) {
 
-        HashMap<Integer, Integer> map = new HashMap<>();
+    HashMap<Integer, Integer> map = new HashMap<>();
 
-        Deque<Integer> stack = new ArrayDeque<>();
+    Deque<Integer> stack = new ArrayDeque<>();
 
-        for (int i = nums2.length - 1; i >= 0; i++) {
+    for (int i = nums2.length - 1; i >= 0; i++) {
 
-            int num = nums2[i];
-            while (!stack.isEmpty() && stack.getLast() <= num) {
-                stack.removeLast();
-            }
+      int num = nums2[i];
+      while (!stack.isEmpty() && stack.getLast() <= num) {
+        stack.removeLast();
+      }
 
-            if (stack.isEmpty()) {
-                map.put(num, -1);
-            } else {
-                map.put(num, stack.getLast());
-            }
+      if (stack.isEmpty()) {
+        map.put(num, -1);
+      } else {
+        map.put(num, stack.getLast());
+      }
 
-            stack.addLast(num);
-        }
-
-        int[] res = new int[nums1.length];
-
-        for (int i = 0; i < nums1.length; i++) {
-            res[i] = map.get(nums1[i]);
-        }
-
-        return res;
+      stack.addLast(num);
     }
+
+    int[] res = new int[nums1.length];
+
+    for (int i = 0; i < nums1.length; i++) {
+      res[i] = map.get(nums1[i]);
+    }
+
+    return res;
+  }
 }

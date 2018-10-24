@@ -1,8 +1,5 @@
 package leetcode;
 
-import java.beans.AppletInitializer;
-import java.util.*;
-
 // Let's call an array A a mountain if the following properties hold:
 //
 // A.length >= 3
@@ -20,40 +17,40 @@ import java.util.*;
 // Output: 1
 public class PeakIndexInMountainArray_852 {
 
-    public int peakIndexInMountainArray(int[] A) {
-        if (A.length < 3) {
-            return -1;
-        }
-
-        int index = 0;
-        while (index < A.length - 1) {
-            if (A[index] > A[index + 1]) {
-                break;
-            }
-            index++;
-        }
-
-        return index;
+  public int peakIndexInMountainArray(int[] A) {
+    if (A.length < 3) {
+      return -1;
     }
 
-    // binary search
-    public int peakIndexInMountainArray2(int[] A) {
-        if (A.length < 3) {
-            return -1;
-        }
-
-        int low = 0;
-        int high = A.length - 1;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-
-            if (A[mid] < A[mid + 1]) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-
-        return low;
+    int index = 0;
+    while (index < A.length - 1) {
+      if (A[index] > A[index + 1]) {
+        break;
+      }
+      index++;
     }
+
+    return index;
+  }
+
+  // binary search
+  public int peakIndexInMountainArray2(int[] A) {
+    if (A.length < 3) {
+      return -1;
+    }
+
+    int low = 0;
+    int high = A.length - 1;
+    while (low <= high) {
+      int mid = low + (high - low) / 2;
+
+      if (A[mid] < A[mid + 1]) {
+        low = mid + 1;
+      } else {
+        high = mid - 1;
+      }
+    }
+
+    return low;
+  }
 }

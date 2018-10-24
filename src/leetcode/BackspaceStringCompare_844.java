@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 // Given two strings S and T, return if they are equal when both are typed into empty text editors.
 // # means a backspace character.
@@ -35,22 +36,22 @@ import java.util.*;
 // Can you solve it in O(N) time and O(1) space?
 public class BackspaceStringCompare_844 {
 
-    public boolean backspaceCompare(String s, String t) {
+  public boolean backspaceCompare(String s, String t) {
 
-        return buildString(s, '#').equals(buildString(t, '#'));
+    return buildString(s, '#').equals(buildString(t, '#'));
+  }
+
+  private String buildString(String s, char backspace) {
+    Deque<Character> res = new ArrayDeque<>();
+
+    for (char c : s.toCharArray()) {
+      if (c != backspace) {
+        res.addLast(c);
+      } else if (!res.isEmpty()) {
+        res.removeLast();
+      }
     }
 
-    private String buildString(String s, char backspace) {
-        Deque<Character> res = new ArrayDeque<>();
-
-        for (char c : s.toCharArray()) {
-            if (c != backspace) {
-                res.addLast(c);
-            } else if (!res.isEmpty()) {
-                res.removeLast();
-            }
-        }
-
-        return String.valueOf(res);
-    }
+    return String.valueOf(res);
+  }
 }

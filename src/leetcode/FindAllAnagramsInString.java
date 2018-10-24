@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
 //
@@ -33,40 +34,40 @@ import java.util.*;
 // The substring with start index = 2 is "ab", which is an anagram of "ab".
 public class FindAllAnagramsInString {
 
-    private boolean isAnagram(String s, String t) {
-        int[] chars = new int[26];
+  private boolean isAnagram(String s, String t) {
+    int[] chars = new int[26];
 
-        for (char c : s.toCharArray()) {
-            chars[c - 'a']++;
-        }
-
-        for (char c : t.toCharArray()) {
-            chars[c - 'a']--;
-        }
-
-        for (int n : chars) {
-            if (n != 0) {
-                return false;
-            }
-        }
-
-        return true;
+    for (char c : s.toCharArray()) {
+      chars[c - 'a']++;
     }
 
-    // brute force solution O(len(s) * len(p)) time
-    public List<Integer> findAnagrams(String s, String p) {
-
-        List<Integer> result = new ArrayList<>();
-        if (s.isEmpty()) {
-            return result;
-        }
-
-        for (int i = 0; i <= s.length() - p.length(); i++) {
-            if (isAnagram(s.substring(i, i + p.length()), p)) {
-                result.add(i);
-            }
-        }
-
-        return result;
+    for (char c : t.toCharArray()) {
+      chars[c - 'a']--;
     }
+
+    for (int n : chars) {
+      if (n != 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // brute force solution O(len(s) * len(p)) time
+  public List<Integer> findAnagrams(String s, String p) {
+
+    List<Integer> result = new ArrayList<>();
+    if (s.isEmpty()) {
+      return result;
+    }
+
+    for (int i = 0; i <= s.length() - p.length(); i++) {
+      if (isAnagram(s.substring(i, i + p.length()), p)) {
+        result.add(i);
+      }
+    }
+
+    return result;
+  }
 }

@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.
 //
 // If there is no such window in S that covers all characters in T, return the empty string "".

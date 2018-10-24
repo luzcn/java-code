@@ -1,8 +1,8 @@
 package leetcode;
 
 /**
- * Given two non-empty binary trees s and t,
- * check whether tree t has exactly the same structure and node values with a subtree of s.
+ * Given two non-empty binary trees s and t, check whether tree t has exactly the same structure and
+ * node values with a subtree of s.
  *
  * A subtree of s is a tree consists of a node in s and all of this node's descendants.
  *
@@ -10,9 +10,7 @@ package leetcode;
  *
  * https://leetcode.com/problems/subtree-of-another-tree/description/
  *
- * Thought:
- * for each subtree of s, check if they are equivalent tree
- * time: O(m*n)
+ * Thought: for each subtree of s, check if they are equivalent tree time: O(m*n)
  */
 
 //Example 1:
@@ -45,21 +43,23 @@ package leetcode;
 // Return false.
 public class SubtreeOfAnotherTree {
 
-    private boolean isSameTree(TreeNode s, TreeNode t) {
-        if (s == null && t == null)
-            return true;
-
-        if (s == null || t == null)
-            return false;
-
-
-        return s.val == t.val && isSameTree(s.left, t.left) && isSameTree(s.right, t.right);
+  private boolean isSameTree(TreeNode s, TreeNode t) {
+    if (s == null && t == null) {
+      return true;
     }
 
-    public boolean isSubtree(TreeNode s, TreeNode t) {
-        if (s == null)
-            return false;
-
-        return isSameTree(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t);
+    if (s == null || t == null) {
+      return false;
     }
+
+    return s.val == t.val && isSameTree(s.left, t.left) && isSameTree(s.right, t.right);
+  }
+
+  public boolean isSubtree(TreeNode s, TreeNode t) {
+    if (s == null) {
+      return false;
+    }
+
+    return isSameTree(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t);
+  }
 }

@@ -1,6 +1,9 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 // Given a list of airline tickets represented by pairs of departure and arrival airports [from, to],
 // reconstruct the itinerary in order.
@@ -24,41 +27,41 @@ import java.util.*;
 // Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"]. But it is larger in lexical order.
 public class ReconstructItinerary {
 
-    private List<String> result = new ArrayList<>();
-    private HashMap<String, List<String>> graph = new HashMap<>();
+  private List<String> result = new ArrayList<>();
+  private HashMap<String, List<String>> graph = new HashMap<>();
 
-    // dfs, topo sort
-    // but we cannot use a "visited" hashset to indicate if the next node is visited.
-    // we should check if the node has more destination "next" to reach and each dfs iteration need to remove this "next"
-    private void dfs(String node) {
+  // dfs, topo sort
+  // but we cannot use a "visited" hashset to indicate if the next node is visited.
+  // we should check if the node has more destination "next" to reach and each dfs iteration need to remove this "next"
+  private void dfs(String node) {
 
-        while (graph.get(node) != null && !graph.get(node).isEmpty()) {
-            String next = graph.get(node).get(0);
+    while (graph.get(node) != null && !graph.get(node).isEmpty()) {
+      String next = graph.get(node).get(0);
 
-            graph.get(node).remove(0);
+      graph.get(node).remove(0);
 
-            dfs(next);
-        }
-        this.result.add(node);
+      dfs(next);
+    }
+    this.result.add(node);
 
+  }
+
+  public List<String> findItinerary(String[][] tickets) {
+
+    // directed graph
+    for (String[] t : tickets) {
+      graph.computeIfAbsent(t[0], k -> new ArrayList<>()).add(t[1]);
     }
 
-    public List<String> findItinerary(String[][] tickets) {
-
-        // directed graph
-        for (String[] t : tickets) {
-            graph.computeIfAbsent(t[0], k -> new ArrayList<>()).add(t[1]);
-        }
-
-        // sort the list
-        for (List<String> values : graph.values()) {
-            values.sort(String::compareTo);
-        }
-
-        dfs("JFK");
-
-        // topo sort, reverse the result
-        Collections.reverse(result);
-        return result;
+    // sort the list
+    for (List<String> values : graph.values()) {
+      values.sort(String::compareTo);
     }
+
+    dfs("JFK");
+
+    // topo sort, reverse the result
+    Collections.reverse(result);
+    return result;
+  }
 }

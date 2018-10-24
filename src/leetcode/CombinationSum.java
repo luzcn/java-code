@@ -23,67 +23,67 @@ import java.util.List;
 ///
 public class CombinationSum {
 
-    private List<List<Integer>> result = new ArrayList<>();
-    private List<Integer> current = new ArrayList<>();
+  private List<List<Integer>> result = new ArrayList<>();
+  private List<Integer> current = new ArrayList<>();
 
 
-    // recursive + backtracking
-    private void dfs(int[] candidates, int target, int index, int sum) {
-        if (sum > target) {
-            return;
-        }
-
-        if (sum == target) {
-            this.result.add(new ArrayList<>(this.current));
-            return;
-        }
-
-        for (int i = index; i < candidates.length; i++) {
-            this.current.add(candidates[i]);
-
-            dfs(candidates, target, i, sum + candidates[i]);
-
-            this.current.remove(this.current.size() - 1);
-        }
+  // recursive + backtracking
+  private void dfs(int[] candidates, int target, int index, int sum) {
+    if (sum > target) {
+      return;
     }
 
-
-    // now the input candidates array may contain duplicates.
-    // and each number can only be used once.
-    private void dfs2(int[] candidates, int target, int index, int sum) {
-        if (sum == target) {
-            this.result.add(new ArrayList<>(this.current));
-            return;
-        }
-
-        if (sum > target) {
-            return;
-        }
-
-        for (int i = index; i < candidates.length; i++) {
-
-            if (i > index && (candidates[i] == candidates[i - 1])) {
-                continue;
-            }
-
-            this.current.add(candidates[i]);
-            dfs2(candidates, target, i + 1, sum + candidates[i]);
-            this.current.remove(this.current.size() - 1);
-        }
-
+    if (sum == target) {
+      this.result.add(new ArrayList<>(this.current));
+      return;
     }
 
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    for (int i = index; i < candidates.length; i++) {
+      this.current.add(candidates[i]);
 
-        dfs(candidates, target, 0, 0);
-        return this.result;
+      dfs(candidates, target, i, sum + candidates[i]);
 
+      this.current.remove(this.current.size() - 1);
+    }
+  }
+
+
+  // now the input candidates array may contain duplicates.
+  // and each number can only be used once.
+  private void dfs2(int[] candidates, int target, int index, int sum) {
+    if (sum == target) {
+      this.result.add(new ArrayList<>(this.current));
+      return;
     }
 
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        Arrays.sort(candidates);
-        dfs2(candidates, target, 0, 0);
-
-        return this.result;
+    if (sum > target) {
+      return;
     }
+
+    for (int i = index; i < candidates.length; i++) {
+
+      if (i > index && (candidates[i] == candidates[i - 1])) {
+        continue;
+      }
+
+      this.current.add(candidates[i]);
+      dfs2(candidates, target, i + 1, sum + candidates[i]);
+      this.current.remove(this.current.size() - 1);
+    }
+
+  }
+
+  public List<List<Integer>> combinationSum(int[] candidates, int target) {
+
+    dfs(candidates, target, 0, 0);
+    return this.result;
+
+  }
+
+  public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    Arrays.sort(candidates);
+    dfs2(candidates, target, 0, 0);
+
+    return this.result;
+  }
 }

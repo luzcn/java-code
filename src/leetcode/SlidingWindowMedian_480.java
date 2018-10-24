@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 // Median is the middle value in an ordered integer list.
 // If the size of the list is even, there is no middle value.
@@ -36,79 +37,79 @@ import java.util.*;
 public class SlidingWindowMedian_480 {
 
 
-    private PriorityQueue<Integer> left = new PriorityQueue<>(Collections.reverseOrder());
-    private PriorityQueue<Integer> right = new PriorityQueue<>();
+  private PriorityQueue<Integer> left = new PriorityQueue<>(Collections.reverseOrder());
+  private PriorityQueue<Integer> right = new PriorityQueue<>();
 
-    // similar to problem find median from data stream
-    // - use two heaps to simulate the median data
-    // - use a hashset to save the invalid number, when the number reaches the heap top, remove them from heap
-    public double[] medianSlidingWindow(int[] nums, int k) {
-        if (nums.length == 0 || k <= 0) {
-            return new double[0];
-        }
-
-        // List<Double> res = new ArrayList<>();
-
-        double[] res = new double[nums.length - k + 1];
-        for (int i = 0; i < nums.length; i++) {
-            addNumber(nums[i]);
-
-            if (i >= k) {
-                // invalid i-k th number
-                remove(nums[i - k]);
-            }
-
-            if (i >= k - 1) {
-                res[i - k + 1] = getMedian();
-            }
-        }
-
-        return res;
+  // similar to problem find median from data stream
+  // - use two heaps to simulate the median data
+  // - use a hashset to save the invalid number, when the number reaches the heap top, remove them from heap
+  public double[] medianSlidingWindow(int[] nums, int k) {
+    if (nums.length == 0 || k <= 0) {
+      return new double[0];
     }
 
-    private void balance() {
-        if (left.size() - right.size() > 1) {
-            right.add(left.poll());
-        } else if (right.size() - left.size() > 1) {
-            left.add(right.poll());
-        }
+    // List<Double> res = new ArrayList<>();
+
+    double[] res = new double[nums.length - k + 1];
+    for (int i = 0; i < nums.length; i++) {
+      addNumber(nums[i]);
+
+      if (i >= k) {
+        // invalid i-k th number
+        remove(nums[i - k]);
+      }
+
+      if (i >= k - 1) {
+        res[i - k + 1] = getMedian();
+      }
     }
 
-    private void remove(Integer n) {
-        if (!left.remove(n)) {
-            right.remove(n);
-        }
+    return res;
+  }
 
-        balance();
+  private void balance() {
+    if (left.size() - right.size() > 1) {
+      right.add(left.poll());
+    } else if (right.size() - left.size() > 1) {
+      left.add(right.poll());
+    }
+  }
+
+  private void remove(Integer n) {
+    if (!left.remove(n)) {
+      right.remove(n);
     }
 
-    private void addNumber(int n) {
+    balance();
+  }
 
-        if (left.isEmpty()) {
-            left.add(n);
-            return;
-        }
+  private void addNumber(int n) {
 
-        if (n <= left.peek()) {
-            left.add(n);
-        } else {
-            right.add(n);
-        }
-
-        balance();
+    if (left.isEmpty()) {
+      left.add(n);
+      return;
     }
 
-    private double getMedian() {
-        if (left.size() == 0 && right.size() == 0) {
-            return 0;
-        }
-
-        if (left.size() == right.size()) {
-            return left.peek() * 0.5 + right.peek() * 0.5;
-        } else if (left.size() > right.size()) {
-            return left.peek();
-        } else {
-            return right.peek();
-        }
+    if (n <= left.peek()) {
+      left.add(n);
+    } else {
+      right.add(n);
     }
+
+    balance();
+  }
+
+  private double getMedian() {
+    if (left.size() == 0 && right.size() == 0) {
+      return 0;
+    }
+
+    if (left.size() == right.size()) {
+      return left.peek() * 0.5 + right.peek() * 0.5;
+    } else if (left.size() > right.size()) {
+      return left.peek();
+    } else {
+      return right.peek();
+    }
+  }
 }

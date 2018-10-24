@@ -1,11 +1,7 @@
 package leetcode;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-
-import datastructure.Trie;
 
 // Design a search autocomplete system for a search engine.
 // Users may input a sentence (at least one word and end with a special character '#').
@@ -39,145 +35,144 @@ import datastructure.Trie;
 
 public class DesignSearchAutocompleteSystem {
 
-    // the user input string and frequency mapping
-    // private HashMap<String, Integer> map = new HashMap<>();
+  // the user input string and frequency mapping
+  // private HashMap<String, Integer> map = new HashMap<>();
 
-    // The trie root node
-    private TrieNode root = new TrieNode();
+  // The trie root node
+  private TrieNode root = new TrieNode();
 
-    private String currentSentence = "";
+  private String currentSentence = "";
 
-    private void insert(String word, int times) {
+  private void insert(String word, int times) {
 
-        TrieNode current = this.root;
-        for (char c : word.toCharArray()) {
-            int index = c - 'a';
-            if (Character.isWhitespace(c)) {
-                index = 26;
-            }
+    TrieNode current = this.root;
+    for (char c : word.toCharArray()) {
+      int index = c - 'a';
+      if (Character.isWhitespace(c)) {
+        index = 26;
+      }
 
-            if (current.children[index] == null) {
-                current.children[index] = new TrieNode();
-            }
-            current = current.children[index];
-        }
-
-        // + is used for increase the frequency
-        current.times += times;
-        current.sentence = word;
+      if (current.children[index] == null) {
+        current.children[index] = new TrieNode();
+      }
+      current = current.children[index];
     }
 
-    // dfs search all the sentence which has prefix "currentSentence"
-    private void findAllSuggestion(String s, TrieNode node, List<TrieNode> res) {
+    // + is used for increase the frequency
+    current.times += times;
+    current.sentence = word;
+  }
 
-        if (node.times > 0) {
-            res.add(new TrieNode(s, node.times));
-        }
+  // dfs search all the sentence which has prefix "currentSentence"
+  private void findAllSuggestion(String s, TrieNode node, List<TrieNode> res) {
 
-        for (char c = 'a'; c <= 'z'; c++) {
-            int index = c - 'a';
-
-            if (node.children[index] != null) {
-                findAllSuggestion(s + c, node.children[index], res);
-            }
-        }
-
-        if (node.children[26] != null) {
-            findAllSuggestion(s + " ", node.children[26], res);
-        }
-
+    if (node.times > 0) {
+      res.add(new TrieNode(s, node.times));
     }
 
-    private List<TrieNode> query() {
+    for (char c = 'a'; c <= 'z'; c++) {
+      int index = c - 'a';
 
-        TrieNode current = root;
-        List<TrieNode> res = new ArrayList<>();
+      if (node.children[index] != null) {
+        findAllSuggestion(s + c, node.children[index], res);
+      }
+    }
 
-        for (char c : this.currentSentence.toCharArray()) {
-            int index = c - 'a';
+    if (node.children[26] != null) {
+      findAllSuggestion(s + " ", node.children[26], res);
+    }
 
-            if (Character.isWhitespace(c)) {
-                index = 26;
-            }
+  }
 
-            if (current.children[index] == null) {
-                return res;
-            }
-            current = current.children[index];
-        }
+  private List<TrieNode> query() {
 
-        // finished parsing the user input sentence now
-        // start from the current trie node, dfs find all the sentences that have currentSentence as prefix
-        findAllSuggestion(this.currentSentence, current, res);
+    TrieNode current = root;
+    List<TrieNode> res = new ArrayList<>();
 
+    for (char c : this.currentSentence.toCharArray()) {
+      int index = c - 'a';
+
+      if (Character.isWhitespace(c)) {
+        index = 26;
+      }
+
+      if (current.children[index] == null) {
         return res;
+      }
+      current = current.children[index];
     }
 
-    public DesignSearchAutocompleteSystem(String[] sentences, int[] times) {
+    // finished parsing the user input sentence now
+    // start from the current trie node, dfs find all the sentences that have currentSentence as prefix
+    findAllSuggestion(this.currentSentence, current, res);
 
-        if (sentences.length != times.length) {
-            return;
-        }
+    return res;
+  }
 
-        for (int i = 0; i < sentences.length; i++) {
+  public DesignSearchAutocompleteSystem(String[] sentences, int[] times) {
 
-            this.insert(sentences[i], times[i]);
-        }
+    if (sentences.length != times.length) {
+      return;
     }
 
-    public List<String> input(char c) {
+    for (int i = 0; i < sentences.length; i++) {
 
-        List<String> res = new ArrayList<>();
+      this.insert(sentences[i], times[i]);
+    }
+  }
 
-        if (c == '#') {
-            // end of sentence
-            this.insert(currentSentence, 1);
-            this.currentSentence = "";
+  public List<String> input(char c) {
+
+    List<String> res = new ArrayList<>();
+
+    if (c == '#') {
+      // end of sentence
+      this.insert(currentSentence, 1);
+      this.currentSentence = "";
+    } else {
+      // append the current char to query sentence
+      currentSentence += c;
+      List<TrieNode> candidates = this.query();
+
+      // sort the candidates list ordered by times and alphabetic
+      candidates.sort((x, y) -> {
+        if (x.times == y.times) {
+          return x.sentence.compareTo(y.sentence);
         } else {
-            // append the current char to query sentence
-            currentSentence += c;
-            List<TrieNode> candidates = this.query();
-
-            // sort the candidates list ordered by times and alphabetic
-            candidates.sort((x, y) -> {
-                if (x.times == y.times) {
-                    return x.sentence.compareTo(y.sentence);
-                } else {
-                    return y.times - x.times;
-                }
-            });
-
-            for (int i = 0; i < Math.min(3, candidates.size()); i++) {
-                res.add(candidates.get(i).sentence);
-            }
+          return y.times - x.times;
         }
+      });
 
-        return res;
+      for (int i = 0; i < Math.min(3, candidates.size()); i++) {
+        res.add(candidates.get(i).sentence);
+      }
     }
 
+    return res;
+  }
 
-    private class TrieNode {
 
-        TrieNode[] children;
-        int times;
-        String sentence;
+  private class TrieNode {
 
-        TrieNode() {
-            // 0...25 for a...z, 26 is reserved for whitespace
-            children = new TrieNode[27];
-            times = 0;
-            sentence = "";
-        }
+    TrieNode[] children;
+    int times;
+    String sentence;
 
-        TrieNode(String s, int t) {
-            // 0...25 for a...z, 26 is reserved for whitespace
-            children = new TrieNode[27];
-            times = t;
-            sentence = s;
-        }
+    TrieNode() {
+      // 0...25 for a...z, 26 is reserved for whitespace
+      children = new TrieNode[27];
+      times = 0;
+      sentence = "";
     }
+
+    TrieNode(String s, int t) {
+      // 0...25 for a...z, 26 is reserved for whitespace
+      children = new TrieNode[27];
+      times = t;
+      sentence = s;
+    }
+  }
 }
-
 
 // public static void main(String[] args) {
 //

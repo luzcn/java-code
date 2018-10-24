@@ -8,36 +8,36 @@ package leetcode;
 // Can you solve it without using extra space?
 public class LinkedListCycle {
 
-    // two pointer
-    // 快慢指针
-    public ListNode detectCycle(ListNode head) {
-        if (head == null || head.next == null) {
-            return null;
-        }
-
-        ListNode p = head;
-        ListNode q = head;
-
-        while (q != null && q.next != null) {
-            p = p.next;
-            q = q.next.next;
-
-            if (p == q) {
-                break;
-            }
-        }
-
-        if (q == null || q.next == null) {
-            return null;
-        }
-
-        // now p == q and there is cycle
-        p = head;
-        while (p != q) {
-            p = p.next;
-            q = q.next;
-        }
-
-        return p;
+  // two pointer
+  // 快慢指针
+  public ListNode detectCycle(ListNode head) {
+    if (head == null || head.next == null) {
+      return null;
     }
+
+    ListNode p = head;
+    ListNode q = head;
+
+    while (q != null && q.next != null) {
+      p = p.next;
+      q = q.next.next;
+
+      if (p == q) {
+        break;
+      }
+    }
+
+    if (q == null || q.next == null) {
+      return null;
+    }
+
+    // now p == q and there is cycle
+    p = head;
+    while (p != q) {
+      p = p.next;
+      q = q.next;
+    }
+
+    return p;
+  }
 }

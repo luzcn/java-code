@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Stack;
 
 // Evaluate the value of an arithmetic expression in Reverse Polish Notation.
 //
@@ -34,53 +34,53 @@ import java.util.*;
 // = 22
 public class EvaluateReversePolishNotation {
 
-    // this is easier than basic calculator
-    // because the RPN notation has already included the evaluation order
-    public int evalRPN(String[] tokens) {
-        // use stack
-        Stack<Integer> stackNumber = new Stack<>();
+  // this is easier than basic calculator
+  // because the RPN notation has already included the evaluation order
+  public int evalRPN(String[] tokens) {
+    // use stack
+    Stack<Integer> stackNumber = new Stack<>();
 
-        for (String s : tokens) {
-            if (isOperator(s)) {
-                int n2 = stackNumber.pop();
-                int n1 = stackNumber.pop();
+    for (String s : tokens) {
+      if (isOperator(s)) {
+        int n2 = stackNumber.pop();
+        int n1 = stackNumber.pop();
 
-                int n = compute(n1, n2, s);
+        int n = compute(n1, n2, s);
 
-                stackNumber.push(n);
+        stackNumber.push(n);
 
-            } else {
-                stackNumber.push(Integer.parseInt(s));
-            }
-        }
-        return stackNumber.peek();
+      } else {
+        stackNumber.push(Integer.parseInt(s));
+      }
+    }
+    return stackNumber.peek();
+  }
+
+
+  private boolean isOperator(String s) {
+    return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
+  }
+
+  private int compute(int number1, int number2, String op) {
+    if (op.equals("+")) {
+      return number1 + number2;
     }
 
-
-    private boolean isOperator(String s) {
-        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
+    if (op.equals("-")) {
+      return number1 - number2;
     }
 
-    private int compute(int number1, int number2, String op) {
-        if (op.equals("+")) {
-            return number1 + number2;
-        }
+    if (op.equals("*")) {
+      return number1 * number2;
+    }
 
-        if (op.equals("-")) {
-            return number1 - number2;
-        }
-
-        if (op.equals("*")) {
-            return number1 * number2;
-        }
-
-        if (op.equals("/")) {
-            if (number2 == 0) {
-                return 0;
-            }
-            return number1 / number2;
-        }
-
+    if (op.equals("/")) {
+      if (number2 == 0) {
         return 0;
+      }
+      return number1 / number2;
     }
+
+    return 0;
+  }
 }

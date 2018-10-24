@@ -1,8 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
-
 // We are given an elevation map, heights[i] representing the height of the terrain at that index.
 // The width at each index is 1. After V units of water fall at index K, how much water is at each index?
 //
@@ -20,40 +17,40 @@ import java.util.*;
 // - each unit of water has to be in exactly one block.
 public class PourWater_755 {
 
-    public int[] pourWater(int[] heights, int V, int K) {
+  public int[] pourWater(int[] heights, int V, int K) {
 
-        return pourWaterBruteForce(heights, V, K);
+    return pourWaterBruteForce(heights, V, K);
 
-    }
+  }
 
-    // brute force solution
-    private int[] pourWaterBruteForce(int[] heights, int V, int K) {
+  // brute force solution
+  private int[] pourWaterBruteForce(int[] heights, int V, int K) {
 
-        while (V-- > 0) {
-            int index = K;
-            for (int i = K - 1; i >= 0; i--) {
-                if (heights[i] > heights[index]) {
-                    break;
-                } else if (heights[i] < heights[index]) {
-                    index = i;
-                }
-            }
-
-            if (index != K) {
-                heights[index]++;
-                continue;
-            }
-
-            for (int i = K + 1; i < heights.length; i++) {
-                if (heights[i] > heights[index]) {
-                    break;
-                } else if (heights[i] < heights[index]) {
-                    index = i;
-                }
-            }
-
-            heights[index]++;
+    while (V-- > 0) {
+      int index = K;
+      for (int i = K - 1; i >= 0; i--) {
+        if (heights[i] > heights[index]) {
+          break;
+        } else if (heights[i] < heights[index]) {
+          index = i;
         }
-        return heights;
+      }
+
+      if (index != K) {
+        heights[index]++;
+        continue;
+      }
+
+      for (int i = K + 1; i < heights.length; i++) {
+        if (heights[i] > heights[index]) {
+          break;
+        } else if (heights[i] < heights[index]) {
+          index = i;
+        }
+      }
+
+      heights[index]++;
     }
+    return heights;
+  }
 }

@@ -11,42 +11,42 @@ package leetcode;
  */
 public class RemoveNthNodeFromEndOfList {
 
-    // Two pointer
-    // p move n steps first,
-    // then both p and q move to end, until p.next is null,
-    // now q.next is the element need to remove
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        if (head == null || n <= 0) {
-            return head;
-        }
-
-        ListNode p = head;
-        int count = 0;
-
-        while (p != null && count < n) {
-            p = p.next;
-            count++;
-        }
-
-        if (p == null) {
-            // need to remove the head node
-            return head.next;
-        }
-
-        // keep the "p" pointer unchanged,
-        // the distance between q and p is always n
-        ListNode q = head;
-
-        while (p.next != null) {
-            q = q.next;
-            p = p.next;
-        }
-
-        // now q.next is the element need to remove
-        ListNode toRemove = q.next;
-        q.next = toRemove.next;
-        toRemove.next = null;
-
-        return head;
+  // Two pointer
+  // p move n steps first,
+  // then both p and q move to end, until p.next is null,
+  // now q.next is the element need to remove
+  public ListNode removeNthFromEnd(ListNode head, int n) {
+    if (head == null || n <= 0) {
+      return head;
     }
+
+    ListNode p = head;
+    int count = 0;
+
+    while (p != null && count < n) {
+      p = p.next;
+      count++;
+    }
+
+    if (p == null) {
+      // need to remove the head node
+      return head.next;
+    }
+
+    // keep the "p" pointer unchanged,
+    // the distance between q and p is always n
+    ListNode q = head;
+
+    while (p.next != null) {
+      q = q.next;
+      p = p.next;
+    }
+
+    // now q.next is the element need to remove
+    ListNode toRemove = q.next;
+    q.next = toRemove.next;
+    toRemove.next = null;
+
+    return head;
+  }
 }

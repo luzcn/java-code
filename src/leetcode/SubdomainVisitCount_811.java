@@ -1,6 +1,9 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 // A website domain like "discuss.leetcode.com" consists of various subdomains.
 // At the top level, we have "com", at the next level, we have "leetcode.com",
@@ -27,28 +30,28 @@ import java.util.*;
 // As discussed above, the subdomain "leetcode.com" and "com" will also be visited. So they will all be visited 9001 times.
 public class SubdomainVisitCount_811 {
 
-    public List<String> subdomainVisits(String[] cpdomains) {
-        HashMap<String, Integer> map = new HashMap<>();
+  public List<String> subdomainVisits(String[] cpdomains) {
+    HashMap<String, Integer> map = new HashMap<>();
 
-        for (String cp : cpdomains) {
+    for (String cp : cpdomains) {
 
-            int count = Integer.parseInt(cp.split(" ")[0]);
-            String domain = cp.split(" ")[1];
+      int count = Integer.parseInt(cp.split(" ")[0]);
+      String domain = cp.split(" ")[1];
 
-            map.put(domain, map.getOrDefault(domain, 0) + count);
-            for (int i = 0; i < domain.length(); i++) {
-                if (domain.charAt(i) == '.') {
-                    String subdomain = domain.substring(i + 1);
-                    map.put(subdomain, map.getOrDefault(subdomain, 0) + count);
-                }
-            }
+      map.put(domain, map.getOrDefault(domain, 0) + count);
+      for (int i = 0; i < domain.length(); i++) {
+        if (domain.charAt(i) == '.') {
+          String subdomain = domain.substring(i + 1);
+          map.put(subdomain, map.getOrDefault(subdomain, 0) + count);
         }
-
-        List<String> res = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            res.add(entry.getValue() + " " + entry.getKey());
-        }
-
-        return res;
+      }
     }
+
+    List<String> res = new ArrayList<>();
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+      res.add(entry.getValue() + " " + entry.getKey());
+    }
+
+    return res;
+  }
 }

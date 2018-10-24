@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given a binary tree, find its maximum depth.
 //
 // The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
@@ -20,14 +18,14 @@ import java.util.*;
 // return its depth = 3.
 public class MaximumDepthBinaryTree {
 
-    public int maxDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-
-        int leftSub = maxDepth(root.left);
-        int rightSub = maxDepth(root.right);
-
-        return Math.max(leftSub, rightSub) + 1;
+  public int maxDepth(TreeNode root) {
+    if (root == null) {
+      return 0;
     }
+
+    int leftSub = maxDepth(root.left);
+    int rightSub = maxDepth(root.right);
+
+    return Math.max(leftSub, rightSub) + 1;
+  }
 }

@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Arrays;
 
 // You are given coins of different denominations and a total amount of money amount.
 // Write a function to compute the fewest number of coins that you need to make up that amount.
@@ -20,21 +20,21 @@ import java.util.*;
 // You may assume that you have an infinite number of each kind of coin.
 public class CoinChange_322 {
 
-    public int coinChange(int[] coins, int amount) {
-        int m = amount;
-        int n = coins.length;
-        int[] dp = new int[m + 1];
-        Arrays.fill(dp, Integer.MAX_VALUE - 1);
-        dp[0] = 0;
+  public int coinChange(int[] coins, int amount) {
+    int m = amount;
+    int n = coins.length;
+    int[] dp = new int[m + 1];
+    Arrays.fill(dp, Integer.MAX_VALUE - 1);
+    dp[0] = 0;
 
-        for (int i = 1; i <= m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i >= coins[j]) {
-                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
-                }
-            }
+    for (int i = 1; i <= m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (i >= coins[j]) {
+          dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
         }
-
-        return dp[m] == Integer.MAX_VALUE - 1 ? -1 : dp[m];
+      }
     }
+
+    return dp[m] == Integer.MAX_VALUE - 1 ? -1 : dp[m];
+  }
 }

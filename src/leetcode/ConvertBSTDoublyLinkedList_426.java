@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Stack;
 
 // Convert a BST to a sorted circular doubly-linked list in-place.
 // Think of the left and right pointers as synonymous to the previous and next pointers in a doubly-linked list.
@@ -20,83 +20,83 @@ import java.util.*;
 //
 public class ConvertBSTDoublyLinkedList_426 {
 
-    public Node treeToDoublyList(Node root) {
+  public Node treeToDoublyList(Node root) {
 
-        if (root == null) {
-            return root;
-        }
-
-        Node head = root;
-        while (head.left != null) {
-            head = head.left;
-        }
-
-        // inorder(root);
-
-        head.left = prev;
-        prev.right = head;
-
-        return head;
+    if (root == null) {
+      return root;
     }
 
-    private Node prev = null;
-
-
-    private void inorderIterative(Node root) {
-        Stack<Node> stack = new Stack<>();
-        Node current = root;
-
-        while (true) {
-            if (current != null) {
-                stack.push(current);
-                current = current.left;
-            } else if (!stack.isEmpty()) {
-                current = stack.pop();
-
-                if (prev != null) {
-                    current.left = prev;
-                    prev.right = current;
-                }
-
-                prev = current;
-
-                current = current.right;
-            } else {
-                break;
-            }
-        }
+    Node head = root;
+    while (head.left != null) {
+      head = head.left;
     }
 
-    private void inorder(Node node) {
+    // inorder(root);
 
-        if (node == null) {
-            return;
-        }
+    head.left = prev;
+    prev.right = head;
 
-        inorder(node.left);
+    return head;
+  }
+
+  private Node prev = null;
+
+
+  private void inorderIterative(Node root) {
+    Stack<Node> stack = new Stack<>();
+    Node current = root;
+
+    while (true) {
+      if (current != null) {
+        stack.push(current);
+        current = current.left;
+      } else if (!stack.isEmpty()) {
+        current = stack.pop();
 
         if (prev != null) {
-            node.left = prev;
-            prev.right = node;
+          current.left = prev;
+          prev.right = current;
         }
 
-        prev = node;
-        inorder(node.right);
+        prev = current;
+
+        current = current.right;
+      } else {
+        break;
+      }
+    }
+  }
+
+  private void inorder(Node node) {
+
+    if (node == null) {
+      return;
     }
 
-    private class Node {
+    inorder(node.left);
 
-        public int val;
-        public Node left;
-        public Node right;
-
-        public Node() {
-        }
-
-        public Node(int _val, Node _left, Node _right) {
-            val = _val;
-            left = _left;
-            right = _right;
-        }
+    if (prev != null) {
+      node.left = prev;
+      prev.right = node;
     }
+
+    prev = node;
+    inorder(node.right);
+  }
+
+  private class Node {
+
+    public int val;
+    public Node left;
+    public Node right;
+
+    public Node() {
+    }
+
+    public Node(int _val, Node _left, Node _right) {
+      val = _val;
+      left = _left;
+      right = _right;
+    }
+  }
 }

@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Suppose you are at a party with n people (labeled from 0 to n - 1) and among them, there may exist one celebrity.
 // The definition of a celebrity is that all the other n - 1 people know him/her but he/she does not know any of them.
 //
@@ -18,33 +16,33 @@ import java.util.*;
 // - If there is no celebrity, return -1.
 public class FindCelebrity_277 {
 
-    // helper function, not useful
-    private boolean knows(int a, int b) {
-        return false;
+  // helper function, not useful
+  private boolean knows(int a, int b) {
+    return false;
+  }
+
+  public int findCelebrity(int n) {
+    int candidate = 0;
+
+    for (int i = 1; i < n; i++) {
+      if (knows(candidate, i)) {
+        // candidate knows i, so candidate cannot be celebrity,
+        // but i is a new candidate now
+        candidate = i;
+      }
     }
 
-    public int findCelebrity(int n) {
-        int candidate = 0;
+    // we need to check if there is a celebrity
+    for (int i = 0; i < n; i++) {
+      if (i == candidate) {
+        continue;
+      }
 
-        for (int i = 1; i < n; i++) {
-            if (knows(candidate, i)) {
-                // candidate knows i, so candidate cannot be celebrity,
-                // but i is a new candidate now
-                candidate = i;
-            }
-        }
-
-        // we need to check if there is a celebrity
-        for (int i = 0; i < n; i++) {
-            if (i == candidate) {
-                continue;
-            }
-
-            if (knows(candidate, i) || !knows(i, candidate)) {
-                return -1;
-            }
-        }
-
-        return candidate;
+      if (knows(candidate, i) || !knows(i, candidate)) {
+        return -1;
+      }
     }
+
+    return candidate;
+  }
 }

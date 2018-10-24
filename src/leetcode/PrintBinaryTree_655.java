@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // Print a binary tree in an m*n 2D string array following these rules:
 //

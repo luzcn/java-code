@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given a positive integer n, return the number of all possible attendance records with length n,
 // which will be regarded as rewardable.
 //
@@ -24,39 +22,39 @@ import java.util.*;
 // Only "AA" won't be regarded as rewardable owing to more than one absent times.
 public class StudentAttendanceRecord_552 {
 
-    public int checkRecord(int n) {
+  public int checkRecord(int n) {
 
-        // DP solution
+    // DP solution
 
-        return 0;
-    }
+    return 0;
+  }
 
-    // 551 You need to return whether the student could be rewarded according to his attendance record.
-    public boolean checkRecord1(String s) {
-        int countAbsent = 0;
-        int countLate = 0;
+  // 551 You need to return whether the student could be rewarded according to his attendance record.
+  public boolean checkRecord1(String s) {
+    int countAbsent = 0;
+    int countLate = 0;
 
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
+    for (int i = 0; i < s.length(); i++) {
+      char c = s.charAt(i);
 
-            if (c == 'A') {
-                countAbsent++;
-                if (countAbsent > 1) {
-                    return false;
-                }
-            } else if (c == 'L') {
-                if (i > 0 && s.charAt(i - 1) == 'L') {
-                    countLate++;
-
-                    if (countLate > 1) {
-                        return false;
-                    }
-                } else {
-                    countLate = 0;
-                }
-            }
+      if (c == 'A') {
+        countAbsent++;
+        if (countAbsent > 1) {
+          return false;
         }
+      } else if (c == 'L') {
+        if (i > 0 && s.charAt(i - 1) == 'L') {
+          countLate++;
 
-        return true;
+          if (countLate > 1) {
+            return false;
+          }
+        } else {
+          countLate = 0;
+        }
+      }
     }
+
+    return true;
+  }
 }

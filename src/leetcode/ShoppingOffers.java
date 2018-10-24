@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 // In LeetCode Store, there are some kinds of items to sell. Each item has a price.
@@ -43,77 +44,78 @@ import java.util.*;
 public class ShoppingOffers {
 
 
-    public List<List<Integer>> res = new ArrayList<>();
+  public List<List<Integer>> res = new ArrayList<>();
 
 
-    // dfs, solution
-    // find out all the possible special offers that can use
-    // then compute the minimal total price with (needs[i] - offer[i]) * prices[i] + offer.last
-    private void dfs(List<List<Integer>> special, List<Integer> needs, int start, List<Integer> current) {
+  // dfs, solution
+  // find out all the possible special offers that can use
+  // then compute the minimal total price with (needs[i] - offer[i]) * prices[i] + offer.last
+  private void dfs(List<List<Integer>> special, List<Integer> needs, int start,
+      List<Integer> current) {
 
-        if (start >= special.size()) {
-            return;
-        }
-
-        // more than the required items
-        for (int j = 0; j < needs.size(); j++) {
-            if (current.get(j) > needs.get(j)) {
-                return;
-            }
-        }
-
-        res.add(new ArrayList<>(current));
-        for (int i = start; i < special.size(); i++) {
-            List<Integer> offer = special.get(i);
-
-            for (int j = 0; j < offer.size(); j++) {
-                current.set(j, current.get(j) + offer.get(j));
-            }
-
-            dfs(special, needs, i, current);
-
-            for (int j = 0; j < offer.size(); j++) {
-                current.set(j, current.get(j) - offer.get(j));
-            }
-        }
-
+    if (start >= special.size()) {
+      return;
     }
 
-    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
-        if (price.isEmpty() || needs.isEmpty()) {
-            return 0;
-        }
-
-        List<Integer> current = new ArrayList<>();
-
-        for (int i = 0; i < needs.size(); i++) {
-            current.add(0);
-        }
-        // the last element is total price of all possible offers
-        current.add(0);
-
-        dfs(special, needs, 0, current);
-
-        if (this.res.isEmpty()) {
-            // no special offer used
-            int totalPrice = 0;
-            for (int item = 0; item < needs.size(); item++) {
-                totalPrice += needs.get(item) * price.get(item);
-            }
-            return totalPrice;
-        }
-
-        //
-        for (List<Integer> offer : this.res) {
-            for (int item = 0; item < needs.size(); item++) {
-
-                int specialOfferPrice = offer.get(offer.size() - 1);
-                int itemPrice = price.get(item);
-                int itemNeeds = needs.get(item);
-
-                offer.set(offer.size() - 1, specialOfferPrice + itemPrice * (itemNeeds - offer.get(item)));
-            }
-        }
-        return this.res.stream().mapToInt(x -> x.get(x.size() - 1)).min().getAsInt();
+    // more than the required items
+    for (int j = 0; j < needs.size(); j++) {
+      if (current.get(j) > needs.get(j)) {
+        return;
+      }
     }
+
+    res.add(new ArrayList<>(current));
+    for (int i = start; i < special.size(); i++) {
+      List<Integer> offer = special.get(i);
+
+      for (int j = 0; j < offer.size(); j++) {
+        current.set(j, current.get(j) + offer.get(j));
+      }
+
+      dfs(special, needs, i, current);
+
+      for (int j = 0; j < offer.size(); j++) {
+        current.set(j, current.get(j) - offer.get(j));
+      }
+    }
+
+  }
+
+  public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+    if (price.isEmpty() || needs.isEmpty()) {
+      return 0;
+    }
+
+    List<Integer> current = new ArrayList<>();
+
+    for (int i = 0; i < needs.size(); i++) {
+      current.add(0);
+    }
+    // the last element is total price of all possible offers
+    current.add(0);
+
+    dfs(special, needs, 0, current);
+
+    if (this.res.isEmpty()) {
+      // no special offer used
+      int totalPrice = 0;
+      for (int item = 0; item < needs.size(); item++) {
+        totalPrice += needs.get(item) * price.get(item);
+      }
+      return totalPrice;
+    }
+
+    //
+    for (List<Integer> offer : this.res) {
+      for (int item = 0; item < needs.size(); item++) {
+
+        int specialOfferPrice = offer.get(offer.size() - 1);
+        int itemPrice = price.get(item);
+        int itemNeeds = needs.get(item);
+
+        offer.set(offer.size() - 1, specialOfferPrice + itemPrice * (itemNeeds - offer.get(item)));
+      }
+    }
+    return this.res.stream().mapToInt(x -> x.get(x.size() - 1)).min().getAsInt();
+  }
 }

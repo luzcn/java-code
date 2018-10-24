@@ -17,77 +17,77 @@ import java.util.Queue;
 //
 public class TheMaze {
 
-    private Queue<int[]> queue = new LinkedList<>();
-    private boolean[][] visited;
-    private int[][] dirs = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+  private Queue<int[]> queue = new LinkedList<>();
+  private boolean[][] visited;
+  private int[][] dirs = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
 
-    // bfs solution, use queue
-    private boolean bfs(int[][] maze, int[] start, int[] destination) {
-        queue.add(start);
-        visited[start[0]][start[1]] = true;
+  // bfs solution, use queue
+  private boolean bfs(int[][] maze, int[] start, int[] destination) {
+    queue.add(start);
+    visited[start[0]][start[1]] = true;
 
-        while (!queue.isEmpty()) {
-            int[] current = queue.remove();
+    while (!queue.isEmpty()) {
+      int[] current = queue.remove();
 
-            if (current[0] == destination[0] && current[1] == destination[1]) {
-                return true;
-            }
+      if (current[0] == destination[0] && current[1] == destination[1]) {
+        return true;
+      }
 
-            for (int[] dir : dirs) {
-                int x = current[0] + dir[0];
-                int y = current[1] + dir[1];
+      for (int[] dir : dirs) {
+        int x = current[0] + dir[0];
+        int y = current[1] + dir[1];
 
-                while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
-                    x += dir[0];
-                    y += dir[1];
-                }
-
-                if (!visited[x - dir[0]][y - dir[1]]) {
-                    visited[x - dir[0]][y - dir[1]] = true;
-                    queue.add(new int[]{x - dir[0], y - dir[1]});
-                }
-            }
+        while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
+          x += dir[0];
+          y += dir[1];
         }
 
-        return false;
+        if (!visited[x - dir[0]][y - dir[1]]) {
+          visited[x - dir[0]][y - dir[1]] = true;
+          queue.add(new int[]{x - dir[0], y - dir[1]});
+        }
+      }
     }
 
-    private boolean dfs(int[][] maze, int[] current, int[] destination) {
-        if (current[0] == destination[0] && current[1] == destination[1]) {
-            return true;
-        }
+    return false;
+  }
 
-        if (visited[current[0]][current[1]]) {
-            return false;
-        }
-
-        visited[current[0]][current[1]] = true;
-
-        for (int[] dir : dirs) {
-            int x = current[0];
-            int y = current[1];
-            while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
-                x += dir[0];
-                y += dir[1];
-            }
-
-            if (dfs(maze, new int[]{x - dir[0], y - dir[1]}, destination)) {
-                return true;
-            }
-        }
-
-        return false;
+  private boolean dfs(int[][] maze, int[] current, int[] destination) {
+    if (current[0] == destination[0] && current[1] == destination[1]) {
+      return true;
     }
 
-
-    public boolean hasPath(int[][] maze, int[] start, int[] destination) {
-        if (maze.length == 0) {
-            return false;
-        }
-
-        visited = new boolean[maze.length][maze[0].length];
-
-        return dfs(maze, start, destination);
+    if (visited[current[0]][current[1]]) {
+      return false;
     }
+
+    visited[current[0]][current[1]] = true;
+
+    for (int[] dir : dirs) {
+      int x = current[0];
+      int y = current[1];
+      while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
+        x += dir[0];
+        y += dir[1];
+      }
+
+      if (dfs(maze, new int[]{x - dir[0], y - dir[1]}, destination)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+
+  public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+    if (maze.length == 0) {
+      return false;
+    }
+
+    visited = new boolean[maze.length][maze[0].length];
+
+    return dfs(maze, start, destination);
+  }
 }

@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Write a function to generate the generalized abbreviations of a word.
 //
@@ -15,49 +16,49 @@ import java.util.*;
 public class GeneralizedAbbreviation {
 
 
-    private List<String> res = new ArrayList<>();
+  private List<String> res = new ArrayList<>();
 
-    // dfs
-    // similar to subset, string permutation
-    // each iteration, compute the i - start distance, if > 0, append to the current string
-    // also need to add the ith character
+  // dfs
+  // similar to subset, string permutation
+  // each iteration, compute the i - start distance, if > 0, append to the current string
+  // also need to add the ith character
 
-    private void dfs(String word, int index, List<String> current) {
-        if (index >= word.length()) {
-            String result = "";
-            for (String s : current) {
-                result += s;
-            }
-            res.add(result);
-            return;
-        }
-
-        for (int i = index; i <= word.length(); i++) {
-            int distance = i - index;
-            if (distance > 0) {
-                current.add(Integer.toString(distance));
-            }
-
-            if (i < word.length()) {
-                current.add("" + word.charAt(i));
-            }
-
-            dfs(word, i + 1, current);
-
-            if (distance > 0) {
-                current.remove(current.size() - 1);
-            }
-
-            if (i < word.length()) {
-                current.remove(current.size() - 1);
-            }
-        }
+  private void dfs(String word, int index, List<String> current) {
+    if (index >= word.length()) {
+      String result = "";
+      for (String s : current) {
+        result += s;
+      }
+      res.add(result);
+      return;
     }
 
-    public List<String> generateAbbreviations(String word) {
+    for (int i = index; i <= word.length(); i++) {
+      int distance = i - index;
+      if (distance > 0) {
+        current.add(Integer.toString(distance));
+      }
 
-        dfs(word, 0, new ArrayList<>());
+      if (i < word.length()) {
+        current.add("" + word.charAt(i));
+      }
 
-        return this.res;
+      dfs(word, i + 1, current);
+
+      if (distance > 0) {
+        current.remove(current.size() - 1);
+      }
+
+      if (i < word.length()) {
+        current.remove(current.size() - 1);
+      }
     }
+  }
+
+  public List<String> generateAbbreviations(String word) {
+
+    dfs(word, 0, new ArrayList<>());
+
+    return this.res;
+  }
 }

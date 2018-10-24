@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
 
 // Given two sentences words1, words2 (each represented as an array of strings),
 // and a list of similar word pairs pairs, determine if two sentences are similar.
@@ -28,27 +29,27 @@ import java.util.*;
 // - The length of each words[i] and pairs[i][j] will be in the range [1, 20].
 public class SentenceSimilarity_734 {
 
-    public boolean areSentencesSimilar(String[] words1, String[] words2, String[][] pairs) {
+  public boolean areSentencesSimilar(String[] words1, String[] words2, String[][] pairs) {
 
-        if (words1.length != words2.length) {
-            return false;
-        }
-        int n = words1.length;
-
-        HashMap<String, HashSet<String>> map = new HashMap<>();
-
-        for (String[] pair : pairs) {
-            map.computeIfAbsent(pair[0], k -> new HashSet<>()).add(pair[1]);
-            map.computeIfAbsent(pair[1], k -> new HashSet<>()).add(pair[0]);
-        }
-
-        for (int i = 0; i < n; i++) {
-            if (!words1[i].equals(words2[i]) && (map.get(words1[i]) == null
-                    || !map.get(words1[i]).contains(words2[i]))) {
-                return false;
-            }
-        }
-
-        return true;
+    if (words1.length != words2.length) {
+      return false;
     }
+    int n = words1.length;
+
+    HashMap<String, HashSet<String>> map = new HashMap<>();
+
+    for (String[] pair : pairs) {
+      map.computeIfAbsent(pair[0], k -> new HashSet<>()).add(pair[1]);
+      map.computeIfAbsent(pair[1], k -> new HashSet<>()).add(pair[0]);
+    }
+
+    for (int i = 0; i < n; i++) {
+      if (!words1[i].equals(words2[i]) && (map.get(words1[i]) == null
+          || !map.get(words1[i]).contains(words2[i]))) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }

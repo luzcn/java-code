@@ -8,21 +8,21 @@ import java.util.Random;
 
 public class RandomPickIndex {
 
-    Map<Integer, List<Integer>> map = new HashMap<>();
-    Random random = new Random();
+  Map<Integer, List<Integer>> map = new HashMap<>();
+  Random random = new Random();
 
-    public RandomPickIndex(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
-            map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
-        }
+  public RandomPickIndex(int[] nums) {
+    for (int i = 0; i < nums.length; i++) {
+      map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
     }
+  }
 
-    public int pick(int target) {
+  public int pick(int target) {
 
-        List<Integer> indexList = map.get(target);
+    List<Integer> indexList = map.get(target);
 
-        int i = random.nextInt(indexList.size());
+    int i = random.nextInt(indexList.size());
 
-        return indexList.get(i);
-    }
+    return indexList.get(i);
+  }
 }

@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Reverse bits of a given 32 bits unsigned integer.
 //
 // Example:
@@ -13,16 +11,17 @@ import java.util.*;
 // Follow up:
 // If this function is called many times, how would you optimize it?
 public class ReverseBits_190 {
-    public int reverseBits(int n) {
 
-        int res = 0;
+  public int reverseBits(int n) {
 
-        for (int i = 0; i < 32; i++) {
-            if (((n >> i) & 1) == 1) {
-                res += (1 << (31 - i));
-            }
-        }
+    int res = 0;
 
-        return res;
+    for (int i = 0; i < 32; i++) {
+      if (((n >> i) & 1) == 1) {
+        res += (1 << (31 - i));
+      }
     }
+
+    return res;
+  }
 }

@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashSet;
 
 // Given a non-empty 2D array grid of 0's and 1's,
 // an island is a group of 1's (representing land) connected 4-directionally (horizontal or vertical.)
@@ -26,53 +26,53 @@ import java.util.*;
 // Given the above grid map, return 3.
 public class NumberOfDistinctIslands {
 
-    private boolean[][] visited;
-    private String shape = "";
+  private boolean[][] visited;
+  private String shape = "";
 
-    private void dfs(int[][] grid, int x, int y, String id) {
-        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) {
-            return;
-        }
-
-        if (visited[x][y] || grid[x][y] == 0) {
-            return;
-        }
-
-        visited[x][y] = true;
-        shape += id;
-
-        dfs(grid, x - 1, y, "L");
-        dfs(grid, x + 1, y, "R");
-        dfs(grid, x, y - 1, "U");
-        dfs(grid, x, y + 1, "D");
-
-        shape += "#";
+  private void dfs(int[][] grid, int x, int y, String id) {
+    if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) {
+      return;
     }
 
-    public int numDistinctIslands(int[][] grid) {
-        int m = grid.length;
-        if (m == 0) {
-            return 0;
-        }
-
-        int n = grid[0].length;
-        visited = new boolean[m][n];
-        HashSet<String> shapes = new HashSet<>();
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1 && !visited[i][j]) {
-
-                    shape = "";
-                    dfs(grid, i, j, "0");
-
-                    if (!shape.isEmpty()) {
-                        shapes.add(shape);
-                    }
-                }
-            }
-        }
-
-        return shapes.size();
+    if (visited[x][y] || grid[x][y] == 0) {
+      return;
     }
+
+    visited[x][y] = true;
+    shape += id;
+
+    dfs(grid, x - 1, y, "L");
+    dfs(grid, x + 1, y, "R");
+    dfs(grid, x, y - 1, "U");
+    dfs(grid, x, y + 1, "D");
+
+    shape += "#";
+  }
+
+  public int numDistinctIslands(int[][] grid) {
+    int m = grid.length;
+    if (m == 0) {
+      return 0;
+    }
+
+    int n = grid[0].length;
+    visited = new boolean[m][n];
+    HashSet<String> shapes = new HashSet<>();
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (grid[i][j] == 1 && !visited[i][j]) {
+
+          shape = "";
+          dfs(grid, i, j, "0");
+
+          if (!shape.isEmpty()) {
+            shapes.add(shape);
+          }
+        }
+      }
+    }
+
+    return shapes.size();
+  }
 }

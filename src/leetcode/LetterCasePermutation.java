@@ -22,27 +22,28 @@ import java.util.List;
 //
 public class LetterCasePermutation {
 
-    // recursive, bottom-up solution
-    public List<String> letterCasePermutation(String S) {
-        List<String> result = new ArrayList<>();
+  // recursive, bottom-up solution
+  public List<String> letterCasePermutation(String S) {
+    List<String> result = new ArrayList<>();
 
-        if (S.isEmpty()) {
-            result.add("");
-            return result;
-        }
-
-        char c = S.charAt(0);
-
-        List<String> words = letterCasePermutation(S.substring(1));
-
-        for (String word : words) {
-            result.add(c + word);
-
-            if (!Character.isDigit(c)) {
-                result.add((Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c)) + word);
-            }
-        }
-
-        return result;
+    if (S.isEmpty()) {
+      result.add("");
+      return result;
     }
+
+    char c = S.charAt(0);
+
+    List<String> words = letterCasePermutation(S.substring(1));
+
+    for (String word : words) {
+      result.add(c + word);
+
+      if (!Character.isDigit(c)) {
+        result.add((Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c))
+            + word);
+      }
+    }
+
+    return result;
+  }
 }

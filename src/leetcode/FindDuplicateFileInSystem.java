@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 // Given a list of directory info including directory path, and all the files with contents in this directory,
 // you need to find out all the groups of duplicate files in the file system in terms of their paths.
@@ -45,61 +47,61 @@ import java.util.*;
 // - How to make sure the duplicated files you find are not false positive?
 public class FindDuplicateFileInSystem {
 
-    public List<List<String>> findDuplicate(String[] paths) {
+  public List<List<String>> findDuplicate(String[] paths) {
 
-        // parse the input directory, filename and content
-        // save the content in a hashmap, with a list of file path (directory_path/file_name.txt)
-        List<List<String>> result = new ArrayList<>();
+    // parse the input directory, filename and content
+    // save the content in a hashmap, with a list of file path (directory_path/file_name.txt)
+    List<List<String>> result = new ArrayList<>();
 
-        if (paths.length == 0) {
-            return result;
-        }
-
-        HashMap<String, List<String>> map = new HashMap<>();
-
-        for (String path : paths) {
-            String[] fileList = path.split(" ");
-            String directory = fileList[0];
-
-            for (int i = 1; i < fileList.length; i++) {
-                String file = fileList[i];
-
-                StringBuilder fileName = new StringBuilder();
-                StringBuilder content = new StringBuilder();
-
-                parseFile(fileName, content, file);
-
-                map.computeIfAbsent(content.toString(), k -> new ArrayList<>())
-                        .add(directory + "/" + fileName.toString());
-            }
-        }
-
-        for (List<String> files : map.values()) {
-            if (files.size() > 1) {
-                result.add(files);
-            }
-        }
-
-        return result;
+    if (paths.length == 0) {
+      return result;
     }
 
-    // parse the file name and content
-    private void parseFile(StringBuilder fileName, StringBuilder content, String file) {
-        int index = 0;
-        while (index < file.length()) {
-            char c = file.charAt(index);
+    HashMap<String, List<String>> map = new HashMap<>();
 
-            if (c == '(') {
-                index++;
-                while (index < file.length() && file.charAt(index) != ')') {
-                    content.append(file.charAt(index));
-                    index++;
-                }
-                break;
-            }
+    for (String path : paths) {
+      String[] fileList = path.split(" ");
+      String directory = fileList[0];
 
-            fileName.append(c);
-            index++;
-        }
+      for (int i = 1; i < fileList.length; i++) {
+        String file = fileList[i];
+
+        StringBuilder fileName = new StringBuilder();
+        StringBuilder content = new StringBuilder();
+
+        parseFile(fileName, content, file);
+
+        map.computeIfAbsent(content.toString(), k -> new ArrayList<>())
+            .add(directory + "/" + fileName.toString());
+      }
     }
+
+    for (List<String> files : map.values()) {
+      if (files.size() > 1) {
+        result.add(files);
+      }
+    }
+
+    return result;
+  }
+
+  // parse the file name and content
+  private void parseFile(StringBuilder fileName, StringBuilder content, String file) {
+    int index = 0;
+    while (index < file.length()) {
+      char c = file.charAt(index);
+
+      if (c == '(') {
+        index++;
+        while (index < file.length() && file.charAt(index) != ')') {
+          content.append(file.charAt(index));
+          index++;
+        }
+        break;
+      }
+
+      fileName.append(c);
+      index++;
+    }
+  }
 }

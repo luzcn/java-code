@@ -8,8 +8,8 @@ import java.util.List;
  *
  * Find the number of paths that sum to a given value.
  *
- * The path does not need to start or end at the root or a leaf,
- * but it must go downwards (traveling only from parent nodes to child nodes).
+ * The path does not need to start or end at the root or a leaf, but it must go downwards (traveling
+ * only from parent nodes to child nodes).
  *
  * The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
  */
@@ -32,42 +32,43 @@ import java.util.List;
 // 3. -3 -> 11
 public class PathSum3 {
 
-    private int[] nums = new int[1 << 10];  // 1024
-    private int count;
-    private List<List<Integer>> result = new ArrayList<>();
+  private int[] nums = new int[1 << 10];  // 1024
+  private int count;
+  private List<List<Integer>> result = new ArrayList<>();
 
-    private void addArrayToList(int i, int j) {
-        List<Integer> path = new ArrayList<>();
-        while (i >= j) {
-            path.add(nums[i]);
-            i--;
-        }
-
-        this.result.add(path);
+  private void addArrayToList(int i, int j) {
+    List<Integer> path = new ArrayList<>();
+    while (i >= j) {
+      path.add(nums[i]);
+      i--;
     }
 
-    private void dfs(TreeNode node, int sum, int i) {
-        if (node == null)
-            return;
+    this.result.add(path);
+  }
 
-        nums[i] = node.val;
-        int pathSum = 0;
-        for (int j = i; j >= 0; j--) {
-            pathSum += nums[j];
-            if (pathSum == sum) {
-                this.count++;
-                addArrayToList(i, j);
-            }
-        }
-
-        dfs(node.left, sum, i + 1);
-        dfs(node.right, sum, i + 1);
+  private void dfs(TreeNode node, int sum, int i) {
+    if (node == null) {
+      return;
     }
 
-    public int pathSum(TreeNode root, int sum) {
-        dfs(root, sum, 0);
-
-        result.forEach(System.out::println);
-        return this.count;
+    nums[i] = node.val;
+    int pathSum = 0;
+    for (int j = i; j >= 0; j--) {
+      pathSum += nums[j];
+      if (pathSum == sum) {
+        this.count++;
+        addArrayToList(i, j);
+      }
     }
+
+    dfs(node.left, sum, i + 1);
+    dfs(node.right, sum, i + 1);
+  }
+
+  public int pathSum(TreeNode root, int sum) {
+    dfs(root, sum, 0);
+
+    result.forEach(System.out::println);
+    return this.count;
+  }
 }

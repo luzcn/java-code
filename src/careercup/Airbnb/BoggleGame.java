@@ -1,8 +1,8 @@
 package careercup.Airbnb;
 
-import java.util.*;
-
-import datastructure.Trie;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 // similar to word search II
 // each cell can move in 8 directions
@@ -27,136 +27,137 @@ import datastructure.Trie;
 public class BoggleGame {
 
 
-    private List<String> res = new ArrayList<>();
-    private int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
+  private List<String> res = new ArrayList<>();
+  private int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
 
-    // dfs solution O(m*n) time
-    private void dfs(char[][] boggle, int i, int j, boolean[][] visited, String word, int pos) {
-        if (pos >= word.length()) {
-            res.add(word);
-            return;
-        }
-
-        if (i < 0 || i >= boggle.length || j < 0 || j >= boggle[0].length || visited[i][j]) {
-            return;
-        }
-
-        if (boggle[i][j] != word.charAt(pos)) {
-            return;
-        }
-
-        visited[i][j] = true;
-
-        for (int[] dir : dirs) {
-            int x = i + dir[0];
-            int y = i + dir[1];
-
-            dfs(boggle, x, y, visited, word, pos + 1);
-        }
-        visited[i][j] = false;
+  // dfs solution O(m*n) time
+  private void dfs(char[][] boggle, int i, int j, boolean[][] visited, String word, int pos) {
+    if (pos >= word.length()) {
+      res.add(word);
+      return;
     }
 
-    private List<String> wordSearchDFS(char[][] boggle, HashSet<String> dict) {
-
-        if (boggle.length == 0) {
-            return res;
-        }
-
-        int m = boggle.length;
-        int n = boggle[0].length;
-        boolean[][] visited = new boolean[m][n];
-
-        for (String word : dict) {
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (word.charAt(0) == boggle[i][j]) {
-                        dfs(boggle, i, j, visited, word, 0);
-                    }
-                }
-            }
-        }
-
-        return res;
+    if (i < 0 || i >= boggle.length || j < 0 || j >= boggle[0].length || visited[i][j]) {
+      return;
     }
 
-    //**********************************************************************/
-
-    // we can build a trie on top of the given dictionary words
-    // search each path in the boggle board, if the path string in the trie, save it
-    private class TrieNode {
-
-        TrieNode[] children;
-        int wordCount;
-
-        TrieNode() {
-            children = new TrieNode[26];
-            wordCount = 0;
-        }
-
+    if (boggle[i][j] != word.charAt(pos)) {
+      return;
     }
 
-    private TrieNode root;
+    visited[i][j] = true;
 
-    private void buildTrie(List<String> words) {
-        for (String word : words) {
-            TrieNode current = root;
+    for (int[] dir : dirs) {
+      int x = i + dir[0];
+      int y = i + dir[1];
 
-            for (char c : word.toCharArray()) {
-                int index = c - 'a';
+      dfs(boggle, x, y, visited, word, pos + 1);
+    }
+    visited[i][j] = false;
+  }
 
-                if (current.children[index] == null) {
-                    current.children[index] = new TrieNode();
-                }
-                current = current.children[index];
-            }
+  private List<String> wordSearchDFS(char[][] boggle, HashSet<String> dict) {
 
-            current.wordCount = 1;
-        }
+    if (boggle.length == 0) {
+      return res;
     }
 
-    private void dfs(char[][] board, int i, int j, String current, TrieNode node, boolean[][] visited) {
-        if (node == null) {
-            return;
+    int m = boggle.length;
+    int n = boggle[0].length;
+    boolean[][] visited = new boolean[m][n];
+
+    for (String word : dict) {
+      for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+          if (word.charAt(0) == boggle[i][j]) {
+            dfs(boggle, i, j, visited, word, 0);
+          }
         }
+      }
+    }
 
-        if (node.wordCount == 1) {
-            res.add(current);
+    return res;
+  }
 
-            // no duplicate
-            node.wordCount--;
-        }
+  //**********************************************************************/
 
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]) {
-            return;
-        }
+  // we can build a trie on top of the given dictionary words
+  // search each path in the boggle board, if the path string in the trie, save it
+  private class TrieNode {
 
-        visited[i][j] = true;
-        char c = board[i][j];
+    TrieNode[] children;
+    int wordCount;
+
+    TrieNode() {
+      children = new TrieNode[26];
+      wordCount = 0;
+    }
+
+  }
+
+  private TrieNode root;
+
+  private void buildTrie(List<String> words) {
+    for (String word : words) {
+      TrieNode current = root;
+
+      for (char c : word.toCharArray()) {
         int index = c - 'a';
 
-        for (int[] dir : dirs) {
-            int x = i + dir[0];
-            int y = j + dir[1];
-
-            dfs(board, x, y, current + c, node.children[index], visited);
+        if (current.children[index] == null) {
+          current.children[index] = new TrieNode();
         }
+        current = current.children[index];
+      }
 
-        visited[i][j] = false;
+      current.wordCount = 1;
+    }
+  }
+
+  private void dfs(char[][] board, int i, int j, String current, TrieNode node,
+      boolean[][] visited) {
+    if (node == null) {
+      return;
     }
 
-    private List<String> findWords(char[][] board, List<String> dict) {
-        // build trie for each word
-        root = new TrieNode();
+    if (node.wordCount == 1) {
+      res.add(current);
 
-        buildTrie(dict);
-
-        return res;
-
+      // no duplicate
+      node.wordCount--;
     }
 
-
-    public List<String> wordSearch(char[][] board, HashSet<String> dict) {
-        return this.wordSearchDFS(board, dict);
+    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]) {
+      return;
     }
+
+    visited[i][j] = true;
+    char c = board[i][j];
+    int index = c - 'a';
+
+    for (int[] dir : dirs) {
+      int x = i + dir[0];
+      int y = j + dir[1];
+
+      dfs(board, x, y, current + c, node.children[index], visited);
+    }
+
+    visited[i][j] = false;
+  }
+
+  private List<String> findWords(char[][] board, List<String> dict) {
+    // build trie for each word
+    root = new TrieNode();
+
+    buildTrie(dict);
+
+    return res;
+
+  }
+
+
+  public List<String> wordSearch(char[][] board, HashSet<String> dict) {
+    return this.wordSearchDFS(board, dict);
+  }
 
 }

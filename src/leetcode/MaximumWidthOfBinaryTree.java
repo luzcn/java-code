@@ -57,28 +57,28 @@ import java.util.HashMap;
 // Output: 8
 // Explanation:The maximum width existing in the fourth level with the length 8 (6,null,null,null,null,null,null,7).
 public class MaximumWidthOfBinaryTree {
-    // similar to level order, assign each node a position, if goes left child position*2, right child position*2 + 1
-    // save these two key values in a hashmap with level as the map key.
+  // similar to level order, assign each node a position, if goes left child position*2, right child position*2 + 1
+  // save these two key values in a hashmap with level as the map key.
 
-    private HashMap<Integer, Integer> map = new HashMap<>();
-    private int ans = 0;
+  private HashMap<Integer, Integer> map = new HashMap<>();
+  private int ans = 0;
 
-    private void dfs(TreeNode node, int position, int level) {
+  private void dfs(TreeNode node, int position, int level) {
 
-        if (node == null) {
-            return;
-        }
-
-        map.putIfAbsent(level, position);
-        ans = Math.max(ans, position - map.get(position) + 1);
-
-        dfs(node.left, position * 2, level + 1);
-        dfs(node.right, position * 2 + 1, level + 1);
+    if (node == null) {
+      return;
     }
 
-    public int widthOfBinaryTree(TreeNode root) {
+    map.putIfAbsent(level, position);
+    ans = Math.max(ans, position - map.get(position) + 1);
 
-        dfs(root, 0, 0);
-        return this.ans;
-    }
+    dfs(node.left, position * 2, level + 1);
+    dfs(node.right, position * 2 + 1, level + 1);
+  }
+
+  public int widthOfBinaryTree(TreeNode root) {
+
+    dfs(root, 0, 0);
+    return this.ans;
+  }
 }

@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 // Given a sequence of words, check whether it forms a valid word square.
 //
@@ -45,76 +46,76 @@ import java.util.*;
 
 public class ValidWordSquare {
 
-    // brute force, O(m*n) time, m*n is the total character size, also O(m*n) space
-    // use a hash map save the string and row index
-    // for each column i, get all the word[i] and form a string, check if the sting is identical to the string with row index i.
-    public boolean validWordSquare(List<String> words) {
-        if (words.isEmpty()) {
-            return true;
-        }
-
-        int n = words.size();
-        HashMap<Integer, String> map = new HashMap<>();
-
-        for (int i = 0; i < n; i++) {
-            map.put(i, words.get(i));
-        }
-
-        for (int i = 0; i < n; i++) {
-            StringBuilder sb = new StringBuilder();
-            for (String w : words) {
-
-                // the strings may not have the same length
-                if (i < w.length()) {
-                    sb.append(w.charAt(i));
-                }
-            }
-            if (!map.get(i).equals(sb.toString())) {
-                return false;
-            }
-        }
-
-        return true;
+  // brute force, O(m*n) time, m*n is the total character size, also O(m*n) space
+  // use a hash map save the string and row index
+  // for each column i, get all the word[i] and form a string, check if the sting is identical to the string with row index i.
+  public boolean validWordSquare(List<String> words) {
+    if (words.isEmpty()) {
+      return true;
     }
 
-    // Word Squares
-    // https://leetcode.com/problems/word-squares/description/
-    // Given a set of words (without duplicates), find all word squares you can build from them.
-    //
-    // A sequence of words forms a valid word square if the kth row and column read the exact same string,
-    // where 0 ≤ k < max(numRows, numColumns).
-    //
-    // For example, the word sequence ["ball","area","lead","lady"]
-    // forms a word square because each word reads the same both horizontally and vertically.
-    //
-    // b a l l
-    // a r e a
-    // l e a d
-    // l a d y
-    //
-    // Example 1:
-    // Input:
-    // ["area","lead","wall","lady","ball"]
-    //
-    // Output:
-    // [
-    //   [ "wall",
-    //     "area",
-    //     "lead",
-    //     "lady"
-    //   ],
-    //   [ "ball",
-    //     "area",
-    //     "lead",
-    //     "lady"
-    //   ]
-    // ]
-    //
-    // Explanation:
-    // The output consists of two word squares.
-    // The order of output does not matter (just the order of words in each word square matters).
-    public List<List<String>> wordSquares(String[] words) {
+    int n = words.size();
+    HashMap<Integer, String> map = new HashMap<>();
 
-        return null;
+    for (int i = 0; i < n; i++) {
+      map.put(i, words.get(i));
     }
+
+    for (int i = 0; i < n; i++) {
+      StringBuilder sb = new StringBuilder();
+      for (String w : words) {
+
+        // the strings may not have the same length
+        if (i < w.length()) {
+          sb.append(w.charAt(i));
+        }
+      }
+      if (!map.get(i).equals(sb.toString())) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Word Squares
+  // https://leetcode.com/problems/word-squares/description/
+  // Given a set of words (without duplicates), find all word squares you can build from them.
+  //
+  // A sequence of words forms a valid word square if the kth row and column read the exact same string,
+  // where 0 ≤ k < max(numRows, numColumns).
+  //
+  // For example, the word sequence ["ball","area","lead","lady"]
+  // forms a word square because each word reads the same both horizontally and vertically.
+  //
+  // b a l l
+  // a r e a
+  // l e a d
+  // l a d y
+  //
+  // Example 1:
+  // Input:
+  // ["area","lead","wall","lady","ball"]
+  //
+  // Output:
+  // [
+  //   [ "wall",
+  //     "area",
+  //     "lead",
+  //     "lady"
+  //   ],
+  //   [ "ball",
+  //     "area",
+  //     "lead",
+  //     "lady"
+  //   ]
+  // ]
+  //
+  // Explanation:
+  // The output consists of two word squares.
+  // The order of output does not matter (just the order of words in each word square matters).
+  public List<List<String>> wordSquares(String[] words) {
+
+    return null;
+  }
 }

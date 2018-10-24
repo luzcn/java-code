@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 // Given the root of a tree, you are asked to find the most frequent subtree sum.
 // The subtree sum of a node is defined as the sum of all the node values formed by the subtree rooted at that node (including the node itself).
@@ -24,42 +26,43 @@ import java.util.*;
 // return [2], since 2 happens twice, however -5 only occur once.
 // Note: You may assume the sum of values in any subtree is in the range of 32-bit signed integer.
 public class MostFrequentSubtreeSum_508 {
-    public int[] findFrequentTreeSum(TreeNode root) {
 
-        dfs(root);
+  public int[] findFrequentTreeSum(TreeNode root) {
 
-        ArrayList<Integer> res = new ArrayList<>();
-        int maxFrequency = 0;
+    dfs(root);
 
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+    ArrayList<Integer> res = new ArrayList<>();
+    int maxFrequency = 0;
 
-            if (maxFrequency == entry.getValue()) {
-                res.add(entry.getKey());
-            } else if (entry.getValue() > maxFrequency) {
-                res.clear();
-                maxFrequency = entry.getValue();
-                res.add(entry.getKey());
-            }
-        }
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
 
-        return res.stream().mapToInt(x -> x).toArray();
+      if (maxFrequency == entry.getValue()) {
+        res.add(entry.getKey());
+      } else if (entry.getValue() > maxFrequency) {
+        res.clear();
+        maxFrequency = entry.getValue();
+        res.add(entry.getKey());
+      }
     }
 
-    private HashMap<Integer, Integer> map = new HashMap<>();
+    return res.stream().mapToInt(x -> x).toArray();
+  }
+
+  private HashMap<Integer, Integer> map = new HashMap<>();
 
 
-    private int dfs(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-
-        int leftSub = dfs(node.left);
-        int rightSub = dfs(node.right);
-
-        int subTreeSum = leftSub + rightSub + node.val;
-
-        map.put(subTreeSum, map.getOrDefault(subTreeSum, 0) + 1);
-
-        return subTreeSum;
+  private int dfs(TreeNode node) {
+    if (node == null) {
+      return 0;
     }
+
+    int leftSub = dfs(node.left);
+    int rightSub = dfs(node.right);
+
+    int subTreeSum = leftSub + rightSub + node.val;
+
+    map.put(subTreeSum, map.getOrDefault(subTreeSum, 0) + 1);
+
+    return subTreeSum;
+  }
 }

@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Design your implementation of the linked list.
 // You can choose to use the singly linked list or the doubly linked list.
 //
@@ -36,166 +34,165 @@ import java.util.*;
 // linkedList.get(1);            // returns 3
 public class DesignLinkedList_707 {
 
-    private ListNode head;
-    private ListNode tail;
+  private ListNode head;
+  private ListNode tail;
 
-    /**
-     * Initialize your data structure here.
-     */
-    public DesignLinkedList_707() {
-        head = null;
+  /**
+   * Initialize your data structure here.
+   */
+  public DesignLinkedList_707() {
+    head = null;
+    tail = null;
+  }
+
+  /**
+   * Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+   */
+  public int get(int index) {
+    if (head == null) {
+      return -1;
+    }
+
+    ListNode p = head;
+    int count = 0;
+
+    while (p != null && count < index) {
+      p = p.next;
+      count++;
+    }
+
+    return p == null ? -1 : p.value;
+  }
+
+  /**
+   * Add a node of value val before the first element of the linked list. After the insertion, the
+   * new node will be the first node of the linked list.
+   */
+  public void addAtHead(int val) {
+
+    if (head == null) {
+      head = new ListNode(val);
+      tail = head;
+      return;
+    }
+
+    ListNode newHead = new ListNode(val);
+    head.prev = newHead;
+    newHead.next = head;
+
+    head = newHead;
+  }
+
+  /**
+   * Append a node of value val to the last element of the linked list.
+   */
+  public void addAtTail(int val) {
+    if (tail == null) {
+      tail = new ListNode(val);
+      head = tail;
+      return;
+    }
+    ListNode newTail = new ListNode(val);
+    tail.next = newTail;
+    newTail.prev = tail;
+
+    tail = newTail;
+  }
+
+  /**
+   * Add a node of value val before the index-th node in the linked list. If index equals to the
+   * length of linked list, the node will be appended to the end of linked list. If index is greater
+   * than the length, the node will not be inserted.
+   */
+  public void addAtIndex(int index, int val) {
+    if (head == null) {
+      addAtHead(val);
+      return;
+    }
+
+    ListNode p = head;
+    int count = 0;
+
+    while (p != null && count < index) {
+      p = p.next;
+      count++;
+    }
+
+    if (p == null && count == index) {
+      addAtTail(val);
+      return;
+    }
+
+    if (p != null) {
+      ListNode newNode = new ListNode(val);
+
+      if (p.prev != null) {
+        p.prev.next = newNode;
+      }
+
+      newNode.prev = p.prev;
+      newNode.next = p;
+      p.prev = newNode;
+    }
+
+  }
+
+  /**
+   * Delete the index-th node in the linked list, if the index is valid.
+   */
+  public void deleteAtIndex(int index) {
+    ListNode p = head;
+    int count = 0;
+
+    while (p != null && count < index) {
+      p = p.next;
+      count++;
+    }
+
+    if (p == null) {
+      return;
+    }
+
+    if (p == head) {
+      head = head.next;
+      if (head == null) {
         tail = null;
+      } else {
+        head.prev = null;
+      }
+      return;
     }
 
-    /**
-     * Get the value of the index-th node in the linked list.
-     * If the index is invalid, return -1.
-     */
-    public int get(int index) {
-        if (head == null) {
-            return -1;
-        }
-
-        ListNode p = head;
-        int count = 0;
-
-        while (p != null && count < index) {
-            p = p.next;
-            count++;
-        }
-
-        return p == null ? -1 : p.value;
+    if (p == tail) {
+      tail = tail.prev;
+      if (tail == null) {
+        head = null;
+      } else {
+        tail.next = null;
+      }
+      return;
     }
 
-    /**
-     * Add a node of value val before the first element of the linked list.
-     * After the insertion, the new node will be the first node of the linked list.
-     */
-    public void addAtHead(int val) {
-
-        if (head == null) {
-            head = new ListNode(val);
-            tail = head;
-            return;
-        }
-
-        ListNode newHead = new ListNode(val);
-        head.prev = newHead;
-        newHead.next = head;
-
-        head = newHead;
+    if (p.prev != null) {
+      p.prev.next = p.next;
     }
 
-    /**
-     * Append a node of value val to the last element of the linked list.
-     */
-    public void addAtTail(int val) {
-        if (tail == null) {
-            tail = new ListNode(val);
-            head = tail;
-            return;
-        }
-        ListNode newTail = new ListNode(val);
-        tail.next = newTail;
-        newTail.prev = tail;
-
-        tail = newTail;
+    if (p.next != null) {
+      p.next.prev = p.prev;
     }
 
-    /**
-     * Add a node of value val before the index-th node in the linked list.
-     * If index equals to the length of linked list, the node will be appended to the end of linked list.
-     * If index is greater than the length, the node will not be inserted.
-     */
-    public void addAtIndex(int index, int val) {
-        if (head == null) {
-            addAtHead(val);
-            return;
-        }
+  }
 
-        ListNode p = head;
-        int count = 0;
+  private class ListNode {
 
-        while (p != null && count < index) {
-            p = p.next;
-            count++;
-        }
+    ListNode prev;
+    ListNode next;
 
-        if (p == null && count == index) {
-            addAtTail(val);
-            return;
-        }
+    int value;
 
-        if (p != null) {
-            ListNode newNode = new ListNode(val);
-
-            if (p.prev != null) {
-                p.prev.next = newNode;
-            }
-
-            newNode.prev = p.prev;
-            newNode.next = p;
-            p.prev = newNode;
-        }
-
+    ListNode(int val) {
+      value = val;
     }
-
-    /**
-     * Delete the index-th node in the linked list, if the index is valid.
-     */
-    public void deleteAtIndex(int index) {
-        ListNode p = head;
-        int count = 0;
-
-        while (p != null && count < index) {
-            p = p.next;
-            count++;
-        }
-
-        if (p == null) {
-            return;
-        }
-
-        if (p == head) {
-            head = head.next;
-            if (head == null) {
-                tail = null;
-            } else {
-                head.prev = null;
-            }
-            return;
-        }
-
-        if (p == tail) {
-            tail = tail.prev;
-            if (tail == null) {
-                head = null;
-            } else {
-                tail.next = null;
-            }
-            return;
-        }
-
-        if (p.prev != null) {
-            p.prev.next = p.next;
-        }
-
-        if (p.next != null) {
-            p.next.prev = p.prev;
-        }
-
-    }
-
-    private class ListNode {
-
-        ListNode prev;
-        ListNode next;
-
-        int value;
-
-        ListNode(int val) {
-            value = val;
-        }
-    }
+  }
 
 }

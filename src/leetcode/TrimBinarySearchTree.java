@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given a binary search tree and the lowest and highest boundaries as L and R,
 // trim the tree so that all its elements lies in [L, R] (R >= L).
 //
@@ -22,28 +20,28 @@ import java.util.*;
 //        2
 public class TrimBinarySearchTree {
 
-    private TreeNode dfs(TreeNode node, int L, int R) {
-        if (node == null) {
-            return null;
-        }
-
-        if (node.val >= L && node.val <= R) {
-            node.left = dfs(node.left, L, R);
-            node.right = dfs(node.right, L, R);
-        } else if (node.val < L) {
-            node = node.right;
-            return dfs(node, L, R);
-        } else {
-            node = node.left;
-            return dfs(node, L, R);
-        }
-
-        return node;
+  private TreeNode dfs(TreeNode node, int L, int R) {
+    if (node == null) {
+      return null;
     }
 
-    public TreeNode trimBST(TreeNode root, int L, int R) {
-
-        return dfs(root, L, R);
+    if (node.val >= L && node.val <= R) {
+      node.left = dfs(node.left, L, R);
+      node.right = dfs(node.right, L, R);
+    } else if (node.val < L) {
+      node = node.right;
+      return dfs(node, L, R);
+    } else {
+      node = node.left;
+      return dfs(node, L, R);
     }
+
+    return node;
+  }
+
+  public TreeNode trimBST(TreeNode root, int L, int R) {
+
+    return dfs(root, L, R);
+  }
 
 }

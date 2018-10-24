@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.LinkedList;
 
 // Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
 //
@@ -11,30 +11,33 @@ import java.util.*;
 // m.next(3) = (1 + 10 + 3) / 3
 // m.next(5) = (10 + 3 + 5) / 3
 public class MovingAverageFromDataStream_346 {
-    private LinkedList<Integer> data = new LinkedList<>();
-    private int cap;
-    private int sum;
 
-    /** Initialize your data structure here. */
-    public MovingAverageFromDataStream_346(int size) {
-        cap = size;
-        sum = 0;
+  private LinkedList<Integer> data = new LinkedList<>();
+  private int cap;
+  private int sum;
+
+  /**
+   * Initialize your data structure here.
+   */
+  public MovingAverageFromDataStream_346(int size) {
+    cap = size;
+    sum = 0;
+  }
+
+  public double next(int val) {
+    if (data.size() == cap) {
+      sum -= data.getFirst();
+      data.removeFirst();
     }
 
-    public double next(int val) {
-        if (data.size() == cap) {
-            sum -= data.getFirst();
-            data.removeFirst();
-        }
+    data.addLast(val);
+    sum += val;
 
-        data.addLast(val);
-        sum += val;
-
-        if (data.size() < cap) {
-            return (double) sum/data.size();
-        }
-
-        return (double) sum/cap;
-
+    if (data.size() < cap) {
+      return (double) sum / data.size();
     }
+
+    return (double) sum / cap;
+
+  }
 }

@@ -24,110 +24,108 @@ import java.util.List;
 // So a sentence like words1 = ["great"] can never be similar to words2 = ["doubleplus","good"].
 public class SentenceSimilarity_737 {
 
-    // dfs solution
-    public boolean areSentencesSimilarTwo(String[] words1, String[] words2, String[][] pairs) {
+  // dfs solution
+  public boolean areSentencesSimilarTwo(String[] words1, String[] words2, String[][] pairs) {
 
-        if (words1.length != words2.length) {
-            return false;
-        }
-
-        for (String[] p : pairs) {
-            graph.computeIfAbsent(p[0], k -> new ArrayList<>()).add(p[1]);
-            graph.computeIfAbsent(p[1], k -> new ArrayList<>()).add(p[0]);
-        }
-
-        int n = words1.length;
-        for (int i = 0; i < n; i++) {
-            String w1 = words1[i];
-            String w2 = words2[i];
-
-            if (!dfs(w1, w2, new HashSet<>())) {
-                return false;
-            }
-        }
-
-        return true;
+    if (words1.length != words2.length) {
+      return false;
     }
 
-    private HashMap<String, List<String>> graph = new HashMap<>();
+    for (String[] p : pairs) {
+      graph.computeIfAbsent(p[0], k -> new ArrayList<>()).add(p[1]);
+      graph.computeIfAbsent(p[1], k -> new ArrayList<>()).add(p[0]);
+    }
 
-    private boolean dfs(String node, String target, HashSet<String> visited) {
-        if (node.equals(target)) {
-            return true;
-        }
+    int n = words1.length;
+    for (int i = 0; i < n; i++) {
+      String w1 = words1[i];
+      String w2 = words2[i];
 
-        if (visited.contains(node)) {
-            return false;
-        }
-
-        visited.add(node);
-
-        for (String next : graph.getOrDefault(node, new ArrayList<>())) {
-            if (dfs(next, target, visited)) {
-                return true;
-            }
-        }
-
+      if (!dfs(w1, w2, new HashSet<>())) {
         return false;
+      }
     }
 
+    return true;
+  }
 
-    // union-find solution
-    public boolean areSentencesSimilarTwoUF(String[] words1, String[] words2, String[][] pairs) {
+  private HashMap<String, List<String>> graph = new HashMap<>();
 
-        if (words1.length != words2.length) {
-            return false;
-        }
+  private boolean dfs(String node, String target, HashSet<String> visited) {
+    if (node.equals(target)) {
+      return true;
+    }
 
-        for (String[] p : pairs) {
-            String w1 = p[0];
-            String w2 = p[1];
+    if (visited.contains(node)) {
+      return false;
+    }
 
-            // make each node as the root of itself first
-            root.putIfAbsent(w1, w1);
-            root.putIfAbsent(w2, w2);
+    visited.add(node);
 
-            // update the root relation
-            root.put(getRoot(w1), getRoot(w2));
-        }
-
-        int n = words1.length;
-        for (int i = 0; i < n; i++) {
-            String w1 = words1[i];
-            String w2 = words2[i];
-
-            if (w1.equals(w2)) {
-                continue;
-            }
-
-            if (getRoot(w1) == null || getRoot(w2) == null) {
-                return false;
-            }
-
-
-            if (!getRoot(w1).equals(getRoot(w2))) {
-                return false;
-            }
-        }
-
+    for (String next : graph.getOrDefault(node, new ArrayList<>())) {
+      if (dfs(next, target, visited)) {
         return true;
+      }
     }
 
-    private HashMap<String, String> root = new HashMap<>();
+    return false;
+  }
 
-    private String getRoot(String s) {
-        if (root.get(s) == null) {
-            return null;
-        }
 
-        while (!s.equals(root.get(s))) {
-            s = root.get(s);
-        }
+  // union-find solution
+  public boolean areSentencesSimilarTwoUF(String[] words1, String[] words2, String[][] pairs) {
 
-        return s;
+    if (words1.length != words2.length) {
+      return false;
     }
+
+    for (String[] p : pairs) {
+      String w1 = p[0];
+      String w2 = p[1];
+
+      // make each node as the root of itself first
+      root.putIfAbsent(w1, w1);
+      root.putIfAbsent(w2, w2);
+
+      // update the root relation
+      root.put(getRoot(w1), getRoot(w2));
+    }
+
+    int n = words1.length;
+    for (int i = 0; i < n; i++) {
+      String w1 = words1[i];
+      String w2 = words2[i];
+
+      if (w1.equals(w2)) {
+        continue;
+      }
+
+      if (getRoot(w1) == null || getRoot(w2) == null) {
+        return false;
+      }
+
+      if (!getRoot(w1).equals(getRoot(w2))) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private HashMap<String, String> root = new HashMap<>();
+
+  private String getRoot(String s) {
+    if (root.get(s) == null) {
+      return null;
+    }
+
+    while (!s.equals(root.get(s))) {
+      s = root.get(s);
+    }
+
+    return s;
+  }
 }
-
 
 //    public static void main(String[] args) {
 //        SentenceSimilarity_737 sm = new SentenceSimilarity_737();

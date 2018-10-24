@@ -15,27 +15,27 @@ package leetcode;
 
 public class SplitBST {
 
-    // dfs solution
-    // the left sub tree only needs to update right children
-    // the right sub tree only needs to update left children.
-    public TreeNode[] splitBST(TreeNode root, int V) {
+  // dfs solution
+  // the left sub tree only needs to update right children
+  // the right sub tree only needs to update left children.
+  public TreeNode[] splitBST(TreeNode root, int V) {
 
-        if (root == null) {
-            return new TreeNode[]{null, null};
-        }
-
-        if (root.val > V) {
-            TreeNode[] result = splitBST(root.left, V);
-            root.left = result[1];
-
-            return new TreeNode[]{result[0], root};
-        } else {
-            TreeNode[] result = splitBST(root.right, V);
-            root.right = result[0];
-
-            return new TreeNode[]{root, result[1]};
-        }
+    if (root == null) {
+      return new TreeNode[]{null, null};
     }
+
+    if (root.val > V) {
+      TreeNode[] result = splitBST(root.left, V);
+      root.left = result[1];
+
+      return new TreeNode[]{result[0], root};
+    } else {
+      TreeNode[] result = splitBST(root.right, V);
+      root.right = result[0];
+
+      return new TreeNode[]{root, result[1]};
+    }
+  }
 
 
 }

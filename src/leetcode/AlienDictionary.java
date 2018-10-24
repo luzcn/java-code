@@ -6,7 +6,8 @@ package leetcode;
 // You receive a list of non-empty words from the dictionary, where words are sorted lexicographically
 // by the rules of this new language.
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
 
 // Derive the order of letters in this language.
 //
@@ -50,90 +51,90 @@ import java.util.*;
 // - There may be multiple valid order of letters, return any one of them is fine.
 public class AlienDictionary {
 
-    private HashMap<Character, HashSet<Character>> graph = new HashMap<>();
-    private StringBuilder res = new StringBuilder();
-    private HashSet<Character> visited = new HashSet<>();
+  private HashMap<Character, HashSet<Character>> graph = new HashMap<>();
+  private StringBuilder res = new StringBuilder();
+  private HashSet<Character> visited = new HashSet<>();
 
-    // The idea is construct a graph, then topological sort with checking if there is cycle in the graph
+  // The idea is construct a graph, then topological sort with checking if there is cycle in the graph
 
-    // The problem says the "words" are sorted, but not for characters in each word.
-    // e.g. from the first example, we have order "wertf", so ["ettf, efwt] is also valid
-    public String alienOrder(String[] words) {
+  // The problem says the "words" are sorted, but not for characters in each word.
+  // e.g. from the first example, we have order "wertf", so ["ettf, efwt] is also valid
+  public String alienOrder(String[] words) {
 
-        if (words.length == 0) {
-            return "";
-        }
-
-        if (words.length == 1) {
-            return words[0];
-        }
-
-        // build the graph
-        this.buildGraph(words);
-
-        // topological sort
-        for (char c : graph.keySet()) {
-            if (!this.topoSort(c, new HashSet<>())) {
-                return "";
-            }
-        }
-
-        return res.reverse().toString();
+    if (words.length == 0) {
+      return "";
     }
 
-
-    private boolean topoSort(char node, HashSet<Character> ancestor) {
-        if (ancestor.contains(node)) {
-            return false;
-        }
-
-        if (this.visited.contains(node)) {
-            return true;
-        }
-
-        this.visited.add(node);
-        ancestor.add(node);
-        for (char child : graph.getOrDefault(node, new HashSet<>())) {
-            if (!topoSort(child, ancestor)) {
-                return false;
-            }
-        }
-        ancestor.remove(node);
-
-        this.res.append(node);
-
-        return true;
+    if (words.length == 1) {
+      return words[0];
     }
 
-    private void buildGraph(String[] words) {
-        for (int i = 1; i < words.length; i++) {
+    // build the graph
+    this.buildGraph(words);
 
-            // comparing each two words pair
-            int m = words[i - 1].length();
-            int n = words[i].length();
-            boolean isFound = false;
-
-            int length = Math.max(m, n);
-
-            for (int j = 0; j < length; j++) {
-
-                // first, implicitly add each character into the graph
-                if (j < m) {
-                    graph.putIfAbsent(words[i - 1].charAt(j), new HashSet<>());
-                }
-
-                if (j < n) {
-                    graph.putIfAbsent(words[i].charAt(j), new HashSet<>());
-                }
-
-                // find one edge, do not need to continue search and add edges, otherwise, it could make the graph cyclic
-                if (j < m && j < n && words[i - 1].charAt(j) != words[i].charAt(j) && !isFound) {
-                    // graph.computeIfAbsent(words[i - 1].charAt(j), k -> new HashSet<>()).add(words[i].charAt(j));
-
-                    graph.get(words[i - 1].charAt(j)).add(words[i].charAt(j));
-                    isFound = true;
-                }
-            }
-        }
+    // topological sort
+    for (char c : graph.keySet()) {
+      if (!this.topoSort(c, new HashSet<>())) {
+        return "";
+      }
     }
+
+    return res.reverse().toString();
+  }
+
+
+  private boolean topoSort(char node, HashSet<Character> ancestor) {
+    if (ancestor.contains(node)) {
+      return false;
+    }
+
+    if (this.visited.contains(node)) {
+      return true;
+    }
+
+    this.visited.add(node);
+    ancestor.add(node);
+    for (char child : graph.getOrDefault(node, new HashSet<>())) {
+      if (!topoSort(child, ancestor)) {
+        return false;
+      }
+    }
+    ancestor.remove(node);
+
+    this.res.append(node);
+
+    return true;
+  }
+
+  private void buildGraph(String[] words) {
+    for (int i = 1; i < words.length; i++) {
+
+      // comparing each two words pair
+      int m = words[i - 1].length();
+      int n = words[i].length();
+      boolean isFound = false;
+
+      int length = Math.max(m, n);
+
+      for (int j = 0; j < length; j++) {
+
+        // first, implicitly add each character into the graph
+        if (j < m) {
+          graph.putIfAbsent(words[i - 1].charAt(j), new HashSet<>());
+        }
+
+        if (j < n) {
+          graph.putIfAbsent(words[i].charAt(j), new HashSet<>());
+        }
+
+        // find one edge, do not need to continue search and add edges, otherwise, it could make the graph cyclic
+        if (j < m && j < n && words[i - 1].charAt(j) != words[i].charAt(j) && !isFound) {
+          // graph.computeIfAbsent(words[i - 1].charAt(j), k -> new HashSet<>()).add(words[i].charAt(j));
+
+          graph.get(words[i - 1].charAt(j)).add(words[i].charAt(j));
+          isFound = true;
+        }
+      }
+    }
+  }
 }

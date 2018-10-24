@@ -23,43 +23,44 @@ package leetcode;
 //
 public class WallsAndGates {
 
-    private static final int INF = Integer.MAX_VALUE;
+  private static final int INF = Integer.MAX_VALUE;
 
-    private static final int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+  private static final int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-    private void dfs(int[][] rooms, int x, int y, boolean[][] visited, int distance) {
-        if (x < 0 || x >= rooms.length || y < 0 || y >= rooms[0].length || visited[x][y] || rooms[x][y] == -1
-                || rooms[x][y] == 0) {
-            return;
-        }
-
-        visited[x][y] = true;
-        rooms[x][y] = Math.min(rooms[x][y], distance);
-
-        for (int[] dir : dirs) {
-            dfs(rooms, x + dir[0], y + dir[1], visited, distance + 1);
-        }
-
-        visited[x][y] = false;
+  private void dfs(int[][] rooms, int x, int y, boolean[][] visited, int distance) {
+    if (x < 0 || x >= rooms.length || y < 0 || y >= rooms[0].length || visited[x][y]
+        || rooms[x][y] == -1
+        || rooms[x][y] == 0) {
+      return;
     }
 
-    public void wallsAndGates(int[][] rooms) {
-        if (rooms.length == 0) {
-            return;
-        }
+    visited[x][y] = true;
+    rooms[x][y] = Math.min(rooms[x][y], distance);
 
-        int m = rooms.length;
-        int n = rooms[0].length;
-        boolean[][] visited = new boolean[m][n];
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (rooms[i][j] == 0) {
-                    for (int[] dir : dirs) {
-                        dfs(rooms, i + dir[0], j + dir[1], visited, 1);
-                    }
-                }
-            }
-        }
+    for (int[] dir : dirs) {
+      dfs(rooms, x + dir[0], y + dir[1], visited, distance + 1);
     }
+
+    visited[x][y] = false;
+  }
+
+  public void wallsAndGates(int[][] rooms) {
+    if (rooms.length == 0) {
+      return;
+    }
+
+    int m = rooms.length;
+    int n = rooms[0].length;
+    boolean[][] visited = new boolean[m][n];
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (rooms[i][j] == 0) {
+          for (int[] dir : dirs) {
+            dfs(rooms, i + dir[0], j + dir[1], visited, 1);
+          }
+        }
+      }
+    }
+  }
 }

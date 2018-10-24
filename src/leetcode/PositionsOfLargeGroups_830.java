@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 // In a string S of lowercase letters, these letters form consecutive groups of the same character.
 //
@@ -30,31 +32,31 @@ import java.util.*;
 //
 public class PositionsOfLargeGroups_830 {
 
-    // two pointer solution
-    public List<List<Integer>> largeGroupPositions(String s) {
-        List<List<Integer>> res = new ArrayList<>();
+  // two pointer solution
+  public List<List<Integer>> largeGroupPositions(String s) {
+    List<List<Integer>> res = new ArrayList<>();
 
-        int begin = 0;
-        int end = 0;
-        int count = 0;
+    int begin = 0;
+    int end = 0;
+    int count = 0;
 
-        while (end < s.length()) {
+    while (end < s.length()) {
 
-            if (s.charAt(end) == s.charAt(begin)) {
-                count++;
-                end++;
-            } else {
-                if (count >= 3) {
-                    res.add(Arrays.asList(begin, end - 1));
-                }
-                begin = end;
-                count = 0;
-            }
-        }
+      if (s.charAt(end) == s.charAt(begin)) {
+        count++;
+        end++;
+      } else {
         if (count >= 3) {
-            res.add(Arrays.asList(begin, end - 1));
+          res.add(Arrays.asList(begin, end - 1));
         }
-
-        return res;
+        begin = end;
+        count = 0;
+      }
     }
+    if (count >= 3) {
+      res.add(Arrays.asList(begin, end - 1));
+    }
+
+    return res;
+  }
 }

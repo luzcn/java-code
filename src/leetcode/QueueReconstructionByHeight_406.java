@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 // Suppose you have a random list of people standing in a queue.
 //
@@ -22,35 +24,35 @@ import java.util.*;
 // [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
 public class QueueReconstructionByHeight_406 {
 
-    public int[][] reconstructQueue(int[][] people) {
-        int m = people.length;
+  public int[][] reconstructQueue(int[][] people) {
+    int m = people.length;
 
-        // Insert a short person in front of tall persons will not affect the relative order of the taller persons,
-        // thus sort from higher height to lower height
-        // but, int Java, Arrays.sort, doesn't support customized sorting, so convert
-        List<int[]> res = new ArrayList<>();
+    // Insert a short person in front of tall persons will not affect the relative order of the taller persons,
+    // thus sort from higher height to lower height
+    // but, int Java, Arrays.sort, doesn't support customized sorting, so convert
+    List<int[]> res = new ArrayList<>();
 
-        List<int[]> peopleList = new ArrayList<>(Arrays.asList(people));
+    List<int[]> peopleList = new ArrayList<>(Arrays.asList(people));
 
-        peopleList.sort((x, y) -> {
-            if (x[0] == y[0]) {
-                return x[1] - y[1];
-            }
+    peopleList.sort((x, y) -> {
+      if (x[0] == y[0]) {
+        return x[1] - y[1];
+      }
 
-            return y[0] - x[0];
-        });
+      return y[0] - x[0];
+    });
 
-        for (int[] p : peopleList) {
+    for (int[] p : peopleList) {
 
-            // in java ArrayList, add with index, if index == list size will append at the end of the list
-            res.add(p[1], p);
-        }
-
-        // int[][] ans = new int[people.length][2];
-        // for (int i = 0; i < people.length; i++) {
-        //     ans[i] = new int[]{res.get(i)[0], res.get(i)[1]};
-        // }
-
-        return res.toArray(new int[people.length][2]);
+      // in java ArrayList, add with index, if index == list size will append at the end of the list
+      res.add(p[1], p);
     }
+
+    // int[][] ans = new int[people.length][2];
+    // for (int i = 0; i < people.length; i++) {
+    //     ans[i] = new int[]{res.get(i)[0], res.get(i)[1]};
+    // }
+
+    return res.toArray(new int[people.length][2]);
+  }
 }

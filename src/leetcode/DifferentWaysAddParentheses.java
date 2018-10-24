@@ -27,76 +27,76 @@ import java.util.List;
 // (((2*3)-4)*5) = 10
 public class DifferentWaysAddParentheses {
 
-    // divide conquer idea
-    // scan the string, each time finds an operator
-    // split the string into two parts and compute separately
-    // Assume there is no whitespace between numbers and operators
+  // divide conquer idea
+  // scan the string, each time finds an operator
+  // split the string into two parts and compute separately
+  // Assume there is no whitespace between numbers and operators
 
-    public List<Integer> diffWaysToCompute(String input) {
+  public List<Integer> diffWaysToCompute(String input) {
 
-        return dfs(input);
+    return dfs(input);
+  }
+
+
+  // similar to Number of BST 2
+  // for each operator, it can have L values of it's left substring and R of right substring
+  // for each number in L and R, we compute them with current operator and put back to the result list
+  private List<Integer> dfs(String s) {
+
+    List<Integer> result = new ArrayList<>();
+    if (s.isEmpty()) {
+      return result;
     }
 
-
-    // similar to Number of BST 2
-    // for each operator, it can have L values of it's left substring and R of right substring
-    // for each number in L and R, we compute them with current operator and put back to the result list
-    private List<Integer> dfs(String s) {
-
-        List<Integer> result = new ArrayList<>();
-        if (s.isEmpty()) {
-            return result;
-        }
-
-        int begin = 0;
-        int number = 0;
-        while (begin < s.length() && Character.isDigit(s.charAt(begin))) {
-            number = number * 10 + Character.getNumericValue(s.charAt(begin));
-            begin++;
-        }
-
-        if (begin == s.length()) {
-            result.add(number);
-            return result;
-        }
-
-        List<Integer> left;
-        List<Integer> right;
-
-        // i start from 0 is also fine
-        // the left will be empty list
-        for (int i = 1; i < s.length(); i++) {
-            if (Character.isDigit(s.charAt(i))) {
-                continue;
-            }
-
-            left = dfs(s.substring(0, i));
-            right = dfs(s.substring(i + 1));
-
-            for (int num1 : left) {
-                for (int num2 : right) {
-                    result.add(compute(s.charAt(i), num1, num2));
-                }
-            }
-        }
-
-        return result;
+    int begin = 0;
+    int number = 0;
+    while (begin < s.length() && Character.isDigit(s.charAt(begin))) {
+      number = number * 10 + Character.getNumericValue(s.charAt(begin));
+      begin++;
     }
 
-
-    private int compute(char operator, int n1, int n2) {
-        switch (operator) {
-            case '+':
-                return n1 + n2;
-            case '-':
-                return n1 - n2;
-            case '*':
-                return n1 * n2;
-            default:
-                break;
-        }
-
-        return 0;
+    if (begin == s.length()) {
+      result.add(number);
+      return result;
     }
+
+    List<Integer> left;
+    List<Integer> right;
+
+    // i start from 0 is also fine
+    // the left will be empty list
+    for (int i = 1; i < s.length(); i++) {
+      if (Character.isDigit(s.charAt(i))) {
+        continue;
+      }
+
+      left = dfs(s.substring(0, i));
+      right = dfs(s.substring(i + 1));
+
+      for (int num1 : left) {
+        for (int num2 : right) {
+          result.add(compute(s.charAt(i), num1, num2));
+        }
+      }
+    }
+
+    return result;
+  }
+
+
+  private int compute(char operator, int n1, int n2) {
+    switch (operator) {
+      case '+':
+        return n1 + n2;
+      case '-':
+        return n1 - n2;
+      case '*':
+        return n1 * n2;
+      default:
+        break;
+    }
+
+    return 0;
+  }
 
 }

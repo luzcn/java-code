@@ -9,61 +9,61 @@ import java.util.List;
 
 public class Subsets {
 
-    private List<List<Integer>> result = new ArrayList<>();
-    private List<Integer> current = new ArrayList<>();
+  private List<List<Integer>> result = new ArrayList<>();
+  private List<Integer> current = new ArrayList<>();
 
-    public List<List<Integer>> getSubset(int[] nums) {
-        // sort the input
-        Arrays.sort(nums);
-        dfs(nums, 0);
+  public List<List<Integer>> getSubset(int[] nums) {
+    // sort the input
+    Arrays.sort(nums);
+    dfs(nums, 0);
 
-        return this.result;
+    return this.result;
+  }
+
+
+  public List<List<Integer>> subsetWithDup(int[] nums) {
+    Arrays.sort(nums);
+    dfsWithDup(nums, 0);
+
+    return result;
+  }
+
+
+  private void dfs(int[] nums, int index) {
+    this.result.add(new ArrayList<>(this.current));
+
+    if (index >= nums.length) {
+      return;
     }
 
+    for (int i = index; i < nums.length; i++) {
+      current.add(nums[i]);
 
-    public List<List<Integer>> subsetWithDup(int[] nums) {
-        Arrays.sort(nums);
-        dfsWithDup(nums, 0);
+      dfs(nums, i + 1);
 
-        return result;
+      current.remove(current.size() - 1);
+    }
+  }
+
+  private void dfsWithDup(int[] nums, int index) {
+
+    result.add(new ArrayList<>(current));
+
+    if (index >= nums.length) {
+      return;
     }
 
+    for (int i = index; i < nums.length; i++) {
 
-    private void dfs(int[] nums, int index) {
-        this.result.add(new ArrayList<>(this.current));
+      if (i > index && nums[i - 1] == nums[i]) {
+        continue;
+      }
 
-        if (index >= nums.length) {
-            return;
-        }
+      current.add(nums[i]);
 
-        for (int i = index; i < nums.length; i++) {
-            current.add(nums[i]);
+      dfsWithDup(nums, i + 1);
 
-            dfs(nums, i + 1);
-
-            current.remove(current.size() - 1);
-        }
+      current.remove(current.size() - 1);
     }
-
-    private void dfsWithDup(int[] nums, int index) {
-
-        result.add(new ArrayList<>(current));
-
-        if (index >= nums.length) {
-            return;
-        }
-
-        for (int i = index; i < nums.length; i++) {
-
-            if (i > index && nums[i - 1] == nums[i]) {
-                continue;
-            }
-
-            current.add(nums[i]);
-
-            dfsWithDup(nums, i + 1);
-
-            current.remove(current.size() - 1);
-        }
-    }
+  }
 }

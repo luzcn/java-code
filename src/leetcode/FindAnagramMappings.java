@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
 
 // Given two lists Aand B, and B is an anagram of A. B is an anagram of A means B is made by randomizing the order of the elements in A.
 //
@@ -21,19 +21,19 @@ import java.util.*;
 // - A[i], B[i] are integers in range [0, 10^5].
 public class FindAnagramMappings {
 
-    // hash map
-    public int[] anagramMappings(int[] A, int[] B) {
-        int[] res = new int[A.length];
+  // hash map
+  public int[] anagramMappings(int[] A, int[] B) {
+    int[] res = new int[A.length];
 
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < B.length; i++) {
-            map.putIfAbsent(B[i], i);
-        }
-
-        for (int i = 0; i < A.length; i++) {
-            res[i] = map.get(A[i]);
-        }
-
-        return res;
+    HashMap<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < B.length; i++) {
+      map.putIfAbsent(B[i], i);
     }
+
+    for (int i = 0; i < A.length; i++) {
+      res[i] = map.get(A[i]);
+    }
+
+    return res;
+  }
 }

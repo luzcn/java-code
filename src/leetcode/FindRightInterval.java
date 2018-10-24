@@ -37,88 +37,88 @@ import java.util.Comparator;
 // For [2,3], the interval [3,4] has minimum-"right" start point.
 public class FindRightInterval {
 
-    // binary search idea,
-    // 1. construct a special object which contains the interval information and the corresponding index in the original array
-    // 2. sort the object list by start time
-    // 3. for each interval from original array, do binary search in the sorted object
-    // O(nlogn) time
-    public int[] findRightInterval(Interval[] intervals) {
-        int n = intervals.length;
-        if (n == 0) {
-            return new int[0];
-        }
-
-        // construct a special object which contains the interval information and the corresponding index in the original array
-        int[] res = new int[n];
-        IntervalData[] dataList = new IntervalData[n];
-        for (int i = 0; i < n; i++) {
-            dataList[i] = new IntervalData(intervals[i].start, intervals[i].end, i);
-        }
-
-        // sort by start time
-        Arrays.sort(dataList, Comparator.comparingInt(x -> x.start));
-
-        for (int i = 0; i < n; i++) {
-            res[i] = search(dataList, intervals[i].end);
-        }
-
-        return res;
+  // binary search idea,
+  // 1. construct a special object which contains the interval information and the corresponding index in the original array
+  // 2. sort the object list by start time
+  // 3. for each interval from original array, do binary search in the sorted object
+  // O(nlogn) time
+  public int[] findRightInterval(Interval[] intervals) {
+    int n = intervals.length;
+    if (n == 0) {
+      return new int[0];
     }
 
-    // binary search, find the smallest number which is >= target
-    private int search(IntervalData[] dataList, int target) {
-        int l = 0;
-        int r = dataList.length - 1;
-        int minStartTime = Integer.MAX_VALUE;
-        int intervalIndex = 0;
-
-        while (l <= r) {
-            int mid = l + (r - l) / 2;
-            IntervalData m = dataList[mid];
-
-            if (m.start < target) {
-                l = mid + 1;
-            } else {
-
-                // find a candidate interval
-                // keep searching and save the interval which has minimum start time
-                if (m.start < minStartTime) {
-                    minStartTime = m.start;
-                    intervalIndex = m.index;
-                }
-                r = mid + 1;
-            }
-        }
-
-        return minStartTime == Integer.MAX_VALUE ? -1 : intervalIndex;
+    // construct a special object which contains the interval information and the corresponding index in the original array
+    int[] res = new int[n];
+    IntervalData[] dataList = new IntervalData[n];
+    for (int i = 0; i < n; i++) {
+      dataList[i] = new IntervalData(intervals[i].start, intervals[i].end, i);
     }
 
-    private class IntervalData {
+    // sort by start time
+    Arrays.sort(dataList, Comparator.comparingInt(x -> x.start));
 
-        int start;
-        int end;
-        int index;
-
-        IntervalData(int s, int e, int i) {
-            start = s;
-            end = e;
-            index = i;
-        }
+    for (int i = 0; i < n; i++) {
+      res[i] = search(dataList, intervals[i].end);
     }
 
-    private class Interval {
+    return res;
+  }
 
-        int start;
-        int end;
+  // binary search, find the smallest number which is >= target
+  private int search(IntervalData[] dataList, int target) {
+    int l = 0;
+    int r = dataList.length - 1;
+    int minStartTime = Integer.MAX_VALUE;
+    int intervalIndex = 0;
 
-        Interval() {
-            start = 0;
-            end = 0;
+    while (l <= r) {
+      int mid = l + (r - l) / 2;
+      IntervalData m = dataList[mid];
+
+      if (m.start < target) {
+        l = mid + 1;
+      } else {
+
+        // find a candidate interval
+        // keep searching and save the interval which has minimum start time
+        if (m.start < minStartTime) {
+          minStartTime = m.start;
+          intervalIndex = m.index;
         }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
+        r = mid + 1;
+      }
     }
+
+    return minStartTime == Integer.MAX_VALUE ? -1 : intervalIndex;
+  }
+
+  private class IntervalData {
+
+    int start;
+    int end;
+    int index;
+
+    IntervalData(int s, int e, int i) {
+      start = s;
+      end = e;
+      index = i;
+    }
+  }
+
+  private class Interval {
+
+    int start;
+    int end;
+
+    Interval() {
+      start = 0;
+      end = 0;
+    }
+
+    Interval(int s, int e) {
+      start = s;
+      end = e;
+    }
+  }
 }

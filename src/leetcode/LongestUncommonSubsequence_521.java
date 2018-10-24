@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given a group of two strings, you need to find the longest uncommon subsequence of this group of two strings.
 // The longest uncommon subsequence is defined as the longest subsequence of one of these strings and this subsequence should not be any subsequence of the other strings.
 //
@@ -20,25 +18,25 @@ import java.util.*;
 
 public class LongestUncommonSubsequence_521 {
 
-    // Simple analysis of this problem can lead to an easy solution.
-    //
-    // These three cases are possible with string aa and bb:-
-    //
-    // 1. a=b. If both the strings are identical, it is obvious that no subsequence will be uncommon. Hence, return -1.
-    //
-    // 2. length(a)=length(b)length(a)=length(b) and a!=b.
-    // Example: abcabc and abdabd.
-    // In this case we can consider any string i.e. abcabc or abdabd as a required subsequence,.
-    //
-    // 3. length(a) != length(b).
-    // Example abcdabcd and abcabc.
-    // In this case we can consider bigger string as a required subsequence because bigger string can't be a subsequence of smaller string.
-    public int findLUSlength(String a, String b) {
+  // Simple analysis of this problem can lead to an easy solution.
+  //
+  // These three cases are possible with string aa and bb:-
+  //
+  // 1. a=b. If both the strings are identical, it is obvious that no subsequence will be uncommon. Hence, return -1.
+  //
+  // 2. length(a)=length(b)length(a)=length(b) and a!=b.
+  // Example: abcabc and abdabd.
+  // In this case we can consider any string i.e. abcabc or abdabd as a required subsequence,.
+  //
+  // 3. length(a) != length(b).
+  // Example abcdabcd and abcabc.
+  // In this case we can consider bigger string as a required subsequence because bigger string can't be a subsequence of smaller string.
+  public int findLUSlength(String a, String b) {
 
-        if (a.equals(b)) {
-            return -1;
-        }
-
-        return Math.max(a.length(), b.length());
+    if (a.equals(b)) {
+      return -1;
     }
+
+    return Math.max(a.length(), b.length());
+  }
 }

@@ -17,38 +17,38 @@ import java.util.List;
 // Explanation: 2,3,4 form a continuous range; 8,9 form a continuous range.
 public class SummaryRanges {
 
-    private List<String> res = new ArrayList<>();
+  private List<String> res = new ArrayList<>();
 
-    private void buildRange(int[] nums, int begin, int end) {
-        if (begin == end - 1) {
-            res.add(String.valueOf(nums[begin]));
-        } else {
-            res.add(String.valueOf(nums[begin]) + "->" + String.valueOf(nums[end - 1]));
-        }
+  private void buildRange(int[] nums, int begin, int end) {
+    if (begin == end - 1) {
+      res.add(String.valueOf(nums[begin]));
+    } else {
+      res.add(String.valueOf(nums[begin]) + "->" + String.valueOf(nums[end - 1]));
     }
+  }
 
-    public List<String> summaryRanges(int[] nums) {
+  public List<String> summaryRanges(int[] nums) {
 
-        int begin = 0;
-        int end = begin + 1;
+    int begin = 0;
+    int end = begin + 1;
 
-        while (end < nums.length) {
+    while (end < nums.length) {
 
-            if (nums[begin] + (end - begin) == nums[end]) {
-                // the input is sorted array without duplicates
-                // so if the nums[begin] + distace(end, begin) == nums[end], we consider they in a continuous subarray
-                end++;
-            } else {
-                this.buildRange(nums, begin, end);
-                begin = end;
-                end++;
-            }
-        }
-
-        // don't forget the last [begin, end-1] elements
+      if (nums[begin] + (end - begin) == nums[end]) {
+        // the input is sorted array without duplicates
+        // so if the nums[begin] + distace(end, begin) == nums[end], we consider they in a continuous subarray
+        end++;
+      } else {
         this.buildRange(nums, begin, end);
-
-        return res;
+        begin = end;
+        end++;
+      }
     }
+
+    // don't forget the last [begin, end-1] elements
+    this.buildRange(nums, begin, end);
+
+    return res;
+  }
 
 }

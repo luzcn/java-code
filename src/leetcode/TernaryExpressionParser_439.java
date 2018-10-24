@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Stack;
 
 // Given a string representing arbitrarily nested ternary expressions, calculate the result of the expression.
 // You can always assume that the given expression is valid and only consists of digits 0-9, ?, :, T and F (T and F represent True and False respectively).
@@ -32,80 +32,82 @@ import java.util.*;
 //           -> "4"                                    -> "4"
 public class TernaryExpressionParser_439 {
 
-    // 从右边开始找到第一个问号，然后先处理这个三元表达式，然后再一步一步向左推，这也符合程序是从右向左执行的特点
-    // use a stack save the position of expression "?", the problem states each number has only 1 digit and each condition is T/F
-    // we can see each valid Ternary expression or sub-expression has length 5
-    public String parseTernary(String expression) {
+  // 从右边开始找到第一个问号，然后先处理这个三元表达式，然后再一步一步向左推，这也符合程序是从右向左执行的特点
+  // use a stack save the position of expression "?", the problem states each number has only 1 digit and each condition is T/F
+  // we can see each valid Ternary expression or sub-expression has length 5
+  public String parseTernary(String expression) {
 
-        // save the index of "?"
-        Stack<Integer> stack = new Stack<>();
-        String res = expression;
+    // save the index of "?"
+    Stack<Integer> stack = new Stack<>();
+    String res = expression;
 
-        for (int i = 0; i < expression.length(); i++) {
-            if (expression.charAt(i) == '?') {
-                stack.push(i);
-            }
-        }
-
-        while (!stack.isEmpty()) {
-            int pos = stack.pop();
-
-            res = res.substring(0, pos - 1) + evaluate(res.substring(pos - 1, pos + 4)) + res.substring(pos + 4);
-        }
-
-        return res;
+    for (int i = 0; i < expression.length(); i++) {
+      if (expression.charAt(i) == '?') {
+        stack.push(i);
+      }
     }
 
-    private String evaluate(String expr) {
-        if (expr.charAt(0) == 'T') {
-            return expr.substring(2, 3);
-        } else {
-            return expr.substring(4, 5);
-        }
+    while (!stack.isEmpty()) {
+      int pos = stack.pop();
+
+      res = res.substring(0, pos - 1) + evaluate(res.substring(pos - 1, pos + 4)) + res
+          .substring(pos + 4);
     }
 
-    public String parseTernary2(String expression) {
+    return res;
+  }
 
-        // save the character
-        Stack<Character> stack = new Stack<>();
-        // String res = expression;
+  private String evaluate(String expr) {
+    if (expr.charAt(0) == 'T') {
+      return expr.substring(2, 3);
+    } else {
+      return expr.substring(4, 5);
+    }
+  }
 
-        for (int i = expression.length() - 1; i >= 0; i--) {
-            char c = expression.charAt(i);
+  public String parseTernary2(String expression) {
 
-            if (!stack.isEmpty() && stack.peek() == '?') {
-                stack.pop(); // remove ?
-                char first = stack.pop();
+    // save the character
+    Stack<Character> stack = new Stack<>();
+    // String res = expression;
 
-                stack.pop(); // remove :
+    for (int i = expression.length() - 1; i >= 0; i--) {
+      char c = expression.charAt(i);
 
-                char second = stack.pop();
-                //
-                // if (c == 'T') {
-                //     stack.push(first);
-                // } else {
-                //     stack.push(second);
-                // }
+      if (!stack.isEmpty() && stack.peek() == '?') {
+        stack.pop(); // remove ?
+        char first = stack.pop();
 
-                stack.push(c == 'T' ? first : second);
-            } else {
-                stack.push(c);
-            }
-        }
-        return String.valueOf(stack.peek());
+        stack.pop(); // remove :
+
+        char second = stack.pop();
+        //
+        // if (c == 'T') {
+        //     stack.push(first);
+        // } else {
+        //     stack.push(second);
+        // }
+
+        stack.push(c == 'T' ? first : second);
+      } else {
+        stack.push(c);
+      }
+    }
+    return String.valueOf(stack.peek());
+  }
+
+  // all we need is evaluating from the last "?", so use string.lastIndexOf function, evaluate the ternary express and add back
+  public String parseTernary3(String expression) {
+    String res = expression;
+
+    while (res.lastIndexOf('?') > 0) {
+      int pos = res.lastIndexOf('?');
+
+      res = res.substring(0, pos - 1) + evaluate(res.substring(pos - 1, pos + 4)) + res
+          .substring(pos + 4);
     }
 
-    // all we need is evaluating from the last "?", so use string.lastIndexOf function, evaluate the ternary express and add back
-    public String parseTernary3(String expression) {
-        String res = expression;
-
-        while (res.lastIndexOf('?') > 0) {
-            int pos = res.lastIndexOf('?');
-
-            res = res.substring(0, pos - 1) + evaluate(res.substring(pos - 1, pos + 4)) + res.substring(pos + 4);
-        }
-
-        return res;
-    }
+    return res;
+  }
 
 }

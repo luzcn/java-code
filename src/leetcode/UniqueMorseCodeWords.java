@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashSet;
 
 // International Morse Code defines a standard encoding where each letter is mapped to a series of dots and dashes,
 // as follows: "a" maps to ".-", "b" maps to "-...", "c" maps to "-.-.", and so on.
@@ -28,23 +28,25 @@ import java.util.*;
 // There are 2 different transformations, "--...-." and "--...--.".
 public class UniqueMorseCodeWords {
 
-    // use hash set to remove duplicates
+  // use hash set to remove duplicates
 
-    private String[] MORSE = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-",
-            ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+  private String[] MORSE = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....",
+      "..", ".---", "-.-",
+      ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
+      "-.--", "--.."};
 
-    public int uniqueMorseRepresentations(String[] words) {
-        HashSet<String> uniqueCode = new HashSet<>();
+  public int uniqueMorseRepresentations(String[] words) {
+    HashSet<String> uniqueCode = new HashSet<>();
 
-        for (String w : words) {
-            StringBuilder code = new StringBuilder();
+    for (String w : words) {
+      StringBuilder code = new StringBuilder();
 
-            for (char c : w.toCharArray()) {
-                code.append(this.MORSE[c - 'a']);
-            }
+      for (char c : w.toCharArray()) {
+        code.append(this.MORSE[c - 'a']);
+      }
 
-            uniqueCode.add(code.toString());
-        }
-        return uniqueCode.size();
+      uniqueCode.add(code.toString());
     }
+    return uniqueCode.size();
+  }
 }

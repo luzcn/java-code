@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 // You have a lock in front of you with 4 circular wheels.
 // Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'.
@@ -26,64 +28,64 @@ import java.util.*;
 // because the wheels of the lock become stuck after the display becomes the dead end "0102".
 public class OpenTheLock_752 {
 
-    public int openLock(String[] deadends, String target) {
+  public int openLock(String[] deadends, String target) {
 
-        HashSet<String> visited = new HashSet<>();
-        HashSet<String> deadSet = new HashSet<>();
-        Collections.addAll(deadSet, deadends);
+    HashSet<String> visited = new HashSet<>();
+    HashSet<String> deadSet = new HashSet<>();
+    Collections.addAll(deadSet, deadends);
 
-        HashSet<String> queue = new HashSet<>();
-        HashSet<String> temp = new HashSet<>();
-        queue.add("0000");
-        int step = 0;
+    HashSet<String> queue = new HashSet<>();
+    HashSet<String> temp = new HashSet<>();
+    queue.add("0000");
+    int step = 0;
 
-        String next1;
-        String next2;
+    String next1;
+    String next2;
 
-        while (!queue.isEmpty()) {
+    while (!queue.isEmpty()) {
 
-            for (String current : queue) {
+      for (String current : queue) {
 
-                if (current.equals(target)) {
-                    return step;
-                }
-
-                // the start "0000" may include in deadends
-                if (visited.contains(current) || deadSet.contains(current)) {
-                    continue;
-                }
-
-                visited.add(current);
-
-                for (int i = 0; i < 4; i++) {
-
-                    char c = current.charAt(i);
-                    if (c == '0') {
-                        next1 = current.substring(0, i) + '9' + current.substring(i + 1);
-                        next2 = current.substring(0, i) + '1' + current.substring(i + 1);
-                    } else if (c == '9') {
-                        next1 = current.substring(0, i) + '8' + current.substring(i + 1);
-                        next2 = current.substring(0, i) + '0' + current.substring(i + 1);
-                    } else {
-                        next1 = current.substring(0, i) + (char) (c - 1) + current.substring(i + 1);
-                        next2 = current.substring(0, i) + (char) (c + 1) + current.substring(i + 1);
-                    }
-
-                    if (!visited.contains(next1) && !deadSet.contains(next1)) {
-                        temp.add(next1);
-                    }
-
-                    if (!visited.contains(next2) && !deadSet.contains(next2)) {
-                        temp.add(next2);
-                    }
-                }
-            }
-
-            queue = temp;
-            temp = new LinkedHashSet<>();
-            step++;
+        if (current.equals(target)) {
+          return step;
         }
 
-        return -1;
+        // the start "0000" may include in deadends
+        if (visited.contains(current) || deadSet.contains(current)) {
+          continue;
+        }
+
+        visited.add(current);
+
+        for (int i = 0; i < 4; i++) {
+
+          char c = current.charAt(i);
+          if (c == '0') {
+            next1 = current.substring(0, i) + '9' + current.substring(i + 1);
+            next2 = current.substring(0, i) + '1' + current.substring(i + 1);
+          } else if (c == '9') {
+            next1 = current.substring(0, i) + '8' + current.substring(i + 1);
+            next2 = current.substring(0, i) + '0' + current.substring(i + 1);
+          } else {
+            next1 = current.substring(0, i) + (char) (c - 1) + current.substring(i + 1);
+            next2 = current.substring(0, i) + (char) (c + 1) + current.substring(i + 1);
+          }
+
+          if (!visited.contains(next1) && !deadSet.contains(next1)) {
+            temp.add(next1);
+          }
+
+          if (!visited.contains(next2) && !deadSet.contains(next2)) {
+            temp.add(next2);
+          }
+        }
+      }
+
+      queue = temp;
+      temp = new LinkedHashSet<>();
+      step++;
     }
+
+    return -1;
+  }
 }

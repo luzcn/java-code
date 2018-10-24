@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 // An undirected, connected graph of N nodes (labeled 0, 1, 2, ..., N-1) is given as graph.
 //
@@ -24,34 +26,34 @@ import java.util.*;
 // Explanation: One possible path is [0,1,4,2,3]
 public class ShortestPathVisitingAllNodes {
 
-    private HashMap<Integer, List<Integer>> graph = new HashMap<>();
-    private HashMap<Integer, Integer> indegree = new HashMap<>();
+  private HashMap<Integer, List<Integer>> graph = new HashMap<>();
+  private HashMap<Integer, Integer> indegree = new HashMap<>();
 
-    private int res = Integer.MAX_VALUE;
+  private int res = Integer.MAX_VALUE;
 
-    public int shortestPathLength(int[][] edges) {
+  public int shortestPathLength(int[][] edges) {
 
-        // build undirected graph
-        for (int i = 0; i < edges.length; i++) {
-            for (int node : edges[i]) {
-                graph.computeIfAbsent(i, k -> new ArrayList<>()).add(node);
-                // graph.computeIfAbsent(node, k -> new ArrayList<>()).add(i);
-                indegree.put(node, indegree.getOrDefault(node, 0) + 1);
-            }
-        }
-
-        // bfs
-        // PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.comparingInt(x -> indegree.get(x)));
-        //
-        // while (!queue.isEmpty()) {
-        //     int node = queue.poll();
-        //
-        //
-        // }
-
-        return res;
+    // build undirected graph
+    for (int i = 0; i < edges.length; i++) {
+      for (int node : edges[i]) {
+        graph.computeIfAbsent(i, k -> new ArrayList<>()).add(node);
+        // graph.computeIfAbsent(node, k -> new ArrayList<>()).add(i);
+        indegree.put(node, indegree.getOrDefault(node, 0) + 1);
+      }
     }
 
-    private void dfs(int node, int level) {
-    }
+    // bfs
+    // PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.comparingInt(x -> indegree.get(x)));
+    //
+    // while (!queue.isEmpty()) {
+    //     int node = queue.poll();
+    //
+    //
+    // }
+
+    return res;
+  }
+
+  private void dfs(int node, int level) {
+  }
 }

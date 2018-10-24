@@ -1,10 +1,11 @@
 package leetcode;
 
 /**
- * Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+ * Given a linked list, reverse the nodes of a linked list k at a time and return its modified
+ * list.
  *
- * k is a positive integer and is less than or equal to the length of the linked list.
- * If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+ * k is a positive integer and is less than or equal to the length of the linked list. If the number
+ * of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
  *
  * Example:
  *
@@ -16,24 +17,23 @@ package leetcode;
  */
 public class ReverseNodesInkGroup {
 
-    private ListNode reverse(ListNode head, ListNode end) {
-        return null;
+  private ListNode reverse(ListNode head, ListNode end) {
+    return null;
+  }
+
+
+  public ListNode reverseKGroup(ListNode head, int k) {
+
+    if (head == null || k <= 0) {
+      return head;
     }
 
+    ListNode newHead = new ListNode(-1);
+    ListNode prev = newHead;
+    ListNode p = head;
+    int count = 1;
 
-    public ListNode reverseKGroup(ListNode head, int k) {
+    return newHead.next;
 
-        if (head == null || k <= 0) {
-            return head;
-        }
-
-        ListNode newHead = new ListNode(-1);
-        ListNode prev = newHead;
-        ListNode p = head;
-        int count = 1;
-
-
-        return newHead.next;
-
-    }
+  }
 }

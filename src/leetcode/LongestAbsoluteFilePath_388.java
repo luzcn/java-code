@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
 
 
 // Suppose we abstract our file system by a string in the following manner:
@@ -41,29 +41,29 @@ import java.util.*;
 // Notice that a/aa/aaa/file1.txt is not the longest file path, if there is another path aaaaaaaaaaaaaaaaaaaaa/sth.png.
 public class LongestAbsoluteFilePath_388 {
 
-    // use hashmap
-    public int lengthLongestPath(String input) {
+  // use hashmap
+  public int lengthLongestPath(String input) {
 
-        // the mapping of level and file path length
-        HashMap<Integer, Integer> map = new HashMap<>();
-        int res = 0;
-        String[] strs = input.split("\n");
+    // the mapping of level and file path length
+    HashMap<Integer, Integer> map = new HashMap<>();
+    int res = 0;
+    String[] strs = input.split("\n");
 
-        for (String s : strs) {
-            // get the last index of '\t', the numbers of '\t' is the level in the map
-            int level = s.lastIndexOf('\t') + 1;
-            int length = s.substring(level).length();
+    for (String s : strs) {
+      // get the last index of '\t', the numbers of '\t' is the level in the map
+      int level = s.lastIndexOf('\t') + 1;
+      int length = s.substring(level).length();
 
-            if (s.contains(".")) {
-                // s is a file name, update the result length
-                res = Math.max(res, map.getOrDefault(level, 0) + length);
-            } else {
-                // s is a directory name, put it into the next level (i.e. level + 1)
-                // because in the final path, we need to add "/", so we need to update with length + 1;
-                map.put(level + 1, map.getOrDefault(level, 0) + length + 1);
-            }
-        }
-
-        return res;
+      if (s.contains(".")) {
+        // s is a file name, update the result length
+        res = Math.max(res, map.getOrDefault(level, 0) + length);
+      } else {
+        // s is a directory name, put it into the next level (i.e. level + 1)
+        // because in the final path, we need to add "/", so we need to update with length + 1;
+        map.put(level + 1, map.getOrDefault(level, 0) + length + 1);
+      }
     }
+
+    return res;
+  }
 }

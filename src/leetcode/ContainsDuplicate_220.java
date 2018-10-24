@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.TreeSet;
 
 // Given an array of integers, find out whether there are two distinct indices i and j in the array such that
 // - the absolute difference between nums[i] and nums[j] is at most t
@@ -20,72 +21,73 @@ import java.util.*;
 // Output: false
 public class ContainsDuplicate_220 {
 
-    // use TreeSet to save the window of k elements
-    // for each n, find the first number that are greater than n,  set.ceiling(n)
-    // and the first number that is less than n set.floor(n)
-    // O(n * log(k))
-    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+  // use TreeSet to save the window of k elements
+  // for each n, find the first number that are greater than n,  set.ceiling(n)
+  // and the first number that is less than n set.floor(n)
+  // O(n * log(k))
+  public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
 
-        if (nums.length == 0 || k < 0) {
-            return false;
-        }
-
-        TreeSet<Integer> set = new TreeSet<>();
-
-        for (int i = 0; i < nums.length; i++) {
-
-            Integer s = set.ceiling(nums[i]);
-
-            // Find the first number that are greater than current element
-            if (s != null && nums[i] >= s - t) {
-                return true;
-            }
-
-            // Find the first number that are less than current element
-            Integer g = set.floor(nums[i]);
-            if (g != null && nums[i] <= g + t) {
-                return true;
-            }
-
-            set.add(nums[i]);
-
-            if (set.size() > k) {
-                set.remove(nums[i - k]);
-            }
-        }
-
-        return false;
+    if (nums.length == 0 || k < 0) {
+      return false;
     }
 
+    TreeSet<Integer> set = new TreeSet<>();
 
-    // use bucket
-    public boolean containsNearbyAlmostDuplicateBucket(int[] nums, int k, int t) {
-        if (k < 1 || t < 0) {
-            return false;
-        }
+    for (int i = 0; i < nums.length; i++) {
 
-        HashMap<Long, Long> map = new HashMap<>();
+      Integer s = set.ceiling(nums[i]);
 
-        // choose t+1 as the bucket size.
-        for (int i = 0; i < nums.length; i++) {
-            long remappedNum = (long) nums[i] - Integer.MIN_VALUE;
+      // Find the first number that are greater than current element
+      if (s != null && nums[i] >= s - t) {
+        return true;
+      }
 
-            long bucket =  remappedNum / ((long)t + 1);
+      // Find the first number that are less than current element
+      Integer g = set.floor(nums[i]);
+      if (g != null && nums[i] <= g + t) {
+        return true;
+      }
 
-            if (map.containsKey(bucket) || (map.containsKey(bucket - 1) && remappedNum - map.get(bucket - 1) <= t) || (
-                    map.containsKey(bucket + 1) && map.get(bucket + 1) - remappedNum <= t)) {
-                return true;
-            }
+      set.add(nums[i]);
 
-            map.put(bucket, remappedNum);
-
-            if (map.size() > k) {
-                long lastBucket = ((long) nums[i - k] - Integer.MIN_VALUE) / ((long)t + 1);
-
-                map.remove(lastBucket);
-            }
-        }
-
-        return false;
+      if (set.size() > k) {
+        set.remove(nums[i - k]);
+      }
     }
+
+    return false;
+  }
+
+
+  // use bucket
+  public boolean containsNearbyAlmostDuplicateBucket(int[] nums, int k, int t) {
+    if (k < 1 || t < 0) {
+      return false;
+    }
+
+    HashMap<Long, Long> map = new HashMap<>();
+
+    // choose t+1 as the bucket size.
+    for (int i = 0; i < nums.length; i++) {
+      long remappedNum = (long) nums[i] - Integer.MIN_VALUE;
+
+      long bucket = remappedNum / ((long) t + 1);
+
+      if (map.containsKey(bucket) || (map.containsKey(bucket - 1)
+          && remappedNum - map.get(bucket - 1) <= t) || (
+          map.containsKey(bucket + 1) && map.get(bucket + 1) - remappedNum <= t)) {
+        return true;
+      }
+
+      map.put(bucket, remappedNum);
+
+      if (map.size() > k) {
+        long lastBucket = ((long) nums[i - k] - Integer.MIN_VALUE) / ((long) t + 1);
+
+        map.remove(lastBucket);
+      }
+    }
+
+    return false;
+  }
 }

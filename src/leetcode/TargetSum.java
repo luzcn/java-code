@@ -1,59 +1,51 @@
 package leetcode;
 
 /**
- * You are given a list of non-negative integers, a1, a2, ..., an, and a target, S.
- * Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
+ * You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2
+ * symbols + and -. For each integer, you should choose one from + and - as its new symbol.
  *
  * Find out how many ways to assign symbols to make sum of integers equal to target S.
  *
- * Example 1:
- * Input: nums is [1, 1, 1, 1, 1], S is 3.
- * Output: 5
- * Explanation:
+ * Example 1: Input: nums is [1, 1, 1, 1, 1], S is 3. Output: 5 Explanation:
  *
- * -1+1+1+1+1 = 3
- * +1-1+1+1+1 = 3
- * +1+1-1+1+1 = 3
- * +1+1+1-1+1 = 3
- * +1+1+1+1-1 = 3
+ * -1+1+1+1+1 = 3 +1-1+1+1+1 = 3 +1+1-1+1+1 = 3 +1+1+1-1+1 = 3 +1+1+1+1-1 = 3
  *
- * There are 5 ways to assign symbols to make the sum of nums be target 3.
- * Note:
- * The length of the given array is positive and will not exceed 20.
- * The sum of elements in the given array will not exceed 1000.
- * Your output answer is guaranteed to be fitted in a 32-bit integer.
+ * There are 5 ways to assign symbols to make the sum of nums be target 3. Note: The length of the
+ * given array is positive and will not exceed 20. The sum of elements in the given array will not
+ * exceed 1000. Your output answer is guaranteed to be fitted in a 32-bit integer.
  */
 public class TargetSum {
 
-    private int ways = 0;
+  private int ways = 0;
 
-    // private void dfs(int[] nums, int S, int index, int sum) {
-    //
-    //     if (index >= nums.length) {
-    //         if (sum == S)
-    //             this.ways++;
-    //
-    //         return;
-    //     }
-    //     dfs(nums, S, index + 1, sum + nums[index]);
-    //     dfs(nums, S, index + 1, sum - nums[index]);
-    // }
+  // private void dfs(int[] nums, int S, int index, int sum) {
+  //
+  //     if (index >= nums.length) {
+  //         if (sum == S)
+  //             this.ways++;
+  //
+  //         return;
+  //     }
+  //     dfs(nums, S, index + 1, sum + nums[index]);
+  //     dfs(nums, S, index + 1, sum - nums[index]);
+  // }
 
 
-    // memoization for both i and sum
-    private int dfs(int[] nums, int S, int i, int sum) {
-        if (i >= nums.length) {
-            if (sum == S)
-                return 1;
+  // memoization for both i and sum
+  private int dfs(int[] nums, int S, int i, int sum) {
+    if (i >= nums.length) {
+      if (sum == S) {
+        return 1;
+      }
 
-            return 0;
-        }
-
-        return dfs(nums, S, i + 1, sum + nums[i]) + dfs(nums, S, i + 1, sum - nums[i]);
+      return 0;
     }
 
-    public int findTargetSumWays(int[] nums, int S) {
+    return dfs(nums, S, i + 1, sum + nums[i]) + dfs(nums, S, i + 1, sum - nums[i]);
+  }
 
-        return dfs(nums, S, 0, 0);
-    }
+  public int findTargetSumWays(int[] nums, int S) {
+
+    return dfs(nums, S, 0, 0);
+  }
 }

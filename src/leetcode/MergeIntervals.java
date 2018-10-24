@@ -9,55 +9,55 @@ import java.util.List;
 
 public class MergeIntervals {
 
-    public List<Interval> merge(List<Interval> intervals) {
+  public List<Interval> merge(List<Interval> intervals) {
 
-        List<Interval> result = new ArrayList<>();
+    List<Interval> result = new ArrayList<>();
 
-        if (intervals.isEmpty()) {
-            return result;
-        }
+    if (intervals.isEmpty()) {
+      return result;
+    }
 
-        intervals.sort(Comparator.comparingInt(v -> v.start));
-        // intervals.sort((v1, v2) -> v1.start - v2.start);
+    intervals.sort(Comparator.comparingInt(v -> v.start));
+    // intervals.sort((v1, v2) -> v1.start - v2.start);
 
-        Interval first = intervals.get(0);
-        for (int i = 1; i < intervals.size(); i++) {
-            Interval second = intervals.get(i);
+    Interval first = intervals.get(0);
+    for (int i = 1; i < intervals.size(); i++) {
+      Interval second = intervals.get(i);
 
-            // if overlap, need to merge.
-            if (first.start <= second.end && first.end >= second.start) {
-                first.start = Math.min(first.start, second.start);
-                first.end = Math.max(first.end, second.end);
-            }
-            else {
-                result.add(new Interval(first.start, first.end));
-                first = second;
-            }
-        }
-
-        // don't forget add the "first" to result list
+      // if overlap, need to merge.
+      if (first.start <= second.end && first.end >= second.start) {
+        first.start = Math.min(first.start, second.start);
+        first.end = Math.max(first.end, second.end);
+      } else {
         result.add(new Interval(first.start, first.end));
-
-        return result;
+        first = second;
+      }
     }
 
-    private boolean isOverlap(Interval l1, Interval l2) {
+    // don't forget add the "first" to result list
+    result.add(new Interval(first.start, first.end));
 
-        // take the compliment, => l1.end >= l2.start && l1.start <= l2.end
-        if (l1.end < l2.start || l1.start > l2.end) {
-            return false;
-        }
+    return result;
+  }
 
-        return true;
+  private boolean isOverlap(Interval l1, Interval l2) {
+
+    // take the compliment, => l1.end >= l2.start && l1.start <= l2.end
+    if (l1.end < l2.start || l1.start > l2.end) {
+      return false;
     }
 
-    private class Interval {
-        int start;
-        int end;
+    return true;
+  }
 
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
+  private class Interval {
+
+    int start;
+    int end;
+
+    Interval(int s, int e) {
+      start = s;
+      end = e;
     }
+  }
 }

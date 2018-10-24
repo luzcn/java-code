@@ -1,7 +1,7 @@
 package leetcode;
 
 
-import java.util.*;
+import java.util.HashMap;
 
 // In the "100 game," two players take turns adding, to a running total, any integer from 1..10.
 // The player who first causes the running total to reach or exceed 100 wins.
@@ -32,73 +32,73 @@ import java.util.*;
 // - Same with other integers chosen by the first player, the second player will always win.
 public class CanIWin_464 {
 
-    // https://leetcode.com/problems/can-i-win/discuss/95277/java-solution-using-hashmap-with-detailed-explanation
-    // dfs + memoization
-    // the key problem is what would be the key of hashmap
-    // - we need to remember the state, which number haven't been used.
-    // - if we use a simple boolean array and convert to string, it gives LTE
-    // - we use a single integer and the corresponding bit to indicate if the number has been used.
-    public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
+  // https://leetcode.com/problems/can-i-win/discuss/95277/java-solution-using-hashmap-with-detailed-explanation
+  // dfs + memoization
+  // the key problem is what would be the key of hashmap
+  // - we need to remember the state, which number haven't been used.
+  // - if we use a simple boolean array and convert to string, it gives LTE
+  // - we use a single integer and the corresponding bit to indicate if the number has been used.
+  public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
 
-        used = new boolean[maxChoosableInteger + 1];
+    used = new boolean[maxChoosableInteger + 1];
 
-        if (desiredTotal <= maxChoosableInteger) {
-            return true;
-        }
-
-        int sum = maxChoosableInteger * (maxChoosableInteger + 1) / 2;
-        if (sum < desiredTotal) {
-            return false;
-        }
-
-        return dfs(desiredTotal);
+    if (desiredTotal <= maxChoosableInteger) {
+      return true;
     }
 
-    private boolean[] used;
-    private HashMap<Integer, Boolean> map = new HashMap<>();
-
-    private boolean dfs(int desiredTotal) {
-        if (desiredTotal <= 0) {
-            return false;
-        }
-
-        int state = getState();
-        if (map.containsKey(state)) {
-            return map.get(state);
-        }
-
-        for (int i = 1; i < used.length; i++) {
-            if (used[i]) {
-                continue;
-            }
-
-            used[i] = true;
-
-            if (!dfs(desiredTotal - i)) {
-                used[i] = false;
-                map.put(state, true);
-                return true;
-            }
-
-            used[i] = false;
-            map.put(state, false);
-        }
-
-        return map.get(state);
+    int sum = maxChoosableInteger * (maxChoosableInteger + 1) / 2;
+    if (sum < desiredTotal) {
+      return false;
     }
 
+    return dfs(desiredTotal);
+  }
 
-    private int getState() {
-        int state = 0;
+  private boolean[] used;
+  private HashMap<Integer, Boolean> map = new HashMap<>();
 
-        for (boolean v : used) {
-            state <<= 1;
-
-            if (v) {
-                state |= 1;
-            }
-        }
-
-        return state;
+  private boolean dfs(int desiredTotal) {
+    if (desiredTotal <= 0) {
+      return false;
     }
+
+    int state = getState();
+    if (map.containsKey(state)) {
+      return map.get(state);
+    }
+
+    for (int i = 1; i < used.length; i++) {
+      if (used[i]) {
+        continue;
+      }
+
+      used[i] = true;
+
+      if (!dfs(desiredTotal - i)) {
+        used[i] = false;
+        map.put(state, true);
+        return true;
+      }
+
+      used[i] = false;
+      map.put(state, false);
+    }
+
+    return map.get(state);
+  }
+
+
+  private int getState() {
+    int state = 0;
+
+    for (boolean v : used) {
+      state <<= 1;
+
+      if (v) {
+        state |= 1;
+      }
+    }
+
+    return state;
+  }
 }

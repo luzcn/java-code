@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // A self-dividing number is a number that is divisible by every digit it contains.
 //
@@ -19,38 +20,38 @@ import java.util.*;
 // The boundaries of each input argument are 1 <= left <= right <= 10000.
 public class SelfDividingNumbers {
 
-    private boolean isSelfDividing(int n) {
-        if (n < 10) {
-            return true;
-        }
-
-        int div = n;
-
-        while (n > 0) {
-
-            // no zero digit allowed
-            if (n % 10 == 0) {
-                return false;
-            }
-
-            if (div % (n % 10) != 0) {
-                return false;
-            }
-            n /= 10;
-        }
-
-        return true;
+  private boolean isSelfDividing(int n) {
+    if (n < 10) {
+      return true;
     }
 
-    public List<Integer> selfDividingNumbers(int left, int right) {
-        List<Integer> res = new ArrayList<>();
-        for (int i = left; i <= right; i++) {
-            if (isSelfDividing(i)) {
-                res.add(i);
-            }
-        }
+    int div = n;
 
-        return res;
+    while (n > 0) {
+
+      // no zero digit allowed
+      if (n % 10 == 0) {
+        return false;
+      }
+
+      if (div % (n % 10) != 0) {
+        return false;
+      }
+      n /= 10;
     }
+
+    return true;
+  }
+
+  public List<Integer> selfDividingNumbers(int left, int right) {
+    List<Integer> res = new ArrayList<>();
+    for (int i = left; i <= right; i++) {
+      if (isSelfDividing(i)) {
+        res.add(i);
+      }
+    }
+
+    return res;
+  }
 
 }

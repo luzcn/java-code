@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 // Implement a MapSum class with insert, and sum methods.
 //
@@ -19,74 +20,74 @@ import java.util.*;
 // Input: sum("ap"), Output: 5
 public class MapSumPairs {
 
-    // when we see prefix, usually we should use trie
-    private TrieNode root;
+  // when we see prefix, usually we should use trie
+  private TrieNode root;
 
 
-    /**
-     * Initialize your data structure here.
-     */
-    public MapSumPairs() {
-        root = new TrieNode();
+  /**
+   * Initialize your data structure here.
+   */
+  public MapSumPairs() {
+    root = new TrieNode();
+  }
+
+  public void insert(String key, int val) {
+    TrieNode current = root;
+    for (char c : key.toCharArray()) {
+      int index = c - 'a';
+
+      if (current.children[index] == null) {
+        current.children[index] = new TrieNode();
+      }
+      current = current.children[index];
+    }
+    current.value = val;
+  }
+
+  public int sum(String prefix) {
+    // bfs
+    int totalSum = 0;
+    TrieNode current = root;
+
+    for (char c : prefix.toCharArray()) {
+      int index = c - 'a';
+
+      if (current.children[index] == null) {
+        return 0;
+      }
+      current = current.children[index];
     }
 
-    public void insert(String key, int val) {
-        TrieNode current = root;
-        for (char c : key.toCharArray()) {
-            int index = c - 'a';
+    // bfs from this current node
+    Queue<TrieNode> queue = new LinkedList<>();
+    queue.add(current);
 
-            if (current.children[index] == null) {
-                current.children[index] = new TrieNode();
-            }
-            current = current.children[index];
+    while (!queue.isEmpty()) {
+      TrieNode node = queue.poll();
+
+      if (node == null) {
+        continue;
+      }
+      totalSum += node.value;
+
+      for (TrieNode child : node.children) {
+        if (child != null) {
+          queue.offer(child);
         }
-        current.value = val;
+      }
     }
 
-    public int sum(String prefix) {
-        // bfs
-        int totalSum = 0;
-        TrieNode current = root;
+    return totalSum;
+  }
 
-        for (char c : prefix.toCharArray()) {
-            int index = c - 'a';
+  private class TrieNode {
 
-            if (current.children[index] == null) {
-                return 0;
-            }
-            current = current.children[index];
-        }
+    int value;
+    TrieNode[] children;
 
-        // bfs from this current node
-        Queue<TrieNode> queue = new LinkedList<>();
-        queue.add(current);
-
-        while (!queue.isEmpty()) {
-            TrieNode node = queue.poll();
-
-            if (node == null) {
-                continue;
-            }
-            totalSum += node.value;
-
-            for (TrieNode child : node.children) {
-                if (child != null) {
-                    queue.offer(child);
-                }
-            }
-        }
-
-        return totalSum;
+    TrieNode() {
+      value = 0;
+      children = new TrieNode[26];
     }
-
-    private class TrieNode {
-
-        int value;
-        TrieNode[] children;
-
-        TrieNode() {
-            value = 0;
-            children = new TrieNode[26];
-        }
-    }
+  }
 }

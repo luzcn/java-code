@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given a rows x cols screen and a sentence represented by a list of non-empty words,
 // find how many times the given sentence can be fitted on the screen.
 //
@@ -57,53 +55,53 @@ import java.util.*;
 // The character '-' signifies an empty space on the screen.
 public class SentenceScreenFitting_418 {
 
-    // brute force
-    public int wordsTyping(String[] sentence, int rows, int cols) {
+  // brute force
+  public int wordsTyping(String[] sentence, int rows, int cols) {
 
-        int count = 0;
-        int currentRow = 0;  // current col index
-        int currentCol = 0; // current row index
-        boolean enoughSpace = true;
+    int count = 0;
+    int currentRow = 0;  // current col index
+    int currentCol = 0; // current row index
+    boolean enoughSpace = true;
 
-        while (enoughSpace) {
+    while (enoughSpace) {
 
-            for (int i = 0; i < sentence.length; i++) {
-                String word = sentence[i];
+      for (int i = 0; i < sentence.length; i++) {
+        String word = sentence[i];
 
-                if (currentCol + word.length() <= cols) {
-                    // can fit the word into current line
-                    currentCol += word.length();
-                    // add the whitespace
-                    currentCol += 1;
-                } else {
+        if (currentCol + word.length() <= cols) {
+          // can fit the word into current line
+          currentCol += word.length();
+          // add the whitespace
+          currentCol += 1;
+        } else {
 
-                    // cannot fit in the current line
-                    // change to a new line
-                    currentRow++;
+          // cannot fit in the current line
+          // change to a new line
+          currentRow++;
 
-                    if (currentRow >= rows) {
-                        enoughSpace = false;
-                        break;
-                    }
+          if (currentRow >= rows) {
+            enoughSpace = false;
+            break;
+          }
 
-                    currentCol = 0;
-                    if (currentCol + word.length() > cols) {
-                        // the current word is too long, cannot fit in a single empty line
-                        enoughSpace = false;
-                        break;
-                    }
+          currentCol = 0;
+          if (currentCol + word.length() > cols) {
+            // the current word is too long, cannot fit in a single empty line
+            enoughSpace = false;
+            break;
+          }
 
-                    currentCol += word.length();
-                    currentCol += 1;
-                }
-            }
-
-            if (enoughSpace) {
-                count++;
-            }
-
+          currentCol += word.length();
+          currentCol += 1;
         }
+      }
 
-        return count;
+      if (enoughSpace) {
+        count++;
+      }
+
     }
+
+    return count;
+  }
 }

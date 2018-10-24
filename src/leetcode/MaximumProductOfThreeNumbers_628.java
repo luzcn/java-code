@@ -2,8 +2,6 @@ package leetcode;
 
 // 6/30/18
 
-import java.util.*;
-
 // Given an integer array, find three numbers whose product is maximum and output the maximum product.
 //
 // Example 1:
@@ -17,38 +15,38 @@ import java.util.*;
 // - Multiplication of any three numbers in the input won't exceed the range of 32-bit signed integer.
 public class MaximumProductOfThreeNumbers_628 {
 
-    public int maximumProduct(int[] nums) {
-        // the result could be the product of 3 largest number
-        // or 2 smallest and 1 largest number
+  public int maximumProduct(int[] nums) {
+    // the result could be the product of 3 largest number
+    // or 2 smallest and 1 largest number
 
-        int max1 = Integer.MIN_VALUE;
-        int max2 = Integer.MIN_VALUE;
-        int max3 = Integer.MIN_VALUE;
+    int max1 = Integer.MIN_VALUE;
+    int max2 = Integer.MIN_VALUE;
+    int max3 = Integer.MIN_VALUE;
 
-        int min1 = Integer.MAX_VALUE;
-        int min2 = Integer.MAX_VALUE;
+    int min1 = Integer.MAX_VALUE;
+    int min2 = Integer.MAX_VALUE;
 
-        for (int n : nums) {
-            if (n > max1) {
-                max3 = max2;
-                max2 = max1;
-                max1 = n;
-            } else if (n > max2) {
-                max3 = max2;
-                max2 = n;
-            } else if (n > max3) {
-                max3 = n;
-            }
+    for (int n : nums) {
+      if (n > max1) {
+        max3 = max2;
+        max2 = max1;
+        max1 = n;
+      } else if (n > max2) {
+        max3 = max2;
+        max2 = n;
+      } else if (n > max3) {
+        max3 = n;
+      }
 
-            if (n < min1) {
-                min2 = min1;
-                min1 = n;
-            } else if (n < min2) {
-                min2 = n;
-            }
-        }
-
-        return Math.max(max1 * max2 * max3, min1 * min2 * max1);
-
+      if (n < min1) {
+        min2 = min1;
+        min1 = n;
+      } else if (n < min2) {
+        min2 = n;
+      }
     }
+
+    return Math.max(max1 * max2 * max3, min1 * min2 * max1);
+
+  }
 }

@@ -14,43 +14,43 @@ import java.util.List;
 // Return true because "leetcode" can be segmented as "leet code".
 public class WordBreak {
 
-    // dfs solution
-    public boolean wordBreak(String s, List<String> wordDict) {
+  // dfs solution
+  public boolean wordBreak(String s, List<String> wordDict) {
 
-        if (s.isEmpty() || wordDict.contains(s)) {
-            return true;
-        }
-
-        for (int i = 1; i < s.length(); i++) {
-            String substr = s.substring(0, i);
-
-            if (wordDict.contains(substr) && wordBreak(s.substring(i), wordDict)) {
-                return true;
-            }
-        }
-
-        return false;
+    if (s.isEmpty() || wordDict.contains(s)) {
+      return true;
     }
 
+    for (int i = 1; i < s.length(); i++) {
+      String substr = s.substring(0, i);
 
-    // dp[i] indicate if substring [0...i] can be split to words in dict
-    // dp[i] == true if there is a dp[j] == true, 0 <= j < i and s.substring(j, i) in dict
-    public boolean wordBreakDP(String s, List<String> wordDict) {
-
-        int n = s.length();
-        boolean[] dp = new boolean[n + 1];
-
-        dp[0] = true;
-
-        for (int i = 1; i <= n; i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (dp[j] && wordDict.contains(s.substring(j, i))) {
-                    dp[i] = true;
-                    break;
-                }
-            }
-        }
-
-        return dp[n];
+      if (wordDict.contains(substr) && wordBreak(s.substring(i), wordDict)) {
+        return true;
+      }
     }
+
+    return false;
+  }
+
+
+  // dp[i] indicate if substring [0...i] can be split to words in dict
+  // dp[i] == true if there is a dp[j] == true, 0 <= j < i and s.substring(j, i) in dict
+  public boolean wordBreakDP(String s, List<String> wordDict) {
+
+    int n = s.length();
+    boolean[] dp = new boolean[n + 1];
+
+    dp[0] = true;
+
+    for (int i = 1; i <= n; i++) {
+      for (int j = i - 1; j >= 0; j--) {
+        if (dp[j] && wordDict.contains(s.substring(j, i))) {
+          dp[i] = true;
+          break;
+        }
+      }
+    }
+
+    return dp[n];
+  }
 }

@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Write a program to find the node at which the intersection of two singly linked lists begins.
 //
 //
@@ -22,53 +20,53 @@ import java.util.*;
 // - Your code should preferably run in O(n) time and use only O(1) memory.
 public class IntersectionOfTwoLinkedLists {
 
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null) {
-            return null;
-        }
-
-        ListNode p = headA;
-        ListNode q = headB;
-
-        // count the total length of A, B list
-        int lengthA = 0, lengthB = 0;
-
-        while (p != null) {
-            lengthA++;
-            p = p.next;
-        }
-
-        while (q != null) {
-            lengthB++;
-            q = q.next;
-        }
-
-        // reset p, q to point the head of lists
-        p = headA;
-        q = headB;
-
-        // swap the p and q pointer, if B list is longer than A
-        if (lengthB > lengthA) {
-            p = headB;
-            q = headA;
-        }
-
-        // move the pointer |lengthA-lengthB| steps first
-        int steps = 0;
-        while (p != null && steps < Math.abs(lengthA - lengthB)) {
-            p = p.next;
-            steps++;
-        }
-
-        while (p != null && q != null) {
-            if (p == q) {
-                return p;
-            }
-
-            p = p.next;
-            q = q.next;
-        }
-
-        return null;
+  public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    if (headA == null || headB == null) {
+      return null;
     }
+
+    ListNode p = headA;
+    ListNode q = headB;
+
+    // count the total length of A, B list
+    int lengthA = 0, lengthB = 0;
+
+    while (p != null) {
+      lengthA++;
+      p = p.next;
+    }
+
+    while (q != null) {
+      lengthB++;
+      q = q.next;
+    }
+
+    // reset p, q to point the head of lists
+    p = headA;
+    q = headB;
+
+    // swap the p and q pointer, if B list is longer than A
+    if (lengthB > lengthA) {
+      p = headB;
+      q = headA;
+    }
+
+    // move the pointer |lengthA-lengthB| steps first
+    int steps = 0;
+    while (p != null && steps < Math.abs(lengthA - lengthB)) {
+      p = p.next;
+      steps++;
+    }
+
+    while (p != null && q != null) {
+      if (p == q) {
+        return p;
+      }
+
+      p = p.next;
+      q = q.next;
+    }
+
+    return null;
+  }
 }

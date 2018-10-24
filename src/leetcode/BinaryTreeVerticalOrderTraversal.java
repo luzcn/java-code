@@ -1,16 +1,13 @@
 package leetcode;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * Given a binary tree, return the vertical order traversal of its nodes' values.
- * (ie, from top to bottom, column by column).
+ * Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to
+ * bottom, column by column).
  *
  * If two nodes are in the same row and column, the order should be from left to right.
  *
@@ -35,82 +32,82 @@ import java.util.TreeMap;
 // ]
 public class BinaryTreeVerticalOrderTraversal {
 
-    // dfs solution
-    // each node assign a key, when iterate left sub tree, key - 1
-    // right sub tree, key + 1;
-    // save the key and list of node values in sorted hash map
-    // but guarantee the top down order is a problem
-    // and I don't know how to solve it yet.
-    private void dfs(TreeNode node, int key) {
-        if (node == null) {
-            return;
-        }
-
-        if (!map.containsKey(key)) {
-            map.put(key, new ArrayList<>());
-        }
-        map.get(key).add(node.val);
-
-        // map.computeIfAbsent(key, k -> new ArrayList<>()).add(node.val);
-
-        dfs(node.left, key - 1);
-        dfs(node.right, key + 1);
+  // dfs solution
+  // each node assign a key, when iterate left sub tree, key - 1
+  // right sub tree, key + 1;
+  // save the key and list of node values in sorted hash map
+  // but guarantee the top down order is a problem
+  // and I don't know how to solve it yet.
+  private void dfs(TreeNode node, int key) {
+    if (node == null) {
+      return;
     }
 
-    private SortedMap<Integer, List<Integer>> map = new TreeMap<>();
+    if (!map.containsKey(key)) {
+      map.put(key, new ArrayList<>());
+    }
+    map.get(key).add(node.val);
 
-    private List<List<Integer>> bfs(TreeNode root) {
+    // map.computeIfAbsent(key, k -> new ArrayList<>()).add(node.val);
 
-        if (root == null) {
-            return new ArrayList<>();
-        }
+    dfs(node.left, key - 1);
+    dfs(node.right, key + 1);
+  }
 
-        // bfs needs a queue
-        List<Data> queue = new ArrayList<>();
-        List<Data> temp = new ArrayList<>();
+  private SortedMap<Integer, List<Integer>> map = new TreeMap<>();
 
-        queue.add(new Data(0, root));
+  private List<List<Integer>> bfs(TreeNode root) {
 
-        while (!queue.isEmpty()) {
-
-            for (Data p : queue) {
-                TreeNode current = p.node;
-                int key = p.key;
-
-                map.computeIfAbsent(key, k -> new ArrayList<>()).add(current.val);
-
-                if (current.left != null) {
-                    temp.add(new Data(key - 1, current.left));
-                }
-
-                if (current.right != null) {
-                    temp.add(new Data(key + 1, current.right));
-                }
-            }
-
-            queue = temp;
-            temp = new ArrayList<>();
-        }
-
-        return new ArrayList<>(map.values());
+    if (root == null) {
+      return new ArrayList<>();
     }
 
+    // bfs needs a queue
+    List<Data> queue = new ArrayList<>();
+    List<Data> temp = new ArrayList<>();
 
-    public List<List<Integer>> verticalOrder(TreeNode root) {
+    queue.add(new Data(0, root));
 
-        return bfs(root);
+    while (!queue.isEmpty()) {
 
-    }
+      for (Data p : queue) {
+        TreeNode current = p.node;
+        int key = p.key;
 
-    private class Data {
+        map.computeIfAbsent(key, k -> new ArrayList<>()).add(current.val);
 
-        int key;
-        TreeNode node;
-
-        Data(int key, TreeNode node) {
-            this.key = key;
-            this.node = node;
+        if (current.left != null) {
+          temp.add(new Data(key - 1, current.left));
         }
+
+        if (current.right != null) {
+          temp.add(new Data(key + 1, current.right));
+        }
+      }
+
+      queue = temp;
+      temp = new ArrayList<>();
     }
+
+    return new ArrayList<>(map.values());
+  }
+
+
+  public List<List<Integer>> verticalOrder(TreeNode root) {
+
+    return bfs(root);
+
+  }
+
+  private class Data {
+
+    int key;
+    TreeNode node;
+
+    Data(int key, TreeNode node) {
+      this.key = key;
+      this.node = node;
+    }
+  }
 
 }

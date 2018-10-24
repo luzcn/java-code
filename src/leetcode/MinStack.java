@@ -11,48 +11,48 @@ import java.util.Stack;
 //
 public class MinStack {
 
-    private Stack<Integer> dataStack;
-    private Stack<Integer> minStack;
+  private Stack<Integer> dataStack;
+  private Stack<Integer> minStack;
 
-    /////
-    // initialize your data structure here.
-    ///
-    public MinStack() {
+  /////
+  // initialize your data structure here.
+  ///
+  public MinStack() {
 
-        dataStack = new Stack<>();
-        minStack = new Stack<>();
+    dataStack = new Stack<>();
+    minStack = new Stack<>();
+  }
+
+  public void push(int x) {
+
+    dataStack.push(x);
+
+    if (minStack.isEmpty() || minStack.peek() >= x) {
+      minStack.push(x);
+    }
+  }
+
+  public void pop() {
+    int data = dataStack.pop();
+
+    if (data == minStack.peek()) {
+      minStack.pop();
+    }
+  }
+
+  public int top() {
+    if (dataStack.isEmpty()) {
+      throw new NoSuchElementException();
     }
 
-    public void push(int x) {
+    return dataStack.peek();
+  }
 
-        dataStack.push(x);
-
-        if (minStack.isEmpty() || minStack.peek() >= x) {
-            minStack.push(x);
-        }
+  public int getMin() {
+    if (minStack.isEmpty()) {
+      throw new NoSuchElementException();
     }
 
-    public void pop() {
-        int data = dataStack.pop();
-
-        if (data == minStack.peek()) {
-            minStack.pop();
-        }
-    }
-
-    public int top() {
-        if (dataStack.isEmpty()) {
-            throw new NoSuchElementException();
-        }
-
-        return dataStack.peek();
-    }
-
-    public int getMin() {
-        if (minStack.isEmpty()) {
-            throw new NoSuchElementException();
-        }
-
-        return minStack.peek();
-    }
+    return minStack.peek();
+  }
 }

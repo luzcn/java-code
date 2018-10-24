@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given an array of scores that are non-negative integers.
 // Player 1 picks one of the numbers from either end of the array followed by the player 2 and then player 1 and so on.
 //
@@ -28,39 +26,38 @@ import java.util.*;
 // Finally, player 1 has more score (234) than player 2 (12), so you need to return True representing player1 can win.
 public class PredictTheWinner_486 {
 
-    private Integer[][] memo;
+  private Integer[][] memo;
 
 
-    public boolean PredictTheWinner(int[] nums) {
+  public boolean PredictTheWinner(int[] nums) {
 
-        memo = new Integer[nums.length][nums.length];
+    memo = new Integer[nums.length][nums.length];
 
-        return dfs(nums, 0, nums.length - 1) >= 0;
+    return dfs(nums, 0, nums.length - 1) >= 0;
+  }
+
+  // O(n^2) time and O(n^2) space
+  private int dfs(int[] nums, int l, int r) {
+    if (l == r) {
+      return nums[l];
     }
 
-    // O(n^2) time and O(n^2) space
-    private int dfs(int[] nums, int l, int r) {
-        if (l == r) {
-            return nums[l];
-        }
-
-        if (memo[l][r] != null) {
-            return memo[l][r];
-        }
-
-        memo[l][r] = Math.max(nums[l] - dfs(nums, l + 1, r), nums[r] - dfs(nums, l, r - 1));
-        return memo[l][r];
+    if (memo[l][r] != null) {
+      return memo[l][r];
     }
 
+    memo[l][r] = Math.max(nums[l] - dfs(nums, l + 1, r), nums[r] - dfs(nums, l, r - 1));
+    return memo[l][r];
+  }
 
-    // public boolean PredictTheWinnerDP(int[] nums) {
-    //     int[][] dp = new int[nums.length][nums.length];
-    //
-    //     for (int s = nums.length; s >= 0; s--) {
-    //         for (int e = s + 1; e < nums.length; e++) {
-    //
-    //         }
-    //     }
-    // }
+  // public boolean PredictTheWinnerDP(int[] nums) {
+  //     int[][] dp = new int[nums.length][nums.length];
+  //
+  //     for (int s = nums.length; s >= 0; s--) {
+  //         for (int e = s + 1; e < nums.length; e++) {
+  //
+  //         }
+  //     }
+  // }
 
 }

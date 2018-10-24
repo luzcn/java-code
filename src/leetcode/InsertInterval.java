@@ -19,33 +19,34 @@ import java.util.List;
 //
 public class InsertInterval {
 
-    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+  public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
 
-        List<Interval> result = new ArrayList<>();
+    List<Interval> result = new ArrayList<>();
 
-        for (Interval it : intervals) {
-            if (newInterval.start > it.end || it.start > newInterval.end) {
-                // no overlap
-                result.add(new Interval(it.start, it.end));
-            } else {
-                newInterval = new Interval(Math.min(it.start, newInterval.start), Math.max(it.end, newInterval.end));
-            }
-        }
-
-        result.add(newInterval);
-        result.sort(Comparator.comparingInt(l -> l.start));
-
-        return result;
+    for (Interval it : intervals) {
+      if (newInterval.start > it.end || it.start > newInterval.end) {
+        // no overlap
+        result.add(new Interval(it.start, it.end));
+      } else {
+        newInterval = new Interval(Math.min(it.start, newInterval.start),
+            Math.max(it.end, newInterval.end));
+      }
     }
 
-    private class Interval {
+    result.add(newInterval);
+    result.sort(Comparator.comparingInt(l -> l.start));
 
-        int start;
-        int end;
+    return result;
+  }
 
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
+  private class Interval {
+
+    int start;
+    int end;
+
+    Interval(int s, int e) {
+      start = s;
+      end = e;
     }
+  }
 }

@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
 
 // Write a function that takes a string as input and reverse only the vowels of a string.
 //
@@ -14,36 +15,37 @@ import java.util.*;
 // The vowels does not include the letter "y".
 public class ReverseVowelsOfAString {
 
-    // two pointer solution
-    public String reverseVowels(String s) {
-        HashSet<Character> vowels = new HashSet<>(Arrays.asList('a', 'o', 'u', 'e', 'i', 'A', 'O', 'U', 'E', 'I'));
-        char[] strs = s.toCharArray();
+  // two pointer solution
+  public String reverseVowels(String s) {
+    HashSet<Character> vowels = new HashSet<>(
+        Arrays.asList('a', 'o', 'u', 'e', 'i', 'A', 'O', 'U', 'E', 'I'));
+    char[] strs = s.toCharArray();
 
-        int begin = 0;
-        int end = strs.length - 1;
+    int begin = 0;
+    int end = strs.length - 1;
 
-        while (begin < end) {
+    while (begin < end) {
 
-            if (!vowels.contains(strs[begin])) {
-                begin++;
-            } else if (!vowels.contains(strs[end])) {
-                end--;
-            } else {
-                // swap
-                char temp = strs[begin];
-                strs[begin] = strs[end];
-                strs[end] = temp;
+      if (!vowels.contains(strs[begin])) {
+        begin++;
+      } else if (!vowels.contains(strs[end])) {
+        end--;
+      } else {
+        // swap
+        char temp = strs[begin];
+        strs[begin] = strs[end];
+        strs[end] = temp;
 
-                begin++;
-                end--;
-            }
-        }
-
-        StringBuilder res = new StringBuilder();
-
-        for (char c : strs) {
-            res.append(c);
-        }
-        return res.toString();
+        begin++;
+        end--;
+      }
     }
+
+    StringBuilder res = new StringBuilder();
+
+    for (char c : strs) {
+      res.append(c);
+    }
+    return res.toString();
+  }
 }

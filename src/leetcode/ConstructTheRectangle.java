@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // 1. The area of the rectangular web page you designed must equal to the given target area.
 //
 // 2. The width W should not be larger than the length L, which means L >= W.
@@ -15,13 +13,14 @@ import java.util.*;
 // But according to requirement 2, [1,4] is illegal; according to requirement 3,
 // [4,1] is not optimal compared to [2,2]. So the length L is 2, and the width W is 2.
 public class ConstructTheRectangle {
-    public int[] constructRectangle(int area) {
-        int width = (int) Math.sqrt(area);
 
-        while(area % width != 0){
-            width--;
-        }
+  public int[] constructRectangle(int area) {
+    int width = (int) Math.sqrt(area);
 
-        return new int[]{area/width, width};
+    while (area % width != 0) {
+      width--;
     }
+
+    return new int[]{area / width, width};
+  }
 }

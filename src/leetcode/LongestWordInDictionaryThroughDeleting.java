@@ -3,26 +3,21 @@ package leetcode;
 import java.util.List;
 
 /**
- * Given a string and a string dictionary,
- * find the longest string in the dictionary that can be formed by deleting some characters of the given string.
+ * Given a string and a string dictionary, find the longest string in the dictionary that can be
+ * formed by deleting some characters of the given string.
  *
- * If there are more than one possible results, return the longest word with the smallest lexicographical order.
+ * If there are more than one possible results, return the longest word with the smallest
+ * lexicographical order.
  *
  * If there is no possible result, return the empty string.
  *
- * Example 1:
- * Input:
- * s = "abpcplea", d = ["ale","apple","monkey","plea"]
+ * Example 1: Input: s = "abpcplea", d = ["ale","apple","monkey","plea"]
  *
- * Output:
- * "apple"
+ * Output: "apple"
  *
- * Example 2:
- * Input:
- * s = "abpcplea", d = ["a","b","c"]
+ * Example 2: Input: s = "abpcplea", d = ["a","b","c"]
  *
- * Output:
- * "a"
+ * Output: "a"
  */
 
 // Thoughts:
@@ -39,47 +34,46 @@ import java.util.List;
 // the sor takes O(nlongn)
 public class LongestWordInDictionaryThroughDeleting {
 
-    // check if string s is a sub-sequence of string t
-    // it means all characters s also appears in t and keeps the order in s
-    private boolean isSubSequence(String s, String t) {
-        if (s.isEmpty()) {
-            return t.isEmpty();
-        }
-
-        int i = 0;
-        int j = 0;
-
-        while (i < s.length() && j < t.length()) {
-            if (s.charAt(i) == t.charAt(j)) {
-                i++;
-            }
-            j++;
-        }
-
-        return i == s.length();
+  // check if string s is a sub-sequence of string t
+  // it means all characters s also appears in t and keeps the order in s
+  private boolean isSubSequence(String s, String t) {
+    if (s.isEmpty()) {
+      return t.isEmpty();
     }
 
-    public String findLongestWord(String s, List<String> words) {
+    int i = 0;
+    int j = 0;
 
-        // sort the input words list based on the string length and alphabetic order
-        words.sort((x, y) -> {
-            if (x.length() == y.length()) {
-                return x.compareTo(y);
-            } else {
-                return y.length() - x.length();
-            }
-        });
-
-        // words.forEach(System.out::println);
-
-
-        for (String w : words) {
-            if (isSubSequence(w, s)) {
-                return w;
-            }
-        }
-        return "";
+    while (i < s.length() && j < t.length()) {
+      if (s.charAt(i) == t.charAt(j)) {
+        i++;
+      }
+      j++;
     }
+
+    return i == s.length();
+  }
+
+  public String findLongestWord(String s, List<String> words) {
+
+    // sort the input words list based on the string length and alphabetic order
+    words.sort((x, y) -> {
+      if (x.length() == y.length()) {
+        return x.compareTo(y);
+      } else {
+        return y.length() - x.length();
+      }
+    });
+
+    // words.forEach(System.out::println);
+
+    for (String w : words) {
+      if (isSubSequence(w, s)) {
+        return w;
+      }
+    }
+    return "";
+  }
 }
 
 // public class LongestWordInDictionaryThroughDeleting {

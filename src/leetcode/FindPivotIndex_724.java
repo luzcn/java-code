@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given an array of integers nums, write a method that returns the "pivot" index of this array.
 //
 // We define the pivot index as the index where the sum of the numbers to the left of the index is equal to
@@ -26,24 +24,24 @@ import java.util.*;
 // There is no index that satisfies the conditions in the problem statement.
 public class FindPivotIndex_724 {
 
-    public int pivotIndex(int[] nums) {
+  public int pivotIndex(int[] nums) {
 
-        int n = nums.length;
-        int[] sum = new int[n + 1];
+    int n = nums.length;
+    int[] sum = new int[n + 1];
 
-        for (int i = 1; i <= n; i++) {
-            sum[i] = sum[i - 1] + nums[i - 1];
-        }
-
-        for (int i = 0; i < n; i++) {
-            int leftSum = sum[i];
-            int rightSum = sum[n] - sum[i + 1];
-
-            if (leftSum == rightSum) {
-                return i;
-            }
-        }
-
-        return -1;
+    for (int i = 1; i <= n; i++) {
+      sum[i] = sum[i - 1] + nums[i - 1];
     }
+
+    for (int i = 0; i < n; i++) {
+      int leftSum = sum[i];
+      int rightSum = sum[n] - sum[i + 1];
+
+      if (leftSum == rightSum) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
 }

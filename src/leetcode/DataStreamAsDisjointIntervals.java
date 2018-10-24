@@ -20,100 +20,100 @@ import java.util.TreeSet;
 // What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
 public class DataStreamAsDisjointIntervals {
 
-    // tree set is red-black tree, self-balanced binary search tree
-    // sort the interval by start time
-    // use TreeSet.HeadSet to get a set of items that are strictly less than given item
-    // use TreeSet.TailSet to get items that are greater or equal to the given item.
-    private TreeSet<Interval> bst = new TreeSet<>(Comparator.comparingInt(x -> x.start));
+  // tree set is red-black tree, self-balanced binary search tree
+  // sort the interval by start time
+  // use TreeSet.HeadSet to get a set of items that are strictly less than given item
+  // use TreeSet.TailSet to get items that are greater or equal to the given item.
+  private TreeSet<Interval> bst = new TreeSet<>(Comparator.comparingInt(x -> x.start));
 
-    private Interval getFirst(SortedSet<Interval> set) {
-        if (set.isEmpty()) {
-            return null;
-        }
-
-        // the first or last function gives exception if the given set is empty
-        // here we treat it as null.
-        return set.first();
+  private Interval getFirst(SortedSet<Interval> set) {
+    if (set.isEmpty()) {
+      return null;
     }
 
-    private Interval getLast(SortedSet<Interval> set) {
-        if (set.isEmpty()) {
-            return null;
-        }
+    // the first or last function gives exception if the given set is empty
+    // here we treat it as null.
+    return set.first();
+  }
 
-        return set.last();
+  private Interval getLast(SortedSet<Interval> set) {
+    if (set.isEmpty()) {
+      return null;
     }
 
+    return set.last();
+  }
 
-    /**
-     * Initialize your data structure here.
-     */
-    public DataStreamAsDisjointIntervals() {
 
+  /**
+   * Initialize your data structure here.
+   */
+  public DataStreamAsDisjointIntervals() {
+
+  }
+
+  public void addNum(int val) {
+
+    // first create an interval [val, val]
+    Interval newInterval = new Interval(val, val);
+
+    // get the last element that are < val
+    Interval before = this.getLast(bst.headSet(newInterval));
+
+    if (before != null && before.end >= val) {
+
+      // the input val is already wrapped in some interval
+      // e.g. the before is[6,8], input val is 7,
+      // 7 is already included in [6,8] range
+      // we don't need to change anything
+      return;
     }
 
-    public void addNum(int val) {
+    // get the first element that are >= val
+    Interval after = getFirst(bst.tailSet(newInterval));
 
-        // first create an interval [val, val]
-        Interval newInterval = new Interval(val, val);
+    boolean leftOverlap = before != null && before.end + 1 == val;
+    boolean rightOverlap = after != null && val + 1 == after.start;
 
-        // get the last element that are < val
-        Interval before = this.getLast(bst.headSet(newInterval));
+    if (leftOverlap && rightOverlap) {
 
-        if (before != null && before.end >= val) {
+      // after adding the new value,
+      // before and after are connected
+      // remove them from bst first then add new interval [before.start, after.end]
+      bst.remove(before);
+      bst.remove(after);
+      bst.add(new Interval(before.start, after.end));
+    } else if (leftOverlap) {
+      // before will be connected with val
+      // extend it's end
+      before.end++;
+    } else if (rightOverlap) {
+      after.start--;
+    } else {
+      // NO overlap, just add the interval [val, val]
+      bst.add(newInterval);
+    }
+  }
 
-            // the input val is already wrapped in some interval
-            // e.g. the before is[6,8], input val is 7,
-            // 7 is already included in [6,8] range
-            // we don't need to change anything
-            return;
-        }
+  public List<Interval> getIntervals() {
 
-        // get the first element that are >= val
-        Interval after = getFirst(bst.tailSet(newInterval));
+    return new ArrayList<>(this.bst);
+  }
 
-        boolean leftOverlap = before != null && before.end + 1 == val;
-        boolean rightOverlap = after != null && val + 1 == after.start;
 
-        if (leftOverlap && rightOverlap) {
+  private class Interval {
 
-            // after adding the new value,
-            // before and after are connected
-            // remove them from bst first then add new interval [before.start, after.end]
-            bst.remove(before);
-            bst.remove(after);
-            bst.add(new Interval(before.start, after.end));
-        } else if (leftOverlap) {
-            // before will be connected with val
-            // extend it's end
-            before.end++;
-        } else if (rightOverlap) {
-            after.start--;
-        } else {
-            // NO overlap, just add the interval [val, val]
-            bst.add(newInterval);
-        }
+    public int start;
+    public int end;
+
+    Interval() {
+      start = 0;
+      end = 0;
     }
 
-    public List<Interval> getIntervals() {
-
-        return new ArrayList<>(this.bst);
+    Interval(int s, int e) {
+      start = s;
+      end = e;
     }
-
-
-    private class Interval {
-
-        public int start;
-        public int end;
-
-        Interval() {
-            start = 0;
-            end = 0;
-        }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
-    }
+  }
 }

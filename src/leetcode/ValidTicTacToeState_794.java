@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // A Tic-Tac-Toe board is given as a string array board.
 // Return True if and only if it is possible to reach this board position during the course of a valid tic-tac-toe game.
 //
@@ -39,70 +37,70 @@ import java.util.*;
 // - Each board[i][j] is a character in the set {" ", "X", "O"}.
 public class ValidTicTacToeState_794 {
 
-    public boolean validTicTacToe(String[] board) {
+  public boolean validTicTacToe(String[] board) {
 
-        // check the count of 'X' and 'O'
-        // determine what would be the next char
-        int countX = 0;
-        int countO = 0;
+    // check the count of 'X' and 'O'
+    // determine what would be the next char
+    int countX = 0;
+    int countO = 0;
 
-        for (String row : board) {
-            for (char c : row.toCharArray()) {
-                if (c == 'X') {
-                    countX++;
-                }
-
-                if (c == 'O') {
-                    countO++;
-                }
-            }
+    for (String row : board) {
+      for (char c : row.toCharArray()) {
+        if (c == 'X') {
+          countX++;
         }
 
-        // the first is always 'X', so countX >= countO
-        if (countO != countX && countO != countX - 1) {
-            return false;
+        if (c == 'O') {
+          countO++;
         }
+      }
+    }
 
-        // if countO == countX, next char is 'X'
-        // if X can win, then current state is false
-        if (countO == countX) {
-            return !win(board, 'X');
-        }
+    // the first is always 'X', so countX >= countO
+    if (countO != countX && countO != countX - 1) {
+      return false;
+    }
 
-        // the next char is 'O'
-        // if O can win, current state is false
-        if (countO == countX - 1) {
-            return !win(board, 'O');
-        }
+    // if countO == countX, next char is 'X'
+    // if X can win, then current state is false
+    if (countO == countX) {
+      return !win(board, 'X');
+    }
 
+    // the next char is 'O'
+    // if O can win, current state is false
+    if (countO == countX - 1) {
+      return !win(board, 'O');
+    }
+
+    return true;
+  }
+
+
+  private boolean win(String[] board, char p) {
+    for (int i = 0; i < 3; i++) {
+
+      // vertical
+      if (board[i].charAt(0) == p && board[i].charAt(1) == p && board[i].charAt(2) == p) {
         return true;
+      }
+
+      // horizontal
+      if (board[0].charAt(i) == p && board[1].charAt(i) == p && board[2].charAt(i) == p) {
+        return true;
+      }
     }
 
-
-    private boolean win(String[] board, char p) {
-        for (int i = 0; i < 3; i++) {
-
-            // vertical
-            if (board[i].charAt(0) == p && board[i].charAt(1) == p && board[i].charAt(2) == p) {
-                return true;
-            }
-
-            // horizontal
-            if (board[0].charAt(i) == p && board[1].charAt(i) == p && board[2].charAt(i) == p) {
-                return true;
-            }
-        }
-
-        // diagonal, left-up to right-bottom
-        if (board[0].charAt(0) == p && board[1].charAt(1) == p && board[2].charAt(2) == p) {
-            return true;
-        }
-
-        // diagonal, left-up to right-bottom
-        if (board[2].charAt(0) == p && board[1].charAt(1) == p && board[0].charAt(2) == p) {
-            return true;
-        }
-
-        return false;
+    // diagonal, left-up to right-bottom
+    if (board[0].charAt(0) == p && board[1].charAt(1) == p && board[2].charAt(2) == p) {
+      return true;
     }
+
+    // diagonal, left-up to right-bottom
+    if (board[2].charAt(0) == p && board[1].charAt(1) == p && board[0].charAt(2) == p) {
+      return true;
+    }
+
+    return false;
+  }
 }

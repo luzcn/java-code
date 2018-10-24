@@ -31,37 +31,37 @@ package leetcode;
 // 2
 public class LongestUnivaluePath {
 
-    private int ans = 0;
+  private int ans = 0;
 
-    public int longestUnivaluePath(TreeNode root) {
+  public int longestUnivaluePath(TreeNode root) {
 
-        dfs(root);
-        return ans;
+    dfs(root);
+    return ans;
+  }
+
+  private int dfs(TreeNode node) {
+    if (node == null) {
+      return 0;
     }
 
-    private int dfs(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-
-        if (node.left == null && node.right == null) {
-            return 0;
-        }
-
-        int leftSub = dfs(node.left);
-        int rightSub = dfs(node.right);
-
-        int leftPath = 0;
-        int rightPath = 0;
-        if (node.left != null && node.left.val == node.val) {
-            leftPath = leftSub + 1;
-        }
-        if (node.right != null && node.right.val == node.val) {
-            rightPath = rightSub + 1;
-        }
-
-        ans = Math.max(ans, leftPath + rightPath);
-        return Math.max(leftPath, rightPath);
-
+    if (node.left == null && node.right == null) {
+      return 0;
     }
+
+    int leftSub = dfs(node.left);
+    int rightSub = dfs(node.right);
+
+    int leftPath = 0;
+    int rightPath = 0;
+    if (node.left != null && node.left.val == node.val) {
+      leftPath = leftSub + 1;
+    }
+    if (node.right != null && node.right.val == node.val) {
+      rightPath = rightSub + 1;
+    }
+
+    ans = Math.max(ans, leftPath + rightPath);
+    return Math.max(leftPath, rightPath);
+
+  }
 }

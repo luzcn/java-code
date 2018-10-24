@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Given a binary tree, return all root-to-leaf paths.
 //
@@ -21,27 +22,27 @@ import java.util.*;
 // Explanation: All root-to-leaf paths are: 1->2->5, 1->3
 public class BinaryTreePaths {
 
-    private List<String> res = new ArrayList<>();
+  private List<String> res = new ArrayList<>();
 
-    private void dfs(TreeNode node, String path) {
-        if (node == null) {
-            return;
-        }
-
-        if (node.left == null && node.right == null) {
-
-            res.add(path + node.val);
-            return;
-        }
-
-        dfs(node.left, path + node.val + "->");
-        dfs(node.right, path + node.val + "->");
-
+  private void dfs(TreeNode node, String path) {
+    if (node == null) {
+      return;
     }
 
-    public List<String> binaryTreePaths(TreeNode root) {
-        dfs(root, "");
+    if (node.left == null && node.right == null) {
 
-        return res;
+      res.add(path + node.val);
+      return;
     }
+
+    dfs(node.left, path + node.val + "->");
+    dfs(node.right, path + node.val + "->");
+
+  }
+
+  public List<String> binaryTreePaths(TreeNode root) {
+    dfs(root, "");
+
+    return res;
+  }
 }

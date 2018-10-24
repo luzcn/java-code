@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 // Given an array of words and a width maxWidth,
@@ -64,71 +65,71 @@ import java.util.*;
 // ]
 public class TextJustification_68 {
 
-    public List<String> fullJustify(String[] words, int maxWidth) {
-        List<String> res = new ArrayList<>();
-        if (words.length == 0 || maxWidth <= 0) {
-            return res;
-        }
-
-        int index = 0;
-        while (index < words.length) {
-            int wordLength = words[index].length();
-            int last = index + 1;
-
-            // find the max words that can fit in one line
-            while (last < words.length) {
-                if (wordLength + words[last].length() + 1 > maxWidth) {
-                    break;
-                }
-
-                wordLength += words[last].length() + 1;
-                last++;
-            }
-
-            StringBuilder sb = new StringBuilder();
-            int wordCount = last - index - 1;
-
-            if (last == words.length || wordCount == 0) {
-                // a single word or processing the last line, need to left-justified
-                for (int i = index; i < last; i++) {
-                    sb.append(words[i]).append(" ");
-                }
-
-                // remove the last " ", because the last word may not need it.
-                sb.deleteCharAt(sb.length() - 1);
-                for (int i = sb.length(); i < maxWidth; i++) {
-                    sb.append(" ");
-                }
-            } else {
-
-                // middle-justified
-
-                int spaces = (maxWidth - wordLength) / wordCount;
-                int rest = (maxWidth - wordLength) % wordCount;
-
-                for (int i = index; i < last; i++) {
-
-                    sb.append(words[i]);
-
-                    // between each word
-                    if (i < last - 1) {
-                        for (int j = 0; j <= spaces; j++) {
-                            sb.append(" ");
-                        }
-
-                        if (rest > 0) {
-                            sb.append(" ");
-                            rest--;
-                        }
-                    }
-                }
-            }
-
-            res.add(sb.toString());
-
-            index = last;
-        }
-
-        return res;
+  public List<String> fullJustify(String[] words, int maxWidth) {
+    List<String> res = new ArrayList<>();
+    if (words.length == 0 || maxWidth <= 0) {
+      return res;
     }
+
+    int index = 0;
+    while (index < words.length) {
+      int wordLength = words[index].length();
+      int last = index + 1;
+
+      // find the max words that can fit in one line
+      while (last < words.length) {
+        if (wordLength + words[last].length() + 1 > maxWidth) {
+          break;
+        }
+
+        wordLength += words[last].length() + 1;
+        last++;
+      }
+
+      StringBuilder sb = new StringBuilder();
+      int wordCount = last - index - 1;
+
+      if (last == words.length || wordCount == 0) {
+        // a single word or processing the last line, need to left-justified
+        for (int i = index; i < last; i++) {
+          sb.append(words[i]).append(" ");
+        }
+
+        // remove the last " ", because the last word may not need it.
+        sb.deleteCharAt(sb.length() - 1);
+        for (int i = sb.length(); i < maxWidth; i++) {
+          sb.append(" ");
+        }
+      } else {
+
+        // middle-justified
+
+        int spaces = (maxWidth - wordLength) / wordCount;
+        int rest = (maxWidth - wordLength) % wordCount;
+
+        for (int i = index; i < last; i++) {
+
+          sb.append(words[i]);
+
+          // between each word
+          if (i < last - 1) {
+            for (int j = 0; j <= spaces; j++) {
+              sb.append(" ");
+            }
+
+            if (rest > 0) {
+              sb.append(" ");
+              rest--;
+            }
+          }
+        }
+      }
+
+      res.add(sb.toString());
+
+      index = last;
+    }
+
+    return res;
+  }
 }

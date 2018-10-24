@@ -6,73 +6,67 @@ import java.util.List;
 /**
  * Implement an iterator to flatten a 2d vector.
  *
- * For example,
- * Given 2d vector =
+ * For example, Given 2d vector =
  *
- * [
- * [1,2],
- * [3],
- * [4,5,6]
- * ]
- * By calling next repeatedly until hasNext returns false,
- * the order of elements returned by next should be: [1,2,3,4,5,6].
+ * [ [1,2], [3], [4,5,6] ] By calling next repeatedly until hasNext returns false, the order of
+ * elements returned by next should be: [1,2,3,4,5,6].
  */
 public class Flatten2DVector implements Iterator<Integer> {
 
-    private Iterator<List<Integer>> rowIterator;
-    private Iterator<Integer> columnIterator;
+  private Iterator<List<Integer>> rowIterator;
+  private Iterator<Integer> columnIterator;
 
-    public Flatten2DVector(List<List<Integer>> vec2d) {
-        rowIterator = vec2d.iterator();
-        columnIterator = null;
-        moveToNext();
+  public Flatten2DVector(List<List<Integer>> vec2d) {
+    rowIterator = vec2d.iterator();
+    columnIterator = null;
+    moveToNext();
+  }
+
+  private void moveToNext() {
+    if (columnIterator != null && columnIterator.hasNext()) {
+      return;
     }
 
-    private void moveToNext() {
-        if (columnIterator != null && columnIterator.hasNext()) {
-            return;
-        }
+    // find the first non-empty list
+    while (rowIterator.hasNext()) {
+      columnIterator = rowIterator.next().iterator();
 
-        // find the first non-empty list
-        while (rowIterator.hasNext()) {
-            columnIterator = rowIterator.next().iterator();
+      if (columnIterator.hasNext()) {
+        break;
+      }
+    }
+  }
 
-            if (columnIterator.hasNext()) {
-                break;
-            }
-        }
+  @Override
+  public Integer next() {
+    if (!hasNext()) {
+      return null;
     }
 
-    @Override
-    public Integer next() {
-        if (!hasNext()) {
-            return null;
-        }
+    Integer value = columnIterator.next();
+    moveToNext();
 
-        Integer value = columnIterator.next();
-        moveToNext();
+    return value;
+  }
 
-        return value;
-    }
+  public Integer peek() {
+    Iterator<Integer> current = columnIterator;
 
-    public Integer peek() {
-        Iterator<Integer> current = columnIterator;
+    int value = this.columnIterator.next();
 
-        int value = this.columnIterator.next();
+    this.columnIterator = current;
+    return value;
 
-        this.columnIterator = current;
-        return value;
+  }
 
-    }
+  @Override
+  public boolean hasNext() {
+    return rowIterator.hasNext() || (columnIterator != null && columnIterator.hasNext());
+  }
 
-    @Override
-    public boolean hasNext() {
-        return rowIterator.hasNext() || (columnIterator != null && columnIterator.hasNext());
-    }
+  public void remove() {
+    this.columnIterator.remove();
 
-    public void remove() {
-        this.columnIterator.remove();
-
-        // this.columnIterator.next();
-    }
+    // this.columnIterator.next();
+  }
 }

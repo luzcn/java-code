@@ -1,6 +1,11 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.PriorityQueue;
 
 // There are N network nodes, labelled 1 to N.
 //
@@ -17,51 +22,52 @@ import java.util.*;
 // - All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
 public class NetworkDelayTime {
 
-    public int networkDelayTime(int[][] times, int N, int K) {
+  public int networkDelayTime(int[][] times, int N, int K) {
 
-        HashSet<Integer> visited = new HashSet<>();
-        HashMap<Integer, Integer> distance = new HashMap<>();
-        HashMap<Integer, List<int[]>> graph = new HashMap<>();
-        distance.put(K, 0);
+    HashSet<Integer> visited = new HashSet<>();
+    HashMap<Integer, Integer> distance = new HashMap<>();
+    HashMap<Integer, List<int[]>> graph = new HashMap<>();
+    distance.put(K, 0);
 
-        // 1-> [2, 4], there is a directed edge from node 1 to 2 and weight is 4
-        for (int[] edge : times) {
-            graph.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(new int[]{edge[1], edge[2]});
-        }
-
-        // Dijkstar's single source shortest path, use minHeap
-        PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(x -> x[1]));
-        queue.offer(new int[]{K, 0});
-
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-
-            int u = current[0];
-
-            if (visited.contains(u)) {
-                continue;
-            }
-
-            visited.add(u);
-
-            for (int[] neighbor : graph.getOrDefault(u, new ArrayList<>())) {
-
-                int v = neighbor[0];
-                int dis = neighbor[1];
-
-                if (!visited.contains(v) && (distance.get(v) == null || distance.get(u) + dis < distance.get(v))) {
-                    distance.put(v, distance.get(u) + dis);
-
-                    queue.offer(new int[]{v, distance.get(v)});
-                }
-            }
-        }
-
-        if (distance.size() != N) {
-            return -1;
-        }
-
-        return distance.values().stream().mapToInt(x -> x).max().getAsInt();
+    // 1-> [2, 4], there is a directed edge from node 1 to 2 and weight is 4
+    for (int[] edge : times) {
+      graph.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(new int[]{edge[1], edge[2]});
     }
+
+    // Dijkstar's single source shortest path, use minHeap
+    PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(x -> x[1]));
+    queue.offer(new int[]{K, 0});
+
+    while (!queue.isEmpty()) {
+      int[] current = queue.poll();
+
+      int u = current[0];
+
+      if (visited.contains(u)) {
+        continue;
+      }
+
+      visited.add(u);
+
+      for (int[] neighbor : graph.getOrDefault(u, new ArrayList<>())) {
+
+        int v = neighbor[0];
+        int dis = neighbor[1];
+
+        if (!visited.contains(v) && (distance.get(v) == null || distance.get(u) + dis < distance
+            .get(v))) {
+          distance.put(v, distance.get(u) + dis);
+
+          queue.offer(new int[]{v, distance.get(v)});
+        }
+      }
+    }
+
+    if (distance.size() != N) {
+      return -1;
+    }
+
+    return distance.values().stream().mapToInt(x -> x).max().getAsInt();
+  }
 
 }

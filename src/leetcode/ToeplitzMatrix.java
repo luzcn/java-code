@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // A matrix is Toeplitz if every diagonal from top-left to bottom-right has the same element.
 //
 // Now given an M x N matrix, return True if and only if the matrix is Toeplitz.
@@ -30,26 +28,26 @@ import java.util.*;
 // - matrix[i][j] will be integers in range [0, 99].
 public class ToeplitzMatrix {
 
-    // brute force, be careful of the edge cases.
-    public boolean isToeplitzMatrix(int[][] matrix) {
-        int m = matrix.length;
-        if (m < 2) {
-            return true;
-        }
-
-        int n = matrix[0].length;
-        if (n < 2) {
-            return true;
-        }
-
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                if (matrix[i][j] != matrix[i - 1][j - 1]) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+  // brute force, be careful of the edge cases.
+  public boolean isToeplitzMatrix(int[][] matrix) {
+    int m = matrix.length;
+    if (m < 2) {
+      return true;
     }
+
+    int n = matrix[0].length;
+    if (n < 2) {
+      return true;
+    }
+
+    for (int i = 1; i < m; i++) {
+      for (int j = 1; j < n; j++) {
+        if (matrix[i][j] != matrix[i - 1][j - 1]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
 }

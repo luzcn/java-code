@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // In English, we have a concept called root,
 // which can be followed by some other words to form another longer word - let's call this word successor.
@@ -26,77 +27,77 @@ import java.util.*;
 // - 1 <= sentence words length <= 1000
 public class ReplaceWords {
 
-    private TrieNode root = new TrieNode();
+  private TrieNode root = new TrieNode();
 
-    public String replaceWords(List<String> dict, String sentence) {
+  public String replaceWords(List<String> dict, String sentence) {
 
-        // build trie
-        buildTrie(dict);
+    // build trie
+    buildTrie(dict);
 
-        // process the given sentence
-        // split by non-word
-        String[] words = sentence.split("\\W+");
-        List<String> wordList = new ArrayList<>();
+    // process the given sentence
+    // split by non-word
+    String[] words = sentence.split("\\W+");
+    List<String> wordList = new ArrayList<>();
 
-        for (String word : words) {
-            String strRoot = search(word);
+    for (String word : words) {
+      String strRoot = search(word);
 
-            if (!strRoot.isEmpty()) {
-                wordList.add(strRoot);
-            } else {
-                wordList.add(word);
-            }
-        }
-
-        return String.join(" ", wordList);
+      if (!strRoot.isEmpty()) {
+        wordList.add(strRoot);
+      } else {
+        wordList.add(word);
+      }
     }
 
-    private String search(String word) {
-        StringBuilder res = new StringBuilder();
-        TrieNode current = root;
+    return String.join(" ", wordList);
+  }
 
-        for (char c : word.toCharArray()) {
-            int index = c - 'a';
+  private String search(String word) {
+    StringBuilder res = new StringBuilder();
+    TrieNode current = root;
 
-            if (current.children[index] == null) {
-                return "";
-            }
+    for (char c : word.toCharArray()) {
+      int index = c - 'a';
 
-            res.append(c);
-            current = current.children[index];
+      if (current.children[index] == null) {
+        return "";
+      }
 
-            if (current.wordCount > 0) {
-                break;
-            }
-        }
+      res.append(c);
+      current = current.children[index];
 
-        return res.toString();
+      if (current.wordCount > 0) {
+        break;
+      }
     }
 
-    private void buildTrie(List<String> dict) {
-        for (String word : dict) {
-            TrieNode current = root;
+    return res.toString();
+  }
 
-            for (char c : word.toCharArray()) {
-                int index = c - 'a';
-                if (current.children[index] == null) {
-                    current.children[index] = new TrieNode();
-                }
-                current = current.children[index];
-            }
-            current.wordCount++;
+  private void buildTrie(List<String> dict) {
+    for (String word : dict) {
+      TrieNode current = root;
+
+      for (char c : word.toCharArray()) {
+        int index = c - 'a';
+        if (current.children[index] == null) {
+          current.children[index] = new TrieNode();
         }
-
+        current = current.children[index];
+      }
+      current.wordCount++;
     }
 
-    private class TrieNode {
+  }
 
-        int wordCount;
-        TrieNode[] children;
+  private class TrieNode {
 
-        TrieNode() {
-            wordCount = 0;
-            children = new TrieNode[26];
-        }
+    int wordCount;
+    TrieNode[] children;
+
+    TrieNode() {
+      wordCount = 0;
+      children = new TrieNode[26];
     }
+  }
 }

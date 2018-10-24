@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Alice plays the following game, loosely based on the card game "21".
 //
 // Alice starts with 0 points, and draws numbers while she has less than K points.
@@ -29,20 +27,20 @@ import java.util.*;
 // Output: 0.73278
 public class New21Game {
 
-    // https://leetcode.com/problems/new-21-game/solution/
-    // dp idea
-    // but I don't understand
-    public double new21Game(int N, int K, int W) {
-        double[] dp = new double[N + W + 1];
-        for (int k = K; k <= N; ++k) {
-            dp[k] = 1.0;
-        }
-
-        double S = Math.min(N - K + 1, W);
-        for (int k = K - 1; k >= 0; --k) {
-            dp[k] = S / W;
-            S += dp[k] - dp[k + W];
-        }
-        return dp[0];
+  // https://leetcode.com/problems/new-21-game/solution/
+  // dp idea
+  // but I don't understand
+  public double new21Game(int N, int K, int W) {
+    double[] dp = new double[N + W + 1];
+    for (int k = K; k <= N; ++k) {
+      dp[k] = 1.0;
     }
+
+    double S = Math.min(N - K + 1, W);
+    for (int k = K - 1; k >= 0; --k) {
+      dp[k] = S / W;
+      S += dp[k] - dp[k + W];
+    }
+    return dp[0];
+  }
 }

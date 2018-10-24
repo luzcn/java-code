@@ -1,6 +1,5 @@
 package leetcode;
 
-import java.util.Deque;
 import java.util.LinkedList;
 
 /////
@@ -20,36 +19,36 @@ import java.util.LinkedList;
 ///
 public class SimplifyPath {
 
-    public String simplifyPath(String path) {
-        if (path.length() == 0) {
-            return "";
-        }
-        String[] dirs = path.split("/");
-        LinkedList<String> temp = new LinkedList<>();
-
-        for (String s : dirs) {
-            if (s.length() == 0 || s.equals(".")) {
-                continue;
-            }
-
-            if (s.equals("..")) {
-                if (!temp.isEmpty()) {
-                    temp.removeLast();
-                }
-            } else {
-                temp.addLast("/" + s);
-            }
-        }
-
-        if (temp.isEmpty()) {
-            return "/";
-        }
-
-        StringBuilder result = new StringBuilder();
-        for (String s : temp) {
-            result.append(s);
-        }
-
-        return result.toString();
+  public String simplifyPath(String path) {
+    if (path.length() == 0) {
+      return "";
     }
+    String[] dirs = path.split("/");
+    LinkedList<String> temp = new LinkedList<>();
+
+    for (String s : dirs) {
+      if (s.length() == 0 || s.equals(".")) {
+        continue;
+      }
+
+      if (s.equals("..")) {
+        if (!temp.isEmpty()) {
+          temp.removeLast();
+        }
+      } else {
+        temp.addLast("/" + s);
+      }
+    }
+
+    if (temp.isEmpty()) {
+      return "/";
+    }
+
+    StringBuilder result = new StringBuilder();
+    for (String s : temp) {
+      result.append(s);
+    }
+
+    return result.toString();
+  }
 }

@@ -15,37 +15,37 @@ import java.util.Map;
 ///
 public class LongestSubstringWithoutRepeating {
 
-    public int lengthOfLongestSubstring(String s) {
+  public int lengthOfLongestSubstring(String s) {
 
-        Map<Character, Integer> map = new HashMap<>();
-        int begin = 0, end = 0;
-        int counter = 0;
+    Map<Character, Integer> map = new HashMap<>();
+    int begin = 0, end = 0;
+    int counter = 0;
 
-        int maxLength = 0;
+    int maxLength = 0;
 
-        while (end < s.length()) {
-            char c = s.charAt(end);
+    while (end < s.length()) {
+      char c = s.charAt(end);
 
-            if (!map.containsKey(c) || map.get(c) == 0) {
-                map.put(c, 1);
-            } else {
-                map.put(c, map.get(c) + 1);
-                counter++;
-            }
-            end++;
+      if (!map.containsKey(c) || map.get(c) == 0) {
+        map.put(c, 1);
+      } else {
+        map.put(c, map.get(c) + 1);
+        counter++;
+      }
+      end++;
 
-            while (counter > 0) {
+      while (counter > 0) {
 
-                if (map.get(s.charAt(begin)) > 1) {
-                    counter--;
-                }
-
-                map.put(s.charAt(begin), map.get(s.charAt(begin)) - 1);
-                begin++;
-            }
-
-            maxLength = Math.max(maxLength, end - begin);
+        if (map.get(s.charAt(begin)) > 1) {
+          counter--;
         }
-        return maxLength;
+
+        map.put(s.charAt(begin), map.get(s.charAt(begin)) - 1);
+        begin++;
+      }
+
+      maxLength = Math.max(maxLength, end - begin);
     }
+    return maxLength;
+  }
 }

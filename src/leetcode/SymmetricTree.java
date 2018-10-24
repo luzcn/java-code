@@ -16,20 +16,22 @@ package leetcode;
 //    \   \
 //    3    3
 public class SymmetricTree {
-    private boolean dfs(TreeNode p, TreeNode q){
-        if (p == null || q == null){
-            return q == null && p == null;
-        }
 
-        return (p.val == q.val) && dfs(p.left, q.right) && dfs(p.right, q.left);
-
+  private boolean dfs(TreeNode p, TreeNode q) {
+    if (p == null || q == null) {
+      return q == null && p == null;
     }
 
-    public boolean isSymmetric(TreeNode root) {
-        if (root == null)
-            return true;
+    return (p.val == q.val) && dfs(p.left, q.right) && dfs(p.right, q.left);
 
-        return dfs(root.left, root.right);
+  }
+
+  public boolean isSymmetric(TreeNode root) {
+    if (root == null) {
+      return true;
     }
+
+    return dfs(root.left, root.right);
+  }
 
 }

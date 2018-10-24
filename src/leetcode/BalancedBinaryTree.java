@@ -31,29 +31,29 @@ package leetcode;
 // Return false.
 public class BalancedBinaryTree {
 
-    private boolean balance = true;
+  private boolean balance = true;
 
-    // bottom-up recursive
-    // O(n) time
-    // O(logn) space
-    private int dfs(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-
-        int leftSub = dfs(node.left);
-        int rightSub = dfs(node.right);
-
-        // the depth of the two subtrees of every node never differ by more than 1
-        if (Math.abs(leftSub - rightSub) > 1) {
-            this.balance = false;
-        }
-
-        return Math.max(leftSub, rightSub) + 1;
+  // bottom-up recursive
+  // O(n) time
+  // O(logn) space
+  private int dfs(TreeNode node) {
+    if (node == null) {
+      return 0;
     }
 
-    public boolean isBalanced(TreeNode root) {
-        dfs(root);
-        return this.balance;
+    int leftSub = dfs(node.left);
+    int rightSub = dfs(node.right);
+
+    // the depth of the two subtrees of every node never differ by more than 1
+    if (Math.abs(leftSub - rightSub) > 1) {
+      this.balance = false;
     }
+
+    return Math.max(leftSub, rightSub) + 1;
+  }
+
+  public boolean isBalanced(TreeNode root) {
+    dfs(root);
+    return this.balance;
+  }
 }

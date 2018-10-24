@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 // Let's play the minesweeper game (Wikipedia, online game)!
 //
@@ -38,99 +39,99 @@ import java.util.*;
 //  ['B', 'B', 'B', 'B', 'B']]
 public class Minesweeper_529 {
 
-    private int[][] eightDirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
-    private int m;
-    private int n;
+  private int[][] eightDirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {-1, -1}, {-1, 1}, {1, -1},
+      {1, 1}};
+  private int m;
+  private int n;
 
-    private int getMines(char[][] board, int i, int j) {
-        int mines = 0;
+  private int getMines(char[][] board, int i, int j) {
+    int mines = 0;
+    for (int[] dir : eightDirs) {
+      int x = i + dir[0];
+      int y = j + dir[1];
+
+      if (x < 0 || x >= m || y < 0 || y >= n) {
+        continue;
+      }
+
+      if (board[x][y] == 'M') {
+        mines++;
+      }
+    }
+
+    return mines;
+  }
+
+  public char[][] updateBoard(char[][] board, int[] click) {
+    m = board.length;
+    if (m == 0) {
+      return board;
+    }
+    n = board[0].length;
+
+    int i = click[0];
+    int j = click[1];
+
+    if (board[i][j] == 'B') {
+      return board;
+    }
+
+    if (board[i][j] == 'M') {
+      board[i][j] = 'X';
+      return board;
+    }
+
+    // bfs
+    Queue<int[]> queue = new LinkedList<>();
+    queue.add(click);
+
+    while (!queue.isEmpty()) {
+      int x = queue.peek()[0];
+      int y = queue.peek()[1];
+      queue.poll();
+
+      int mines = getMines(board, x, y);
+      if (mines > 0) {
+        board[x][y] = (char) (mines + '0');
+
+      } else {
+        board[x][y] = 'B';
         for (int[] dir : eightDirs) {
-            int x = i + dir[0];
-            int y = j + dir[1];
+          int u = x + dir[0];
+          int v = y + dir[1];
 
-            if (x < 0 || x >= m || y < 0 || y >= n) {
-                continue;
-            }
+          if (u < 0 || u >= m || v < 0 || v >= n || board[u][v] != 'E') {
+            continue;
+          }
 
-            if (board[x][y] == 'M') {
-                mines++;
-            }
+          queue.add(new int[]{u, v});
         }
-
-        return mines;
+      }
     }
 
-    public char[][] updateBoard(char[][] board, int[] click) {
-        m = board.length;
-        if (m == 0) {
-            return board;
-        }
-        n = board[0].length;
+    return board;
+  }
 
-        int i = click[0];
-        int j = click[1];
-
-        if (board[i][j] == 'B') {
-            return board;
-        }
-
-        if (board[i][j] == 'M') {
-            board[i][j] = 'X';
-            return board;
-        }
-
-        // bfs
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(click);
-
-        while (!queue.isEmpty()) {
-            int x = queue.peek()[0];
-            int y = queue.peek()[1];
-            queue.poll();
-
-            int mines = getMines(board, x, y);
-            if (mines > 0) {
-                board[x][y] = (char) (mines + '0');
-
-            } else {
-                board[x][y] = 'B';
-                for (int[] dir : eightDirs) {
-                    int u = x + dir[0];
-                    int v = y + dir[1];
-
-                    if (u < 0 || u >= m || v < 0 || v >= n || board[u][v] != 'E') {
-                        continue;
-                    }
-
-                    queue.add(new int[]{u, v});
-                }
-            }
-        }
-
-        return board;
-    }
-
-
-    // public static void main(String[] args) {
-    //     char[][] board = {
-    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'M'},
-    //             {'E', 'E', 'M', 'E', 'E', 'E', 'E', 'E'},
-    //             {'M', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-    //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
-    //             {'E', 'E', 'M', 'M', 'E', 'E', 'E', 'E'}};
-    //
-    //     Minesweeper_529 program = new Minesweeper_529();
-    //
-    //     char[][] res = program.updateBoard(board, new int[]{0, 0});
-    //
-    //     for (char[] ans : res) {
-    //         for (char c : ans) {
-    //             System.out.print(c + " ");
-    //         }
-    //         System.out.println();
-    //     }
-    // }
+  // public static void main(String[] args) {
+  //     char[][] board = {
+  //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+  //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'M'},
+  //             {'E', 'E', 'M', 'E', 'E', 'E', 'E', 'E'},
+  //             {'M', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+  //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+  //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+  //             {'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'},
+  //             {'E', 'E', 'M', 'M', 'E', 'E', 'E', 'E'}};
+  //
+  //     Minesweeper_529 program = new Minesweeper_529();
+  //
+  //     char[][] res = program.updateBoard(board, new int[]{0, 0});
+  //
+  //     for (char[] ans : res) {
+  //         for (char c : ans) {
+  //             System.out.print(c + " ");
+  //         }
+  //         System.out.println();
+  //     }
+  // }
 }

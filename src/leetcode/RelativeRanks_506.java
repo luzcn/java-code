@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
 
 // easy
 
@@ -19,29 +20,29 @@ import java.util.*;
 // - All the scores of athletes are guaranteed to be unique.
 public class RelativeRanks_506 {
 
-    public String[] findRelativeRanks(int[] nums) {
+  public String[] findRelativeRanks(int[] nums) {
 
-        HashMap<Integer, Integer> map = new HashMap<>();
-        String[] res = new String[nums.length];
+    HashMap<Integer, Integer> map = new HashMap<>();
+    String[] res = new String[nums.length];
 
-        for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], i);
-        }
-
-        Arrays.sort(nums);
-
-        for (int i = nums.length - 1; i >= 0; i--) {
-            if (i == nums.length - 1) {
-                res[map.get(nums[i])] = "Gold Medal";
-            } else if (i == nums.length - 2) {
-                res[map.get(nums[i])] = "Silver Medal";
-            } else if (i == nums.length - 3) {
-                res[map.get(nums[i])] = "Bronze Medal";
-            } else {
-                res[map.get(nums[i])] = String.valueOf(nums.length - i);
-            }
-        }
-
-        return res;
+    for (int i = 0; i < nums.length; i++) {
+      map.put(nums[i], i);
     }
+
+    Arrays.sort(nums);
+
+    for (int i = nums.length - 1; i >= 0; i--) {
+      if (i == nums.length - 1) {
+        res[map.get(nums[i])] = "Gold Medal";
+      } else if (i == nums.length - 2) {
+        res[map.get(nums[i])] = "Silver Medal";
+      } else if (i == nums.length - 3) {
+        res[map.get(nums[i])] = "Bronze Medal";
+      } else {
+        res[map.get(nums[i])] = String.valueOf(nums.length - i);
+      }
+    }
+
+    return res;
+  }
 }

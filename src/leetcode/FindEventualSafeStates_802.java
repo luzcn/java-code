@@ -1,6 +1,9 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 // In a directed graph, we start at some node and every turn, walk along a directed edge of the graph.
 // If we reach a node that is terminal (that is, it has no outgoing directed edges), we stop.
@@ -20,60 +23,60 @@ import java.util.*;
 // Here is a diagram of the above graph.
 public class FindEventualSafeStates_802 {
 
-    // the problem is to find the starting nodes, that do not have a circle path
-    // if we detect a circle in this undirected graph, then all the nodes in this path cannot be result
-    public List<Integer> eventualSafeNodes(int[][] edges) {
-        // build graph
+  // the problem is to find the starting nodes, that do not have a circle path
+  // if we detect a circle in this undirected graph, then all the nodes in this path cannot be result
+  public List<Integer> eventualSafeNodes(int[][] edges) {
+    // build graph
 
-        List<Integer> res = new ArrayList<>();
-        int N = edges.length;
-        for (int i = 0; i < N; i++) {
-            int[] neighbors = edges[i];
+    List<Integer> res = new ArrayList<>();
+    int N = edges.length;
+    for (int i = 0; i < N; i++) {
+      int[] neighbors = edges[i];
 
-            for (int nei : neighbors) {
-                graph.computeIfAbsent(i, k -> new ArrayList<>()).add(nei);
-            }
-        }
-
-        boolean[] visited = new boolean[N];
-        for (int i = 0; i < N; i++) {
-            if (visited[i]) {
-                continue;
-            }
-
-            dfs(i, visited, new HashSet<>());
-        }
-
-        // all nodes except from the non-safe set are results
-        for (int i = 0; i < N; i++) {
-            if (!nonSafe.contains(i)) {
-                res.add(i);
-            }
-        }
-        return res;
+      for (int nei : neighbors) {
+        graph.computeIfAbsent(i, k -> new ArrayList<>()).add(nei);
+      }
     }
 
-    private void dfs(int node, boolean[] visited, HashSet<Integer> ancestor) {
-        // if detect a cycle or the node is already in the non-safe list
-        // add all the path nodes into non-safe.
-        if (ancestor.contains(node) || nonSafe.contains(node)) {
-            nonSafe.addAll(ancestor);
-            return;
-        }
+    boolean[] visited = new boolean[N];
+    for (int i = 0; i < N; i++) {
+      if (visited[i]) {
+        continue;
+      }
 
-        if (visited[node]) {
-            return;
-        }
-
-        visited[node] = true;
-        ancestor.add(node);
-        for (int nei : graph.getOrDefault(node, new ArrayList<>())) {
-            dfs(nei, visited, ancestor);
-        }
-
-        ancestor.remove(node);
+      dfs(i, visited, new HashSet<>());
     }
 
-    private HashMap<Integer, List<Integer>> graph = new HashMap<>();
-    private HashSet<Integer> nonSafe = new HashSet<>();
+    // all nodes except from the non-safe set are results
+    for (int i = 0; i < N; i++) {
+      if (!nonSafe.contains(i)) {
+        res.add(i);
+      }
+    }
+    return res;
+  }
+
+  private void dfs(int node, boolean[] visited, HashSet<Integer> ancestor) {
+    // if detect a cycle or the node is already in the non-safe list
+    // add all the path nodes into non-safe.
+    if (ancestor.contains(node) || nonSafe.contains(node)) {
+      nonSafe.addAll(ancestor);
+      return;
+    }
+
+    if (visited[node]) {
+      return;
+    }
+
+    visited[node] = true;
+    ancestor.add(node);
+    for (int nei : graph.getOrDefault(node, new ArrayList<>())) {
+      dfs(nei, visited, ancestor);
+    }
+
+    ancestor.remove(node);
+  }
+
+  private HashMap<Integer, List<Integer>> graph = new HashMap<>();
+  private HashSet<Integer> nonSafe = new HashSet<>();
 }

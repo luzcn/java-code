@@ -1,7 +1,7 @@
 package careercup.Lyft;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import leetcode.TreeNode;
 
 
@@ -10,48 +10,48 @@ import leetcode.TreeNode;
 // left child <= root <= right child
 public class FindMostFrequentInBST {
 
-    // in-order traverse and count the equivalent node numbers
+  // in-order traverse and count the equivalent node numbers
 
-    private int count = 1;
-    private int maxFreq = 1;
-    private List<Integer> res = new ArrayList<>();
-    private TreeNode prev = null;
+  private int count = 1;
+  private int maxFreq = 1;
+  private List<Integer> res = new ArrayList<>();
+  private TreeNode prev = null;
 
-    private void inOrder(TreeNode node) {
-        if (node == null) {
-            return;
-        }
-
-        inOrder(node.left);
-
-        if (prev != null) {
-            if (prev.val == node.val) {
-                count++;
-            } else {
-                count = 0;
-            }
-        }
-
-        if (count > maxFreq) {
-            res.clear();
-            maxFreq = count;
-            res.add(node.val);
-        } else if (count == maxFreq) {
-            res.add(node.val);
-        }
-
-        prev = node;
-
-        inOrder(node.right);
+  private void inOrder(TreeNode node) {
+    if (node == null) {
+      return;
     }
 
-    public int[] findMoseFrequent(TreeNode root) throws RuntimeException {
+    inOrder(node.left);
 
-        if (root == null) {
-            throw new IllegalArgumentException("not valid");
-        }
-
-        inOrder(root);
-        return res.stream().mapToInt(x -> x).toArray();
+    if (prev != null) {
+      if (prev.val == node.val) {
+        count++;
+      } else {
+        count = 0;
+      }
     }
+
+    if (count > maxFreq) {
+      res.clear();
+      maxFreq = count;
+      res.add(node.val);
+    } else if (count == maxFreq) {
+      res.add(node.val);
+    }
+
+    prev = node;
+
+    inOrder(node.right);
+  }
+
+  public int[] findMoseFrequent(TreeNode root) throws RuntimeException {
+
+    if (root == null) {
+      throw new IllegalArgumentException("not valid");
+    }
+
+    inOrder(root);
+    return res.stream().mapToInt(x -> x).toArray();
+  }
 }

@@ -25,27 +25,26 @@ package leetcode;
 // Note: The merging process must start from the root nodes of both trees.
 public class MergeTwoBinaryTrees {
 
-    private TreeNode dfs(TreeNode p, TreeNode q) {
+  private TreeNode dfs(TreeNode p, TreeNode q) {
 
-
-        if (p == null) {
-            return q;
-        }
-        if (q == null) {
-            return p;
-        }
-
-        TreeNode leftsub = dfs(p.left, q.left);
-        TreeNode rightsub = dfs(p.right, q.right);
-
-        TreeNode node = new TreeNode(p.val + q.val);
-        node.left = leftsub;
-        node.right = rightsub;
-
-        return node;
+    if (p == null) {
+      return q;
+    }
+    if (q == null) {
+      return p;
     }
 
-    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
-        return dfs(t1, t2);
-    }
+    TreeNode leftsub = dfs(p.left, q.left);
+    TreeNode rightsub = dfs(p.right, q.right);
+
+    TreeNode node = new TreeNode(p.val + q.val);
+    node.left = leftsub;
+    node.right = rightsub;
+
+    return node;
+  }
+
+  public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+    return dfs(t1, t2);
+  }
 }

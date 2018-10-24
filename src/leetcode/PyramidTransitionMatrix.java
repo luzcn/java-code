@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 // We are stacking blocks to form a pyramid. Each block has a color which is a one letter string, like `'Z'`.
 //
@@ -39,42 +41,42 @@ import java.util.*;
 // - Letters in all strings will be chosen from the set {'A', 'B', 'C', 'D', 'E', 'F', 'G'}.
 public class PyramidTransitionMatrix {
 
-    private HashMap<String, List<Character>> map = new HashMap<>();
+  private HashMap<String, List<Character>> map = new HashMap<>();
 
-    private boolean dfs(String bottom, String current) {
-        if (bottom.length() == 2 && current.length() == 1) {
-            return true;
-        }
-
-        // finished the current level, use current as next iteration bottom string
-        if (bottom.length() == current.length() + 1) {
-            return dfs(current, "");
-        }
-
-        int pos = current.length();
-        String prefix = bottom.substring(pos, pos + 2);
-
-        for (char c : map.getOrDefault(prefix, new ArrayList<>())) {
-            if (dfs(bottom, current + c)) {
-                return true;
-            }
-        }
-
-        return false;
+  private boolean dfs(String bottom, String current) {
+    if (bottom.length() == 2 && current.length() == 1) {
+      return true;
     }
 
-    public boolean pyramidTransition(String bottom, List<String> allowed) {
-        int n = bottom.length();
-        // HashSet<String> allowedSet = new HashSet<>(allowed);
-
-        // pre-process the allowed strings
-        // create a mapping of first 2 chars key and list of last char as value
-        // e.g. "XYD" => "XY"-> ['D']
-        for (String word : allowed) {
-            map.computeIfAbsent(word.substring(0, 2), k -> new ArrayList<>()).add(word.charAt(2));
-        }
-
-        return dfs(bottom, "");
+    // finished the current level, use current as next iteration bottom string
+    if (bottom.length() == current.length() + 1) {
+      return dfs(current, "");
     }
+
+    int pos = current.length();
+    String prefix = bottom.substring(pos, pos + 2);
+
+    for (char c : map.getOrDefault(prefix, new ArrayList<>())) {
+      if (dfs(bottom, current + c)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean pyramidTransition(String bottom, List<String> allowed) {
+    int n = bottom.length();
+    // HashSet<String> allowedSet = new HashSet<>(allowed);
+
+    // pre-process the allowed strings
+    // create a mapping of first 2 chars key and list of last char as value
+    // e.g. "XYD" => "XY"-> ['D']
+    for (String word : allowed) {
+      map.computeIfAbsent(word.substring(0, 2), k -> new ArrayList<>()).add(word.charAt(2));
+    }
+
+    return dfs(bottom, "");
+  }
 
 }

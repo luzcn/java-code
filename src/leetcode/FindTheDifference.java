@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // https://leetcode.com/problems/find-the-difference/description/
 
 // Given two strings s and t which consist of only lowercase letters.
@@ -22,32 +20,33 @@ import java.util.*;
 // Explanation:
 // 'e' is the letter that was added.
 public class FindTheDifference {
-    public char findTheDifference(String s, String t) {
 
-        // only lowercase letters
-        int[] charsInS = new int[26];
-        // int[] charsInT = new int[26];
+  public char findTheDifference(String s, String t) {
 
-        for (char c : s.toCharArray()) {
-            charsInS[c-'a']++;
-        }
+    // only lowercase letters
+    int[] charsInS = new int[26];
+    // int[] charsInT = new int[26];
 
-        for (char c : t.toCharArray()) {
-            charsInS[c-'a']--;
-            if (charsInS[c-'a'] < 0) {
-                return c;
-            }
-        }
-
-        // for (char c : t.toCharArray()) {
-        //     charsInT[c-'a']++;
-        // }
-        //
-        // for (int i = 0; i < 26; i++) {
-        //     if (charsInS[i] != charsInT[i]) {
-        //         return (char)('a' + i);
-        //     }
-        // }
-        return ' ';
+    for (char c : s.toCharArray()) {
+      charsInS[c - 'a']++;
     }
+
+    for (char c : t.toCharArray()) {
+      charsInS[c - 'a']--;
+      if (charsInS[c - 'a'] < 0) {
+        return c;
+      }
+    }
+
+    // for (char c : t.toCharArray()) {
+    //     charsInT[c-'a']++;
+    // }
+    //
+    // for (int i = 0; i < 26; i++) {
+    //     if (charsInS[i] != charsInT[i]) {
+    //         return (char)('a' + i);
+    //     }
+    // }
+    return ' ';
+  }
 }

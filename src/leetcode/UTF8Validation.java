@@ -39,65 +39,66 @@ package leetcode;
 public class UTF8Validation {
 
 
-    private int getByteNumbers(int data) {
-        int count = 0;
-        for (int i = 7; i >= 0; i--) {
-            if (((data >> i) & 1) == 1) {
-                count++;
-            } else {
-                break;
-            }
-        }
-
-        return count;
+  private int getByteNumbers(int data) {
+    int count = 0;
+    for (int i = 7; i >= 0; i--) {
+      if (((data >> i) & 1) == 1) {
+        count++;
+      } else {
+        break;
+      }
     }
 
-    public boolean validUtf8(int[] data) {
+    return count;
+  }
 
-        if (data == null || data.length == 0) {
-            return false;
-        }
+  public boolean validUtf8(int[] data) {
 
-        int begin = 0;
-        int length = data.length;
-
-        while (begin < length) {
-            int bytes = getByteNumbers(data[begin]);
-
-            if (bytes == 1) {
-                // if character is 1 byte, the first bit is 0,
-                // if character is n byte, the first n bits should be 1
-                return false;
-            }
-
-            if (bytes == 0) {
-                // one byte character, need to check next
-                begin++;
-                continue;
-            }
-
-            if (bytes == 2) {
-                if (begin + 1 > length || getByteNumbers(data[begin + 1]) != 1) {
-                    return false;
-                }
-                begin += 2;
-            } else if (bytes == 3) {
-                if (begin + 2 > length || getByteNumbers(data[begin + 1]) != 1
-                        || getByteNumbers(data[begin + 2]) != 1) {
-                    return false;
-                }
-                begin += 3;
-            } else if (bytes == 4) {
-                if (begin + 3 > length || getByteNumbers(data[begin + 1]) != 1 || getByteNumbers(data[begin + 2]) != 1
-                        || getByteNumbers(data[begin + 3]) != 1) {
-                    return false;
-                }
-                begin += 4;
-            } else {
-                return false;
-            }
-
-        }
-        return true;
+    if (data == null || data.length == 0) {
+      return false;
     }
+
+    int begin = 0;
+    int length = data.length;
+
+    while (begin < length) {
+      int bytes = getByteNumbers(data[begin]);
+
+      if (bytes == 1) {
+        // if character is 1 byte, the first bit is 0,
+        // if character is n byte, the first n bits should be 1
+        return false;
+      }
+
+      if (bytes == 0) {
+        // one byte character, need to check next
+        begin++;
+        continue;
+      }
+
+      if (bytes == 2) {
+        if (begin + 1 > length || getByteNumbers(data[begin + 1]) != 1) {
+          return false;
+        }
+        begin += 2;
+      } else if (bytes == 3) {
+        if (begin + 2 > length || getByteNumbers(data[begin + 1]) != 1
+            || getByteNumbers(data[begin + 2]) != 1) {
+          return false;
+        }
+        begin += 3;
+      } else if (bytes == 4) {
+        if (begin + 3 > length || getByteNumbers(data[begin + 1]) != 1
+            || getByteNumbers(data[begin + 2]) != 1
+            || getByteNumbers(data[begin + 3]) != 1) {
+          return false;
+        }
+        begin += 4;
+      } else {
+        return false;
+      }
+
+    }
+    return true;
+  }
 }

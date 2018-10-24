@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashMap;
 
 // We are to write the letters of a given string S, from left to right into lines.
 // Each line has maximum width 100 units, and if writing a letter would cause the width of the line to exceed 100 units,
@@ -43,28 +43,28 @@ import java.util.*;
 // - widths[i] will be in the range of [2, 10].
 public class NumberOfLinesToWriteString {
 
-    public int[] numberOfLines(int[] widths, String S) {
+  public int[] numberOfLines(int[] widths, String S) {
 
-        int lineWidth = 0;
-        int lines = 1;
+    int lineWidth = 0;
+    int lines = 1;
 
-        HashMap<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < widths.length; i++) {
-            map.put((char) ('a' + i), widths[i]);
-        }
-
-        int i = 0;
-        while (i < S.length()) {
-
-            if (lineWidth + map.get(S.charAt(i)) <= 100) {
-                lineWidth += map.get(S.charAt(i));
-                i++;
-            } else {
-                lines++;
-                lineWidth = 0;
-            }
-        }
-
-        return new int[]{lines, lineWidth};
+    HashMap<Character, Integer> map = new HashMap<>();
+    for (int i = 0; i < widths.length; i++) {
+      map.put((char) ('a' + i), widths[i]);
     }
+
+    int i = 0;
+    while (i < S.length()) {
+
+      if (lineWidth + map.get(S.charAt(i)) <= 100) {
+        lineWidth += map.get(S.charAt(i));
+        i++;
+      } else {
+        lines++;
+        lineWidth = 0;
+      }
+    }
+
+    return new int[]{lines, lineWidth};
+  }
 }

@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.PriorityQueue;
 
 // In an exam room, there are N seats in a single row, numbered 0, 1, 2, ..., N-1.
 //
@@ -30,81 +30,81 @@ import java.util.*;
 // seat() -> 5, the student​​​​​​​ sits at the last seat number 5.
 public class ExamRoom_855 {
 
-    private int[] seats;
-    private int n;
-    private PriorityQueue<int[]> heap = new PriorityQueue<>((x, y) -> {
-        if ((y[1] - y[0]) / 2 == (x[1] - x[0]) / 2) {
-            return x[0] - y[0];
-        }
-
-        return (y[1] - y[0]) - (x[1] - x[0]);
-    });
-
-
-    public ExamRoom_855(int N) {
-        seats = new int[N];
-        n = N;
+  private int[] seats;
+  private int n;
+  private PriorityQueue<int[]> heap = new PriorityQueue<>((x, y) -> {
+    if ((y[1] - y[0]) / 2 == (x[1] - x[0]) / 2) {
+      return x[0] - y[0];
     }
 
-    public int seat() {
-        if (seats[0] == 0) {
-            seats[0] = 1;
-            return 0;
-        }
+    return (y[1] - y[0]) - (x[1] - x[0]);
+  });
 
-        if (heap.isEmpty() && seats[n - 1] == 0) {
-            seats[n - 1] = 1;
 
-            heap.add(new int[]{0, n - 1});
-            return n - 1;
-        }
+  public ExamRoom_855(int N) {
+    seats = new int[N];
+    n = N;
+  }
 
-        if (heap.isEmpty()) {
-            return -1;
-        }
-
-        int start = heap.peek()[0];
-        int end = heap.peek()[1];
-        heap.poll();
-
-        int pos = start + (end - start) / 2;
-
-        // if current longest interval starts at 0,
-        // then sit to 0
-        // also, if end is n, then sit end
-        if (start == 0 && seats[start] == 0) {
-            pos = start;
-        } else if (end == n && seats[n - 1] == 0) {
-            pos = n - 1;
-        }
-
-        seats[pos] = 1;
-
-        if (pos - 1 != start) {
-            heap.add(new int[]{start, pos});
-        }
-
-        if (pos + 1 != end) {
-            heap.add(new int[]{pos, end});
-        }
-
-        return pos;
+  public int seat() {
+    if (seats[0] == 0) {
+      seats[0] = 1;
+      return 0;
     }
 
-    public void leave(int p) {
+    if (heap.isEmpty() && seats[n - 1] == 0) {
+      seats[n - 1] = 1;
 
-        int left = p - 1;
-        int right = p + 1;
-
-        while (left >= 0 && seats[left] == 0) {
-            left--;
-        }
-
-        while (right < n && seats[right] == 0) {
-            right++;
-        }
-
-        seats[p] = 0;
-        heap.add(new int[]{left, right});
+      heap.add(new int[]{0, n - 1});
+      return n - 1;
     }
+
+    if (heap.isEmpty()) {
+      return -1;
+    }
+
+    int start = heap.peek()[0];
+    int end = heap.peek()[1];
+    heap.poll();
+
+    int pos = start + (end - start) / 2;
+
+    // if current longest interval starts at 0,
+    // then sit to 0
+    // also, if end is n, then sit end
+    if (start == 0 && seats[start] == 0) {
+      pos = start;
+    } else if (end == n && seats[n - 1] == 0) {
+      pos = n - 1;
+    }
+
+    seats[pos] = 1;
+
+    if (pos - 1 != start) {
+      heap.add(new int[]{start, pos});
+    }
+
+    if (pos + 1 != end) {
+      heap.add(new int[]{pos, end});
+    }
+
+    return pos;
+  }
+
+  public void leave(int p) {
+
+    int left = p - 1;
+    int right = p + 1;
+
+    while (left >= 0 && seats[left] == 0) {
+      left--;
+    }
+
+    while (right < n && seats[right] == 0) {
+      right++;
+    }
+
+    seats[p] = 0;
+    heap.add(new int[]{left, right});
+  }
 }

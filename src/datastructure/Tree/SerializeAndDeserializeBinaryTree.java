@@ -1,7 +1,7 @@
 package datastructure.Tree;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import leetcode.TreeNode;
 
 // Serialization is the process of converting a data structure or object into a sequence of bits
@@ -26,51 +26,51 @@ import leetcode.TreeNode;
 // as "[1,2,3,null,null,4,5]"
 public class SerializeAndDeserializeBinaryTree {
 
-    private int index = 0;
+  private int index = 0;
 
-    private void preorder(TreeNode node, List<String> data) {
-        if (node == null) {
-            data.add("#");
-            return;
-        }
-
-        data.add(node.val + "");
-
-        preorder(node.left, data);
-        preorder(node.right, data);
+  private void preorder(TreeNode node, List<String> data) {
+    if (node == null) {
+      data.add("#");
+      return;
     }
 
-    private TreeNode deserializeRec(String[] data) {
-        if (index >= data.length) {
-            return null;
-        }
+    data.add(node.val + "");
 
-        if (data[index].equals("#")) {
-            index++;
-            return null;
-        }
+    preorder(node.left, data);
+    preorder(node.right, data);
+  }
 
-        TreeNode node = new TreeNode(Integer.parseInt(data[index]));
-        index++;
-
-        node.left = deserializeRec(data);
-        node.right = deserializeRec(data);
-
-        return node;
+  private TreeNode deserializeRec(String[] data) {
+    if (index >= data.length) {
+      return null;
     }
 
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        List<String> data = new ArrayList<>();
-
-        preorder(root, data);
-
-        return String.join(",", data);
+    if (data[index].equals("#")) {
+      index++;
+      return null;
     }
 
-    // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
+    TreeNode node = new TreeNode(Integer.parseInt(data[index]));
+    index++;
 
-        return this.deserializeRec(data.split(","));
-    }
+    node.left = deserializeRec(data);
+    node.right = deserializeRec(data);
+
+    return node;
+  }
+
+  // Encodes a tree to a single string.
+  public String serialize(TreeNode root) {
+    List<String> data = new ArrayList<>();
+
+    preorder(root, data);
+
+    return String.join(",", data);
+  }
+
+  // Decodes your encoded data to tree.
+  public TreeNode deserialize(String data) {
+
+    return this.deserializeRec(data.split(","));
+  }
 }

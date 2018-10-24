@@ -33,72 +33,72 @@ import java.util.Stack;
 //
 public class MaxStack {
 
-    private Stack<Integer> dataStack;
-    private Stack<Integer> tempStack;
-    private Stack<Integer> maxStack;
+  private Stack<Integer> dataStack;
+  private Stack<Integer> tempStack;
+  private Stack<Integer> maxStack;
 
-    /////
-    // initialize your data structure here.
-    ///
-    public MaxStack() {
-        this.dataStack = new Stack<>();
-        this.tempStack = new Stack<>();
-        this.maxStack = new Stack<>();
+  /////
+  // initialize your data structure here.
+  ///
+  public MaxStack() {
+    this.dataStack = new Stack<>();
+    this.tempStack = new Stack<>();
+    this.maxStack = new Stack<>();
+  }
+
+  public void push(int x) {
+
+    dataStack.push(x);
+
+    if (maxStack.isEmpty() || maxStack.peek() <= x) {
+      maxStack.push(x);
+    }
+  }
+
+  public int pop() {
+
+    int data = dataStack.pop();
+
+    if (data == maxStack.peek()) {
+      maxStack.pop();
+    }
+    return data;
+  }
+
+  public int top() {
+    return dataStack.peek();
+  }
+
+  public int peekMax() {
+    return maxStack.peek();
+  }
+
+  public int popMax() {
+
+    int maxData = maxStack.pop();
+
+    while (!dataStack.isEmpty() && dataStack.peek() != maxData) {
+      tempStack.push(dataStack.pop());
     }
 
-    public void push(int x) {
-
-        dataStack.push(x);
-
-        if (maxStack.isEmpty() || maxStack.peek() <= x) {
-            maxStack.push(x);
-        }
+    if (!dataStack.isEmpty()) {
+      dataStack.pop();
     }
 
-    public int pop() {
+    // need to put back to the main data stack
+    // if the max stack is empty or the top element is less than data in temp stack,
+    // need to add to the temp stack.
+    while (!tempStack.isEmpty()) {
+      int value = tempStack.pop();
+      dataStack.push(value);
 
-        int data = dataStack.pop();
-
-        if (data == maxStack.peek()) {
-            maxStack.pop();
-        }
-        return data;
+      if (maxStack.isEmpty() || maxStack.peek() <= value) {
+        maxStack.push(value);
+      }
     }
 
-    public int top() {
-        return dataStack.peek();
-    }
-
-    public int peekMax() {
-        return maxStack.peek();
-    }
-
-    public int popMax() {
-
-        int maxData = maxStack.pop();
-
-        while (!dataStack.isEmpty() && dataStack.peek() != maxData) {
-            tempStack.push(dataStack.pop());
-        }
-
-        if (!dataStack.isEmpty()) {
-            dataStack.pop();
-        }
-
-        // need to put back to the main data stack
-        // if the max stack is empty or the top element is less than data in temp stack,
-        // need to add to the temp stack.
-        while (!tempStack.isEmpty()) {
-            int value = tempStack.pop();
-            dataStack.push(value);
-
-            if (maxStack.isEmpty() || maxStack.peek() <= value) {
-                maxStack.push(value);
-            }
-        }
-
-        return maxData;
-    }
+    return maxData;
+  }
 }
 
 /////

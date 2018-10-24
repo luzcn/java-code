@@ -1,56 +1,59 @@
 package datastructure.Tree;
 
-import leetcode.TreeNode;
-
 import java.util.Stack;
+import leetcode.TreeNode;
 
 /**
  * Check if the given binary search tree is a valid BST
  */
 public class ValidBST {
 
-    private boolean validRec(TreeNode node, int l, int r) {
-        if (node == null)
-            return true;
-
-        return node.val >= l && node.val < r
-                && validRec(node.left, l, node.val)
-                && validRec(node.right, node.val, r);
+  private boolean validRec(TreeNode node, int l, int r) {
+    if (node == null) {
+      return true;
     }
 
+    return node.val >= l && node.val < r
+        && validRec(node.left, l, node.val)
+        && validRec(node.right, node.val, r);
+  }
 
-    // use stack, iterative in-order traverse
-    private boolean validIterative(TreeNode root) {
-        if (root == null)
-            return true;
 
-        Stack<TreeNode> stack = new Stack<>();
-        boolean done = false;
-        TreeNode currentNode = root;
-        TreeNode prev = null;
+  // use stack, iterative in-order traverse
+  private boolean validIterative(TreeNode root) {
+    if (root == null) {
+      return true;
+    }
 
-        while (!done) {
-            if (currentNode != null) {
-                stack.push(currentNode);
-                currentNode = currentNode.left;
-            } else if (!stack.isEmpty()) {
-                currentNode = stack.pop();
-                // print out the current node
-                // or valid the node with "prev" which is the previous smallest element
-                if (prev != null && prev.val > currentNode.val)
-                    return false;
+    Stack<TreeNode> stack = new Stack<>();
+    boolean done = false;
+    TreeNode currentNode = root;
+    TreeNode prev = null;
 
-                prev = currentNode;
-                currentNode = currentNode.right;
-
-            } else
-                done = true;
+    while (!done) {
+      if (currentNode != null) {
+        stack.push(currentNode);
+        currentNode = currentNode.left;
+      } else if (!stack.isEmpty()) {
+        currentNode = stack.pop();
+        // print out the current node
+        // or valid the node with "prev" which is the previous smallest element
+        if (prev != null && prev.val > currentNode.val) {
+          return false;
         }
 
-        return true;
+        prev = currentNode;
+        currentNode = currentNode.right;
+
+      } else {
+        done = true;
+      }
     }
 
-    public boolean isValid(TreeNode root) {
-        return this.validRec(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
+    return true;
+  }
+
+  public boolean isValid(TreeNode root) {
+    return this.validRec(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+  }
 }

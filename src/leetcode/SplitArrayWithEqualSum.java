@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashSet;
 
 // Given an array with n integers, you need to find if there are triplets (i, j, k) which satisfies following conditions:
 //
@@ -21,65 +21,65 @@ import java.util.*;
 // sum(k + 1, n - 1) = sum(6, 6) = 1
 public class SplitArrayWithEqualSum {
 
-    // brute force solution
-    public boolean splitArray(int[] nums) {
+  // brute force solution
+  public boolean splitArray(int[] nums) {
 
-        if (nums.length == 0) {
-            return false;
-        }
-
-        int n = nums.length;
-        totalSum = new int[n + 1];
-
-        for (int i = 1; i <= n; i++) {
-            totalSum[i] = totalSum[i - 1] + nums[i - 1];
-        }
-
-        // O(n^3) time TLE
-        // for (int i = 1; i < n; i++) {
-        //     for (int j = i + 2; j < n; j++) {
-        //         for (int k = j + 2; k < n; k++) {
-        //             int sum1 = sumRange(0, i);
-        //             int sum2 = sumRange(i + 1, j);
-        //             int sum3 = sumRange(j + 1, k);
-        //             int sum4 = sumRange(k + 1, n);
-        //
-        //             if (sum1 == sum2 && sum2 == sum3 && sum3 == sum4) {
-        //                 return true;
-        //             }
-        //         }
-        //     }
-        // }
-
-        // use hashset + cumulative sum
-        // O(n^2)
-        for (int j = 3; j < n; j++) {
-            HashSet set = new HashSet();
-            for (int i = 1; i < j - 1; i++) {
-
-                int sum1 = sumRange(0, i);
-                int sum2 = sumRange(i + 1, j);
-                if (sum1 == sum2) {
-                    set.add(sum1);
-                }
-            }
-
-            for (int k = j + 2; k < n - 1; k++) {
-                int sum3 = sumRange(j + 1, k);
-                int sum4 = sumRange(k + 1, n);
-
-                if (sum3 == sum4 && set.contains(sum3)) {
-                    return true;
-                }
-            }
-
-        }
-        return false;
+    if (nums.length == 0) {
+      return false;
     }
 
-    private int[] totalSum;
+    int n = nums.length;
+    totalSum = new int[n + 1];
 
-    public int sumRange(int i, int j) {
-        return totalSum[j] - totalSum[i];
+    for (int i = 1; i <= n; i++) {
+      totalSum[i] = totalSum[i - 1] + nums[i - 1];
     }
+
+    // O(n^3) time TLE
+    // for (int i = 1; i < n; i++) {
+    //     for (int j = i + 2; j < n; j++) {
+    //         for (int k = j + 2; k < n; k++) {
+    //             int sum1 = sumRange(0, i);
+    //             int sum2 = sumRange(i + 1, j);
+    //             int sum3 = sumRange(j + 1, k);
+    //             int sum4 = sumRange(k + 1, n);
+    //
+    //             if (sum1 == sum2 && sum2 == sum3 && sum3 == sum4) {
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    // }
+
+    // use hashset + cumulative sum
+    // O(n^2)
+    for (int j = 3; j < n; j++) {
+      HashSet set = new HashSet();
+      for (int i = 1; i < j - 1; i++) {
+
+        int sum1 = sumRange(0, i);
+        int sum2 = sumRange(i + 1, j);
+        if (sum1 == sum2) {
+          set.add(sum1);
+        }
+      }
+
+      for (int k = j + 2; k < n - 1; k++) {
+        int sum3 = sumRange(j + 1, k);
+        int sum4 = sumRange(k + 1, n);
+
+        if (sum3 == sum4 && set.contains(sum3)) {
+          return true;
+        }
+      }
+
+    }
+    return false;
+  }
+
+  private int[] totalSum;
+
+  public int sumRange(int i, int j) {
+    return totalSum[j] - totalSum[i];
+  }
 }

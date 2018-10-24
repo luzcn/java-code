@@ -28,102 +28,103 @@ import java.util.Queue;
 // The ball and the hole coordinates are represented by row and column indexes.
 public class TheMaze3 {
 
-    // left, right, up, down
-    private int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-    private int[][] distance;
-    private int shortestDistance;
-    private String res;
-    private int[] hole;
+  // left, right, up, down
+  private int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+  private int[][] distance;
+  private int shortestDistance;
+  private String res;
+  private int[] hole;
 
-    // 1. bfs find the shortest distance from ball to hole
-    // 2. dfs to get the path
-    public String findShortestWay(int[][] maze, int[] ball, int[] hole) {
+  // 1. bfs find the shortest distance from ball to hole
+  // 2. dfs to get the path
+  public String findShortestWay(int[][] maze, int[] ball, int[] hole) {
 
-        this.res = "";
-        this.hole = hole;
+    this.res = "";
+    this.hole = hole;
 
-        dfs(maze, ball, "");
+    dfs(maze, ball, "");
 
-        return this.res;
+    return this.res;
+  }
+
+  private void dfs(int[][] maze, int[] current, String path) {
+    if (current[0] < 0 || current[0] >= maze.length || current[1] < 0
+        || current[1] >= maze[0].length
+        || maze[current[0]][current[1]] == 1) {
+      return;
     }
 
-    private void dfs(int[][] maze, int[] current, String path) {
-        if (current[0] < 0 || current[0] >= maze.length || current[1] < 0 || current[1] >= maze[0].length
-                || maze[current[0]][current[1]] == 1) {
-            return;
+    for (int i = 0; i < dirs.length; i++) {
+
+      String direction;
+      if (i == 0) {
+        direction = "L";
+      } else if (i == 1) {
+        direction = "R";
+      } else if (i == 2) {
+        direction = "U";
+      } else {
+        direction = "D";
+      }
+
+      int x = current[0] + dirs[i][0];
+      int y = current[1] + dirs[i][1];
+      int count = 0;
+
+      while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
+        x += dirs[i][0];
+        y += dirs[i][1];
+        count++;
+      }
+
+      if (distance[current[0]][current[1]] + count < distance[x - dirs[i][0]][y - dirs[i][1]]) {
+        distance[x - dirs[i][0]][y - dirs[i][1]] = distance[current[0]][current[1]] + count;
+
+        if (x - dirs[i][0] == this.hole[0] && y - dirs[i][1] == this.hole[1]) {
+          this.res = path + direction;
         }
 
-        for (int i = 0; i < dirs.length; i++) {
+        dfs(maze, new int[]{x - dirs[i][0], y - dirs[i][1]}, path + direction);
+      }
+    }
+  }
 
-            String direction;
-            if (i == 0) {
-                direction = "L";
-            } else if (i == 1) {
-                direction = "R";
-            } else if (i == 2) {
-                direction = "U";
-            } else {
-                direction = "D";
-            }
+  private void bfs(int[][] maze, int[] ball) {
+    // get shortest distance
+    int m = maze.length;
+    int n = maze[0].length;
 
-            int x = current[0] + dirs[i][0];
-            int y = current[1] + dirs[i][1];
-            int count = 0;
+    distance = new int[m][n];
 
-            while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
-                x += dirs[i][0];
-                y += dirs[i][1];
-                count++;
-            }
-
-            if (distance[current[0]][current[1]] + count < distance[x - dirs[i][0]][y - dirs[i][1]]) {
-                distance[x - dirs[i][0]][y - dirs[i][1]] = distance[current[0]][current[1]] + count;
-
-                if (x - dirs[i][0] == this.hole[0] && y - dirs[i][1] == this.hole[1]) {
-                    this.res = path + direction;
-                }
-
-                dfs(maze, new int[]{x - dirs[i][0], y - dirs[i][1]}, path + direction);
-            }
-        }
+    for (int[] di : distance) {
+      Arrays.fill(di, Integer.MAX_VALUE);
     }
 
-    private void bfs(int[][] maze, int[] ball) {
-        // get shortest distance
-        int m = maze.length;
-        int n = maze[0].length;
+    Queue<int[]> candidates = new LinkedList<>();
+    distance[ball[0]][ball[1]] = 0;
 
-        distance = new int[m][n];
+    candidates.add(ball);
 
-        for (int[] di : distance) {
-            Arrays.fill(di, Integer.MAX_VALUE);
+    while (!candidates.isEmpty()) {
+      int[] current = candidates.poll();
+
+      for (int[] dir : dirs) {
+        int newX = current[0] + dir[0];
+        int newY = current[1] + dir[1];
+        int count = 0;
+
+        while (newX >= 0 && newX < m && newY >= 0 && newY < n && maze[newX][newY] == 0) {
+          newX += dir[0];
+          newY += dir[1];
+          count++;
         }
 
-        Queue<int[]> candidates = new LinkedList<>();
-        distance[ball[0]][ball[1]] = 0;
+        if (distance[current[0]][current[1]] + count < distance[newX - dir[0]][newY - dir[1]]) {
+          distance[newX - dir[0]][newY - dir[1]] = distance[current[0]][current[1]] + count;
 
-        candidates.add(ball);
-
-        while (!candidates.isEmpty()) {
-            int[] current = candidates.poll();
-
-            for (int[] dir : dirs) {
-                int newX = current[0] + dir[0];
-                int newY = current[1] + dir[1];
-                int count = 0;
-
-                while (newX >= 0 && newX < m && newY >= 0 && newY < n && maze[newX][newY] == 0) {
-                    newX += dir[0];
-                    newY += dir[1];
-                    count++;
-                }
-
-                if (distance[current[0]][current[1]] + count < distance[newX - dir[0]][newY - dir[1]]) {
-                    distance[newX - dir[0]][newY - dir[1]] = distance[current[0]][current[1]] + count;
-
-                    candidates.add(new int[]{newX - dir[0], newY - dir[1]});
-                }
-            }
+          candidates.add(new int[]{newX - dir[0], newY - dir[1]});
         }
+      }
     }
+  }
 }

@@ -19,31 +19,32 @@ import java.util.List;
 public class Combinations {
 
 
-    private void dfs(List<Integer> nums, int k, List<List<Integer>> result, List<Integer> current, int index) {
-        if (current.size() == k) {
-            result.add(new ArrayList<>(current));
-        }
-
-        for (int i = index; i < nums.size(); i++) {
-            current.add(nums.get(i));
-
-            dfs(nums, k, result, current, i + 1);
-
-            current.remove(current.size() - 1);
-        }
+  private void dfs(List<Integer> nums, int k, List<List<Integer>> result, List<Integer> current,
+      int index) {
+    if (current.size() == k) {
+      result.add(new ArrayList<>(current));
     }
 
-    public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> result = new ArrayList<>();
-        List<Integer> current = new ArrayList<>();
-        List<Integer> nums = new ArrayList<>();
+    for (int i = index; i < nums.size(); i++) {
+      current.add(nums.get(i));
 
-        for (int i = 1; i <= n; i++) {
-            nums.add(i);
-        }
+      dfs(nums, k, result, current, i + 1);
 
-        dfs(nums, k, result, current, 0);
-        return result;
-
+      current.remove(current.size() - 1);
     }
+  }
+
+  public List<List<Integer>> combine(int n, int k) {
+    List<List<Integer>> result = new ArrayList<>();
+    List<Integer> current = new ArrayList<>();
+    List<Integer> nums = new ArrayList<>();
+
+    for (int i = 1; i <= n; i++) {
+      nums.add(i);
+    }
+
+    dfs(nums, k, result, current, 0);
+    return result;
+
+  }
 }

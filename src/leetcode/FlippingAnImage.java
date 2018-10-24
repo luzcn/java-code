@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.*;
-
 // Given a binary matrix A, we want to flip the image horizontally, then invert it, and return the resulting image.
 //
 // To flip an image horizontally means that each row of the image is reversed.
@@ -18,26 +16,26 @@ import java.util.*;
 // Then, invert the image: [[1,0,0],[0,1,0],[1,1,1]]
 public class FlippingAnImage {
 
-    public int[][] flipAndInvertImage(int[][] A) {
+  public int[][] flipAndInvertImage(int[][] A) {
 
-        int m = A.length;
-        int n = A[0].length;
+    int m = A.length;
+    int n = A[0].length;
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n / 2; j++) {
-                int temp = A[i][j];
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n / 2; j++) {
+        int temp = A[i][j];
 
-                A[i][j] = A[i][n - 1 - j];
-                A[i][n - 1 - j] = temp;
-            }
-        }
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                A[i][j] ^= 1;
-            }
-        }
-
-        return A;
+        A[i][j] = A[i][n - 1 - j];
+        A[i][n - 1 - j] = temp;
+      }
     }
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        A[i][j] ^= 1;
+      }
+    }
+
+    return A;
+  }
 }
