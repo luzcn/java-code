@@ -6,11 +6,13 @@ public class Program {
 
   public static void main(String[] args) {
 
-    TreeNode root = BinaryTree.constructBinaryTree("1,2");
+    TreeNode root = BinaryTree.constructBinaryTree("1,2,3,null,4");
 
     PrintBinaryTree_655 printBinaryTree_655 = new PrintBinaryTree_655();
 
-    printBinaryTree_655.printTree(root);
+    var res = printBinaryTree_655.printTree(root);
+
+    res.stream().forEach(System.out::println);
 
   }
 }

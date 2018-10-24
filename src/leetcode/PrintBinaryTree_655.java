@@ -29,7 +29,7 @@ import java.util.*;
 //  ["2", "", ""]]
 public class PrintBinaryTree_655 {
 
-  List<List<String>> res = new ArrayList<>();
+  private List<List<String>> res = new ArrayList<>();
 
   public List<List<String>> printTree(TreeNode root) {
 
@@ -43,17 +43,15 @@ public class PrintBinaryTree_655 {
     int depth = getMaxDepth(root);
 
     int columnSize = (1 << depth) - 1;
-    for (int i = 0; i < depth; i++) {
-      res.add(new ArrayList<>(Collections.nCopies(columnSize, "")));
-    }
+    res = new ArrayList<>(
+        Collections.nCopies(depth, new ArrayList<>(Collections.nCopies(columnSize, ""))));
 
-    // level order
-
-    dfs(root, 0, columnSize / 2 );
+    dfs(root, 0, 0, columnSize);
     return res;
   }
 
 
+  // get the height of the given binary tree
   private int getMaxDepth(TreeNode node) {
     if (node == null) {
       return 0;
@@ -66,14 +64,16 @@ public class PrintBinaryTree_655 {
   }
 
 
-  private void dfs(TreeNode node, int level, int pos) {
+  private void dfs(TreeNode node, int level, int l, int r) {
     if (node == null) {
       return;
     }
 
-    res.get(level).set(pos, String.valueOf(node.val));
+    int mid = l + (r - l) / 2;
 
-    dfs(node, level + 1, pos - 1);
-    dfs(node, level + 1, pos + 1);
+    res.get(level).set(mid, String.valueOf(node.val));
+
+    dfs(node.left, level + 1, l, mid);
+    dfs(node.right, level + 1, mid + 1, r);
   }
 }
