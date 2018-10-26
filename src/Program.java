@@ -1,14 +1,21 @@
-import java.util.Arrays;
-import leetcode.FairCandySwap_888;
+import leetcode.LongestLineOfConsecutiveOneInMatrix_562;
 
 public class Program {
 
   public static void main(String[] args) {
-    FairCandySwap_888 fc = new FairCandySwap_888();
+    LongestLineOfConsecutiveOneInMatrix_562 longestLineOfConsecutiveOneInMatrix_562 = new LongestLineOfConsecutiveOneInMatrix_562();
 
-    var res = fc.fairCandySwap(new int[]{1, 1}, new int[]{2, 2});
+    int[][] grid = {
+        {0, 1, 0, 1, 1},
+        {1, 1, 0, 0, 1},
+        {0, 0, 0, 1, 0},
+        {1, 0, 1, 1, 1},
+        {1, 0, 0, 0, 1}};
 
-    Arrays.stream(res).forEach(System.out::println);
+    // [[0,1,0,1,1],[1,1,0,0,1],[0,0,0,1,0],[1,0,1,1,1],[1,0,0,0,1]]
+
+    System.out.println(longestLineOfConsecutiveOneInMatrix_562.longestLine(grid));
+
   }
 
 }

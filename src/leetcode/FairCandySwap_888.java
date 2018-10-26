@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 // Alice and Bob have candy bars of different sizes:
 // A[i] is the size of the i-th bar of candy that Alice has, and B[j] is the size of the j-th bar of candy that Bob has.
@@ -31,22 +32,52 @@ import java.util.Arrays;
 // Output: [5,4]
 public class FairCandySwap_888 {
 
+  // from the brute force solution, we can see sumAAfterSwap == sumBAfterSwap indicates
+  // sumA - x + y == sumB - y + x
+  // so, we got x = (sumA - sumB)/2 + y;
+  // now it's 2sum problem
+  // O(m + n) time, O(m) space
   public int[] fairCandySwap(int[] A, int[] B) {
 
-    // brute force ?
+    int[] res = new int[2];
+
+    int sumA = Arrays.stream(A).sum();
+    int sumB = Arrays.stream(B).sum();
+
+    HashSet<Integer> set = new HashSet<>();
+    for (int x : A) {
+      set.add(x);
+    }
+
+    for (int y : B) {
+      int x = (sumA - sumB) / 2 + y;
+
+      if (set.contains(x)) {
+        res[0] = x;
+        res[1] = y;
+
+        break;
+      }
+    }
+    return res;
+  }
+
+  // brute force solution, can pass leetcode
+  // O(m*n) time
+  private int[] bruteForceSol(int[] A, int[] B) {
     int sumA = Arrays.stream(A).sum();
     int sumB = Arrays.stream(B).sum();
 
     int[] res = new int[2];
-    for (int aA : A) {
-      for (int aB : B) {
+    for (int x : A) {
+      for (int y : B) {
 
-        int sumAAfterSwap = sumA - aA + aB;
-        int sumBAfterSwap = sumB - aB + aA;
+        int sumAAfterSwap = sumA - x + y;
+        int sumBAfterSwap = sumB - y + x;
 
         if (sumAAfterSwap == sumBAfterSwap) {
-          res[0] = aA;
-          res[1] = aB;
+          res[0] = x;
+          res[1] = y;
 
           break;
         }
