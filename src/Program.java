@@ -6,11 +6,9 @@ public class Program {
     LongestLineOfConsecutiveOneInMatrix_562 longestLineOfConsecutiveOneInMatrix_562 = new LongestLineOfConsecutiveOneInMatrix_562();
 
     int[][] grid = {
-        {0, 1, 0, 1, 1},
-        {1, 1, 0, 0, 1},
-        {0, 0, 0, 1, 0},
-        {1, 0, 1, 1, 1},
-        {1, 0, 0, 0, 1}};
+        {1, 1, 1, 1},
+        {0, 1, 1, 0},
+        {0, 0, 0, 1}};
 
     // [[0,1,0,1,1],[1,1,0,0,1],[0,0,0,1,0],[1,0,1,1,1],[1,0,0,0,1]]
 
