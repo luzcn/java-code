@@ -1,18 +1,11 @@
-import leetcode.LongestLineOfConsecutiveOneInMatrix_562;
+import leetcode.PalindromePermutation2_267;
 
 public class Program {
 
   public static void main(String[] args) {
-    LongestLineOfConsecutiveOneInMatrix_562 longestLineOfConsecutiveOneInMatrix_562 = new LongestLineOfConsecutiveOneInMatrix_562();
+    PalindromePermutation2_267 palindromePermutation2_267 = new PalindromePermutation2_267();
 
-    int[][] grid = {
-        {1, 1, 1, 1},
-        {0, 1, 1, 0},
-        {0, 0, 0, 1}};
-
-    // [[0,1,0,1,1],[1,1,0,0,1],[0,0,0,1,0],[1,0,1,1,1],[1,0,0,0,1]]
-
-    System.out.println(longestLineOfConsecutiveOneInMatrix_562.longestLine(grid));
+    System.out.println(palindromePermutation2_267.generatePalindromes("abababab"));
 
   }
 
