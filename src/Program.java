@@ -1,11 +1,11 @@
-import leetcode.PalindromePermutation2_267;
+import leetcode.AdditiveNumber_306;
 
 public class Program {
 
   public static void main(String[] args) {
-    PalindromePermutation2_267 palindromePermutation2_267 = new PalindromePermutation2_267();
+    AdditiveNumber_306 additiveNumber_306 = new AdditiveNumber_306();
 
-    System.out.println(palindromePermutation2_267.generatePalindromes("abababab"));
+    System.out.println(additiveNumber_306.isAdditiveNumber("113"));
 
   }
 

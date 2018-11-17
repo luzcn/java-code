@@ -20,28 +20,65 @@ package leetcode;
 //   ".Q.."]
 // ]
 public class NQueens2_52 {
+
+  private int[] rows;
+  private int count = 0;
+  private int n;
+
   public int totalNQueens(int n) {
 
-    int[][] board = new int[n][n];
+    rows = new int[n];
+    this.n = n;
 
+    dfs(0);
+    return count;
+  }
 
+  private void dfs(int index) {
+    if (index >= n) {
+      count++;
+      // print();
+      // System.out.println("-----------------");
+    }
 
+    for (int value = 0; value <= n - 1; value++) {
+      if (isValid(value, index)) {
+        rows[index] = value;
+
+        dfs(index + 1);
+      }
+    }
   }
 
 
-  private boolean isValid(int[][] board, int x, int y) {
+  private boolean isValid(int value, int index) {
     // check row
-    for (int j= 0; j < y; j++ ) {
-      if (board[0][j] == 1) {
+    for (int i = 0; i < index; i++) {
+      if (rows[i] == value) {
         return false;
       }
     }
 
+    // check diagonal
+    int x = index - 1, y = value - 1;
+    while (x >= 0 && y >= 0) {
+      if (rows[x] == y) {
+        return false;
+      }
+      x--;
+      y--;
+    }
 
+    // check anti-diagonal
+    x = index - 1;
+    y = value + 1;
+    while (x >= 0 && y < n) {
+      if (rows[x] == y) {
+        return false;
+      }
 
-    // check column
-    for (int i = 0; i < x; i++) {
-      if ()
+      x--;
+      y++;
     }
 
     return true;
