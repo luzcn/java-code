@@ -13,7 +13,7 @@ import leetcode.TreeNode;
 public class BinaryTree {
 
   // bfs traverse tree
-  public void bfs(TreeNode root) {
+  public static void bfs(TreeNode root) {
     // using a queue
     if (root == null) {
       return;
@@ -38,7 +38,7 @@ public class BinaryTree {
   }
 
   // dfs recursive tree
-  public void dfs(TreeNode root) {
+  public static void dfs(TreeNode root) {
     // pre-order
     if (root == null) {
       return;
@@ -51,7 +51,7 @@ public class BinaryTree {
   }
 
   // In-order traverse iterative solution
-  public void inOrderIterative(TreeNode root) {
+  public static void inOrderIterative(TreeNode root) {
     if (root == null) {
       return;
     }
@@ -81,7 +81,7 @@ public class BinaryTree {
   //
   // 1. if the stack is not empty, pop the top element
   // 2. save the right node if not null then left node
-  public void preOrderIterative(TreeNode root) {
+  public static void preOrderIterative(TreeNode root) {
     if (root == null) {
       return;
     }
@@ -111,7 +111,7 @@ public class BinaryTree {
   // Similar to pre-order, but push left child first
   //
   // after save the traverse result in a list, reverse it and return
-  public List<Integer> postOrderIterative(TreeNode root) {
+  public static List<Integer> postOrderIterative(TreeNode root) {
     if (root == null) {
       return new ArrayList<>();
     }
@@ -143,7 +143,7 @@ public class BinaryTree {
 
   // Level order
   // similar to BFS, but use two queue to save the level information
-  public List<List<Integer>> binaryTreeLevelOrder(TreeNode root) {
+  public static List<List<Integer>> binaryTreeLevelOrder(TreeNode root) {
     List<List<Integer>> result = new ArrayList<>();
 
     if (root == null) {
@@ -178,7 +178,7 @@ public class BinaryTree {
   }
 
   // Check if a Binary Search Tree is valid
-  public boolean isValidBST(TreeNode root) {
+  public static boolean isValidBST(TreeNode root) {
 
     // use in-order iterative traverse
     if (root == null) {
@@ -214,7 +214,7 @@ public class BinaryTree {
 
 
   // Delete Node from BinarySearch Tree
-  public TreeNode deleteNode(TreeNode node, int target) {
+  public static TreeNode deleteNode(TreeNode node, int target) {
 
     if (node == null) {
       return null;

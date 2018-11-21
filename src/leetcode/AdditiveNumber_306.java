@@ -27,23 +27,39 @@ public class AdditiveNumber_306 {
 
   public boolean isAdditiveNumber(String num) {
 
-    return dfs(num, 0, null, null, null);
+    return dfs(num, 0, null, null, false);
   }
 
-  private boolean dfs(String num, int index, String num1, String num2, String current) {
+  private boolean dfs(String num, int index, String num1, String num2, boolean isValid) {
 
     if (index >= num.length()) {
-
-      if (Integer.parseInt(num1) + Integer.parseInt(num2) == Integer.parseInt(current)) {
-        return true;
-      }
-
-      return false;
+      return isValid;
     }
 
     for (int i = index; i < num.length(); i++) {
 
-      String value = num.substring(index, i = index )
+      String value = num.substring(index, i + 1);
+
+      if (value.length() > 1 && value.charAt(0) == '0') {
+        continue;
+      }
+
+      if (num1 == null) {
+        if (dfs(num, i + 1, value, num2, false)) {
+          return true;
+        }
+      } else if (num2 == null) {
+        if (dfs(num, i + 1, num1, value, false)) {
+          return true;
+        }
+      } else {
+
+        if (Long.parseLong(num1) + Long.parseLong(num2) == Long.parseLong(value)) {
+          if (dfs(num, i + 1, num2, value, true)) {
+            return true;
+          }
+        }
+      }
     }
 
     return false;

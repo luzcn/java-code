@@ -34,27 +34,46 @@ package leetcode;
 public class ConstructStringFromBinaryTree {
 
   // pre-order
-  private String dfs(TreeNode node) {
+  // private String dfs(TreeNode node) {
+  //
+  //   if (node == null) {
+  //     return "";
+  //   }
+  //
+  //   if (node.left == null && node.right == null) {
+  //     return Integer.toString(node.val);
+  //   }
+  //
+  //   // if right child is null, we should skip the ()
+  //   if (node.right == null) {
+  //     return node.val + "(" + dfs(node.left) + ")";
+  //   }
+  //
+  //   return node.val + "(" + dfs(node.left) + ")(" + dfs(node.right) + ")";
+  //
+  // }
 
+  private String dfs(TreeNode node) {
     if (node == null) {
-      return "";
+      return null;
     }
 
     if (node.left == null && node.right == null) {
-      return Integer.toString(node.val);
+      return node.val + "";
     }
 
-    // if right child is null, we should skip the ()
-    if (node.right == null) {
-      return node.val + "(" + dfs(node.left) + ")";
-    }
+    String leftSub = dfs(node.left);
+    String rightSub = dfs(node.right);
 
-    return node.val + "(" + dfs(node.left) + ")(" + dfs(node.right) + ")";
-
+    return node.val + (leftSub == null ? "()" : "(" + leftSub + ")") + (rightSub == null ? ""
+        : "(" + rightSub + ")");
   }
 
   public String tree2str(TreeNode t) {
 
+    if (t == null) {
+      return "";
+    }
     return dfs(t);
   }
 }
