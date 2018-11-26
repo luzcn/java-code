@@ -1,64 +1,20 @@
-import datastructure.Tree.BinaryTree;
-import leetcode.ConstructBinaryTreeFromString_536;
+import java.util.Arrays;
+import leetcode.LoudAndRich_851;
 
 
 public class Program {
 
   public static void main(String[] args) {
-    //
-    // var l = parse("(3)(1)");
-    //
-    // System.out.println(l[0]);
-    // System.out.println(l[1]);
 
-    ConstructBinaryTreeFromString_536 solution = new ConstructBinaryTreeFromString_536();
+    LoudAndRich_851 loudAndRich_851 = new LoudAndRich_851();
 
-    var res = solution.str2tree("51(-232)(434)");
+    int[][] richer = new int[][]{{1, 0}, {2, 1}, {3, 1}, {3, 7}, {4, 3}, {5, 3}, {6, 3}};
 
-    BinaryTree.inOrderIterative(res);
+    int[] quiet = new int[]{3, 2, 5, 4, 6, 1, 7, 0};
+    var res = loudAndRich_851.loudAndRich(richer, quiet);
 
+    Arrays.stream(res).forEach(System.out::println);
   }
 
-
-  public static String[] parse(String s) {
-
-    int begin = 0;
-    int end = 0;
-
-    String[] res = new String[2];
-    res[0] = null;
-    res[1] = null;
-
-    if (s.isBlank()) {
-      return res;
-    }
-
-    int count = 0;
-    String left = null;
-    String right = null;
-    while (end < s.length()) {
-
-      if (s.charAt(end) == '(') {
-        count++;
-      } else if (s.charAt(end) == ')') {
-        count--;
-      }
-      end++;
-
-      if (count == 0) {
-        if (left == null) {
-          left = s.substring(begin + 1, end - 1);
-          begin = end;
-        } else {
-          right = s.substring(begin + 1, end - 1);
-        }
-      }
-    }
-
-    res[0] = left;
-    res[1] = right;
-
-    return res;
-  }
 
 }
