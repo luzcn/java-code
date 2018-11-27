@@ -1,19 +1,13 @@
-import java.util.Arrays;
-import leetcode.LoudAndRich_851;
+import leetcode.OutOfBoundaryPath_576;
 
 
 public class Program {
 
   public static void main(String[] args) {
 
-    LoudAndRich_851 loudAndRich_851 = new LoudAndRich_851();
+    OutOfBoundaryPath_576 sol = new OutOfBoundaryPath_576();
 
-    int[][] richer = new int[][]{{1, 0}, {2, 1}, {3, 1}, {3, 7}, {4, 3}, {5, 3}, {6, 3}};
-
-    int[] quiet = new int[]{3, 2, 5, 4, 6, 1, 7, 0};
-    var res = loudAndRich_851.loudAndRich(richer, quiet);
-
-    Arrays.stream(res).forEach(System.out::println);
+    System.out.println(sol.findPaths(1,3, 3, 0, 1));
   }
 
 

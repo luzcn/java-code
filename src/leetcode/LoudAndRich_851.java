@@ -35,9 +35,9 @@ public class LoudAndRich_851 {
       graph.computeIfAbsent(row[1], k -> new ArrayList<>()).add(row[0]);
     }
 
-    for (Map.Entry<Integer, List<Integer>> entry : graph.entrySet()) {
-      System.out.println(entry.getKey() + " -> " + entry.getValue());
-    }
+    // for (Map.Entry<Integer, List<Integer>> entry : graph.entrySet()) {
+    //   System.out.println(entry.getKey() + " -> " + entry.getValue());
+    // }
 
     for (int i = 0; i < n; i++) {
       dfs(quiet, i, res);
