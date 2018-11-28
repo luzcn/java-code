@@ -31,7 +31,7 @@ public class ConvertBSTDoublyLinkedList_426 {
       head = head.left;
     }
 
-    // inorder(root);
+    inorder(root);
 
     head.left = prev;
     prev.right = head;
@@ -40,7 +40,6 @@ public class ConvertBSTDoublyLinkedList_426 {
   }
 
   private Node prev = null;
-
 
   private void inorderIterative(Node root) {
     Stack<Node> stack = new Stack<>();
