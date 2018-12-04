@@ -24,7 +24,7 @@ package leetcode;
 public class FlattenAMultilevelDLL_430 {
 
 
-  private class Node {
+  public static class Node {
 
     public int val;
     public Node prev;
@@ -32,6 +32,10 @@ public class FlattenAMultilevelDLL_430 {
     public Node child;
 
     public Node() {
+    }
+
+    public Node(int _val) {
+      val = _val;
     }
 
     public Node(int _val, Node _prev, Node _next, Node _child) {
@@ -43,30 +47,94 @@ public class FlattenAMultilevelDLL_430 {
   }
 
 
+  // dfs idea, but no recursive needed
+  // we just append/insert the child linked list into the current level list
+  // set the current node child to null and keep moving
   public Node flatten(Node head) {
 
-    Node newHead = new Node();
-    prev = newHead;
+    Node p = head;
 
-    return newHead.next;
-  }
+    while (p != null) {
 
-  private Node prev = null;
+      if (p.child == null) {
+        p = p.next;
+        continue;
+      }
 
-  private void dfs(Node node) {
-    if (node == null) {
-      return;
+      int c = p.val;
+      Node next = p.next;
+
+      Node child = p.child;
+      while (child.next != null) {
+        child = child.next;
+      }
+
+      p.next = p.child;
+      p.child.prev = p;
+      p.child = null;
+
+      child.next = next;
+
+      if (next != null) {
+        next.prev = child;
+      }
     }
 
-    Node newNode = new Node();
-    newNode.val = node.val;
-
-    prev.next = newNode;
-    newNode.prev = prev;
-    prev = newNode;
-
-    dfs(node.child);
-    dfs(node.next);
-
+    return head;
   }
+
+
 }
+
+// public static void main(String[] args) {
+//     FlattenAMultilevelDLL_430 sol = new FlattenAMultilevelDLL_430();
+//
+//     FlattenAMultilevelDLL_430.Node n1 = new Node(1);
+//     FlattenAMultilevelDLL_430.Node n2 = new Node(2);
+//     FlattenAMultilevelDLL_430.Node n3 = new Node(3);
+//     FlattenAMultilevelDLL_430.Node n4 = new Node(4);
+//     FlattenAMultilevelDLL_430.Node n5 = new Node(5);
+//     FlattenAMultilevelDLL_430.Node n6 = new Node(6);
+//     FlattenAMultilevelDLL_430.Node n7 = new Node(7);
+//     FlattenAMultilevelDLL_430.Node n8 = new Node(8);
+//     FlattenAMultilevelDLL_430.Node n9 = new Node(9);
+//     FlattenAMultilevelDLL_430.Node n10 = new Node(10);
+//     FlattenAMultilevelDLL_430.Node n11 = new Node(11);
+//     FlattenAMultilevelDLL_430.Node n12 = new Node(12);
+//
+//     n1.next = n2;
+//     n2.prev = n1;
+//
+//     n2.next = n3;
+//     n3.prev = n2;
+//
+//     n3.next = n4;
+//     n4.prev = n3;
+//
+//     n4.next = n5;
+//     n5.prev = n4;
+//
+//     n5.next = n6;
+//     n6.prev = n5;
+//
+//     n3.child = n7;
+//
+//     n7.next = n8;
+//     n8.prev = n7;
+//
+//     n8.next = n9;
+//     n9.prev = n8;
+//
+//     n8.child = n10;
+//     n10.next = n11;
+//     n11.prev = n10;
+//     n11.next = n12;
+//     n12.prev = n11;
+//
+//     var res = sol.flatten(n1);
+//
+//     while (res != null) {
+//       System.out.println(res.val);
+//       res = res.next;
+//     }
+//   }
