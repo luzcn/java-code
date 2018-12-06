@@ -43,3 +43,39 @@ public class LonelyPixel_531 {
     return Math.min(lonelyPixelInColumn, lonelyPixelInRow);
   }
 }
+
+//   public int findLonelyPixelDFS(char[][] picture) {
+//     if (picture.length == 0 || picture[0].length == 0) {
+//       return 0;
+//     }
+//
+//     int m = picture.length;
+//     int n = picture[0].length;
+//     int res = 0;
+//
+//     for (int i = 0; i < m; i++) {
+//       for (int j = 0; j < n; j++) {
+//         if (picture[i][j] == 'B') {
+//
+//         }
+//       }
+//     }
+//
+//     return res;
+//   }
+//
+//   private boolean isLonely(char[][] picture, int i, int j, int x, int y, boolean[][] visited) {
+//     if (x < 0 || x >= picture.length || y < 0 || y >= picture[0].length || visited[x][y]) {
+//       return true;
+//     }
+//
+//     visited[x][y] = true;
+//     if (picture[x][y] == 'B' && x != i && y != j) {
+//       return false;
+//     }
+//
+//     return isLonely(picture, i, j, x + 1, y, visited)
+//         && isLonely(picture, i, j, x - 1, y, visited)
+//         && isLonely(picture, i, j, x, y + 1, visited)
+//         && isLonely(picture, i, j, x, y + 1, visited);
+//   }
