@@ -1,0 +1,62 @@
+package leetcode;
+
+import java.util.Arrays;
+
+// Remember the story of Little Match Girl?
+// By now, you know exactly what matchsticks the little match girl has,
+//
+// please find out a way you can make one square by using up all those matchsticks.
+//
+// You should not break any stick, but you can link them up, and each matchstick must be used exactly one time.
+//
+//Your input will be several matchsticks the girl has, represented with their stick length.
+// Your output will either be true or false, to represent whether you could make one square using all the matchsticks the little match girl has.
+//
+//Example 1:
+//Input: [1,1,2,2,2]
+//Output: true
+//
+//Explanation: You can form a square with length 2, one side of the square came two sticks with length 1.
+//Example 2:
+//Input: [3,3,3,3,4]
+//Output: false
+//
+//Explanation: You cannot find a way to form a square with all the matchsticks.
+public class MatchsticksToSquare_473 {
+
+  public boolean makesquare(int[] nums) {
+    if (nums.length < 4) {
+      return false;
+    }
+
+    Arrays.sort(nums);
+
+//    for (int i = nums.length - 1; i >= 0; i--) {
+//      int target = nums[i];
+//
+//      int l = 0;
+//      int r = i - 1;
+//      int count = 0;
+//      while (r > l) {
+//        if (nums[r] == target) {
+//          count++;
+//          r--;
+//        } else if (nums[l] + nums[r] == target) {
+//          count++;
+//          l++;
+//          r--;
+//        } else if (nums[l] + nums[r] > target) {
+//          r--;
+//        } else {
+//          l++;
+//        }
+//
+//        if (count == 3) {
+//          return true;
+//        }
+//      }
+//    }
+
+    return false;
+  }
+}
