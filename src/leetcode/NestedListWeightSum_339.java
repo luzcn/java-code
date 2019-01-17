@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.List;
 
-public class NestedListWeightSum {
+public class NestedListWeightSum_339 {
 
   public int depthSum(List<NestedInteger> nestedList) {
     return dfs(nestedList, 1);

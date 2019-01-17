@@ -26,11 +26,12 @@ import java.util.HashSet;
 // "msg" -> "--...--."
 //
 // There are 2 different transformations, "--...-." and "--...--.".
-public class UniqueMorseCodeWords {
+public class UniqueMorseCodeWords_804 {
 
   // use hash set to remove duplicates
 
-  private String[] MORSE = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....",
+  private static final String[] MORSE = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.",
+      "--.", "....",
       "..", ".---", "-.-",
       ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
       "-.--", "--.."};
@@ -42,7 +43,7 @@ public class UniqueMorseCodeWords {
       StringBuilder code = new StringBuilder();
 
       for (char c : w.toCharArray()) {
-        code.append(this.MORSE[c - 'a']);
+        code.append(MORSE[c - 'a']);
       }
 
       uniqueCode.add(code.toString());
