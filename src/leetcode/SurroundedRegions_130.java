@@ -11,7 +11,7 @@ package leetcode;
  *
  * Thoughts: dfs + backtracking
  */
-public class SurroundedRegions {
+public class SurroundedRegions_130 {
 
   private static final int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 

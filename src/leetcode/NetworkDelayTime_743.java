@@ -1,9 +1,9 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -20,14 +20,15 @@ import java.util.PriorityQueue;
 // - K will be in the range [1, N].
 // - The length of times will be in the range [1, 6000].
 // - All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
-public class NetworkDelayTime {
+public class NetworkDelayTime_743 {
 
   public int networkDelayTime(int[][] times, int N, int K) {
 
-    HashSet<Integer> visited = new HashSet<>();
-    HashMap<Integer, Integer> distance = new HashMap<>();
+    boolean[] visited = new boolean[N + 1];
+    int[] distance = new int[N + 1];
+    Arrays.fill(distance, Integer.MAX_VALUE);
     HashMap<Integer, List<int[]>> graph = new HashMap<>();
-    distance.put(K, 0);
+    distance[K] = 0;
 
     // 1-> [2, 4], there is a directed edge from node 1 to 2 and weight is 4
     for (int[] edge : times) {
@@ -35,39 +36,40 @@ public class NetworkDelayTime {
     }
 
     // Dijkstar's single source shortest path, use minHeap
-    PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(x -> x[1]));
-    queue.offer(new int[]{K, 0});
+    PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.comparingInt(x -> distance[x]));
+    queue.offer(K);
 
     while (!queue.isEmpty()) {
-      int[] current = queue.poll();
 
-      int u = current[0];
+      int u = queue.poll();
 
-      if (visited.contains(u)) {
+      if (visited[u]) {
         continue;
       }
 
-      visited.add(u);
+      visited[u] = true;
 
       for (int[] neighbor : graph.getOrDefault(u, new ArrayList<>())) {
 
         int v = neighbor[0];
-        int dis = neighbor[1];
+        int cost = neighbor[1];
 
-        if (!visited.contains(v) && (distance.get(v) == null || distance.get(u) + dis < distance
-            .get(v))) {
-          distance.put(v, distance.get(u) + dis);
-
-          queue.offer(new int[]{v, distance.get(v)});
+        if (distance[u] != Integer.MAX_VALUE && distance[u] + cost < distance[v]) {
+          distance[v] = distance[u] + cost;
         }
       }
     }
 
-    if (distance.size() != N) {
-      return -1;
+    int totalCost = 0;
+    for (int i = 1; i <= N; i++) {
+      if (distance[i] == Integer.MAX_VALUE) {
+        return -1;
+      }
+
+      totalCost = Math.max(totalCost, distance[i]);
     }
 
-    return distance.values().stream().mapToInt(x -> x).max().getAsInt();
+    return totalCost;
   }
 
 }

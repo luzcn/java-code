@@ -29,7 +29,7 @@ package leetcode;
 //   / \
 //  4   4
 // Return false.
-public class BalancedBinaryTree {
+public class BalancedBinaryTree_110 {
 
   private boolean balance = true;
 

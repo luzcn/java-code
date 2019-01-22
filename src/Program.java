@@ -1,12 +1,11 @@
-import leetcode.OutputContestMatches_544;
+import leetcode.MinimumAreaRectangle_939;
 
 public class Program {
 
   public static void main(String[] args) {
-    OutputContestMatches_544 sol = new OutputContestMatches_544();
+    MinimumAreaRectangle_939 sol = new MinimumAreaRectangle_939();
 
-    System.out.println(sol.findContestMatch(16));
-
+    System.out.println(sol.minAreaRect(new int[][]{{1, -1}, {1, 3}, {3, -1}, {3, 3}}));
   }
 
 
