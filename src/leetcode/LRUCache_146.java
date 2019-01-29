@@ -86,6 +86,105 @@ public class LRUCache_146 {
   }
 }
 
+
+// self-defined double linked list node
+class LRUCache {
+
+  private int capacity;
+  private DListNode head;
+  private DListNode tail;
+
+  private HashMap<Integer, DListNode> map = new HashMap<>();
+
+  public LRUCache(int capacity) {
+    this.capacity = capacity;
+    head = new DListNode(0, 0);
+    tail = new DListNode(0, 0);
+    head.next = tail;
+    tail.prev = head;
+  }
+
+  public int get(int key) {
+    if (!map.containsKey(key)) {
+      return -1;
+    }
+
+    int value = map.get(key).value;
+
+    moveToHead(key, value);
+
+    return value;
+  }
+
+  public void put(int key, int value) {
+    if (map.containsKey(key)) {
+      moveToHead(key, value);
+    } else {
+
+      if (map.size() == capacity) {
+        DListNode toRemove = tail.prev;
+
+        remove(toRemove);
+        map.remove(toRemove.key);
+      }
+
+      add(key, value);
+      map.put(key, head.next);
+    }
+  }
+
+  private void moveToHead(int key, int value) {
+    // remove this node
+    // add a new node to the head
+
+    remove(map.get(key));
+    add(key, value);
+    map.put(key, head.next);
+  }
+
+
+  private void add(int key, int value) {
+    DListNode newNode = new DListNode(key, value);
+
+    newNode.next = head.next;
+    head.next.prev = newNode;
+
+    newNode.prev = head;
+    head.next = newNode;
+  }
+
+  private void remove(DListNode node) {
+
+    if (node.prev != null) {
+      node.prev.next = node.next;
+    }
+
+    if (node.next != null) {
+      node.next.prev = node.prev;
+    }
+
+    node.prev = null;
+    node.next = null;
+  }
+
+  class DListNode {
+
+    DListNode prev;
+    DListNode next;
+
+    int key;
+    int value;
+
+    DListNode(int key, int value) {
+      this.key = key;
+      this.value = value;
+
+      prev = null;
+      next = null;
+    }
+  }
+}
+
 // LRU with self-defined Double linked list
 // public class LRUCache_146 {
 //
