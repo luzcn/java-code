@@ -16,7 +16,7 @@ package leetcode;
 // Target = 9
 //
 // Output: True
-public class TwoSumInBST {
+public class TwoSumInBST_653 {
 
   private TreeNode root;
 
