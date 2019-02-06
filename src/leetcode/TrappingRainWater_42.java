@@ -15,8 +15,13 @@ import java.util.PriorityQueue;
 // Output: 6
 public class TrappingRainWater_42 {
 
-  // dp idea, scan twice from left to right and right to left
+  // the general idea is for each position i, we need to know the max height on it's left side [0..i-1]
+  // and the max height on it's right side [i+1...n-1].
+  // the brute force solution takes O(n^2)
+  //
+  // use dp idea, scan twice from left to right and right to left
   // save the highest bar found so far
+  // then we reduce to O(n) time and O(n) space
   public int trap(int[] height) {
     if (height.length == 0) {
       return 0;

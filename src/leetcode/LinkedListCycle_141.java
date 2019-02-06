@@ -6,7 +6,7 @@ package leetcode;
 //
 // Follow up:
 // Can you solve it without using extra space?
-public class LinkedListCycle {
+public class LinkedListCycle_141 {
 
   // two pointer
   // 快慢指针

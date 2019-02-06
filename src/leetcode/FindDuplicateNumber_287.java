@@ -66,7 +66,7 @@ public class FindDuplicateNumber_287 {
   //         if (nums[t - 1] > 0) {
   //             nums[t - 1] = 0 - nums[t - 1];
   //         } else {
-  //             res = 0 - nums[t - 1];
+  //             res = t;
   //             break;
   //         }
   //     }

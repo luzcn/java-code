@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,8 +30,10 @@ import java.util.Set;
 
 public class CourseSchedule {
 
+  private HashMap<Integer, List<Integer>> graph;
+
   // dfs, detect if there is a cycle.
-  private boolean dfs(Map<Integer, List<Integer>> graph, int node, Set<Integer> ancestors,
+  private boolean hasCycle(int node, Set<Integer> ancestors,
       boolean[] visited) {
     if (ancestors.contains(node)) {
       return false;
@@ -45,21 +46,21 @@ public class CourseSchedule {
     visited[node] = true;
     ancestors.add(node);
 
-    for (int n : graph.getOrDefault(node, new ArrayList<>())) {
-      // find cycle, return false, do not need to find other nodes.
-      if (!dfs(graph, n, ancestors, visited)) {
-        return false;
+    for (int next : graph.getOrDefault(node, new ArrayList<>())) {
+      // find cycle, return true, do not need to find other nodes.
+      if (hasCycle(next, ancestors, visited)) {
+        return true;
       }
     }
     ancestors.remove(node);
 
-    return true;
+    return false;
   }
 
   public boolean canFinish(int numCourses, int[][] prerequisites) {
 
     // construct the graph
-    Map<Integer, List<Integer>> graph = new HashMap<>();
+    graph = new HashMap<>();
     for (int[] edge : prerequisites) {
       graph.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(edge[1]);
     }
@@ -75,7 +76,7 @@ public class CourseSchedule {
         continue;
       }
 
-      if (!dfs(graph, i, ancestors, visited)) {
+      if (hasCycle(i, ancestors, visited)) {
         return false;
       }
     }
