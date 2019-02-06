@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,19 +18,18 @@ import java.util.List;
 // Output: [[1,2],[3,10],[12,16]]
 // Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 //
-public class InsertInterval {
+public class InsertInterval_57 {
 
   public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
 
     List<Interval> result = new ArrayList<>();
 
     for (Interval it : intervals) {
-      if (newInterval.start > it.end || it.start > newInterval.end) {
-        // no overlap
-        result.add(new Interval(it.start, it.end));
+      if (isOverlap(it, newInterval)) {
+        newInterval.start = Math.min(it.start, newInterval.start);
+        newInterval.end = Math.min(it.end, newInterval.end);
       } else {
-        newInterval = new Interval(Math.min(it.start, newInterval.start),
-            Math.max(it.end, newInterval.end));
+        result.add(new Interval(it.start, it.end));
       }
     }
 
@@ -37,6 +37,10 @@ public class InsertInterval {
     result.sort(Comparator.comparingInt(l -> l.start));
 
     return result;
+  }
+
+  private boolean isOverlap(Interval l1, Interval l2) {
+    return l1.start <= l2.end && l2.start <= l1.end;
   }
 
   private class Interval {

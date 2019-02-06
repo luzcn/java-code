@@ -7,7 +7,7 @@ import java.util.List;
 // Created by zhenlu on 9/22/16.
 
 
-public class MergeIntervals {
+public class MergeIntervals_56 {
 
   public List<Interval> merge(List<Interval> intervals) {
 
