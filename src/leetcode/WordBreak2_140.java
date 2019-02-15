@@ -18,7 +18,7 @@ import java.util.Map;
 // dict = ["cat", "cats", "and", "sand", "dog"].
 //
 // A solution is ["cats and dog", "cat sand dog"].
-public class WordBreak2 {
+public class WordBreak2_140 {
 
   // dfs + memoization
   private List<String> dfs(String s, List<String> dict, Map<String, List<String>> map) {
