@@ -33,9 +33,9 @@ public class ReverseString_541 {
     }
 
     res.append((new StringBuilder(s.substring(0, k))).reverse().toString());
-    res.append(s, k, k + k);
+    res.append(s, k, 2 * k);
 
-    dfs(s.substring(k + k), k);
+    dfs(s.substring(2 * k), k);
   }
 
   public String reverseStr(String s, int k) {
