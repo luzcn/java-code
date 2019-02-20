@@ -17,23 +17,52 @@ package leetcode;
  */
 public class ReverseNodesInkGroup {
 
-  private ListNode reverse(ListNode head, ListNode end) {
-    return null;
-  }
-
-
   public ListNode reverseKGroup(ListNode head, int k) {
 
     if (head == null || k <= 0) {
       return head;
     }
 
-    ListNode newHead = new ListNode(-1);
-    ListNode prev = newHead;
+    int length = 0;
     ListNode p = head;
-    int count = 1;
+    while (p != null) {
+      length++;
+      p = p.next;
+    }
 
-    return newHead.next;
+    return dfs(head, k, length);
+  }
 
+  private ListNode dfs(ListNode head, int k, int size) {
+
+    if (size < k) {
+      return head;
+    }
+
+    if (head == null) {
+      return null;
+    }
+
+    int count = 0;
+    ListNode p = head;
+
+    // get the (p + k)th node
+    while (p != null && count++ < k) {
+      p = p.next;
+    }
+
+    ListNode prev = dfs(p, k, size - k);
+
+    ListNode q = head;
+    count = 0;
+    while (q != null && count++ < k) {
+      // reverse the k-group list nodes
+      ListNode temp = q.next;
+      q.next = prev;
+      prev = q;
+      q = temp;
+    }
+
+    return prev;
   }
 }

@@ -64,7 +64,7 @@ public class ConstructFromPreAndInOrder {
 
   }
 
-  // 在pre-order上建立树， l 和 r的作用是判断 pre[index]是否还有left 和 right children
+  // 在pre-order上建立树， l 和 r的作用是判断 pre[index]所在的结点是否还有left 和 right children
   private TreeNode dfs(int[] preorder, int[] inorder, int index, int l, int r) {
     if (l > r) {
       return null;

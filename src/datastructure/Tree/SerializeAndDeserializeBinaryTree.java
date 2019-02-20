@@ -71,6 +71,6 @@ public class SerializeAndDeserializeBinaryTree {
   // Decodes your encoded data to tree.
   public TreeNode deserialize(String data) {
 
-    return this.deserializeRec(data.split(","));
+    return deserializeRec(data.split(","));
   }
 }
