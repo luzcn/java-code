@@ -234,8 +234,14 @@ public class BinaryTree {
       }
     }
 
-    node.left = deleteNode(node.left, target);
-    node.right = deleteNode(node.right, target);
+    // Use the binary search property
+    if (node.val > target) {
+      node.left = deleteNode(node.left, target);
+    } else {
+      node.right = deleteNode(node.right, target);
+    }
+    // node.left = deleteNode(node.left, target);
+    // node.right = deleteNode(node.right, target);
 
     return node;
   }

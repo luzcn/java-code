@@ -34,34 +34,39 @@ package leetcode;
 // linkedList.get(1);            // returns 3
 public class DesignLinkedList_707 {
 
-  private ListNode head;
-  private ListNode tail;
+  public DListNode head;
+  private DListNode tail;
+  private int length;
 
   /**
    * Initialize your data structure here.
    */
   public DesignLinkedList_707() {
-    head = null;
-    tail = null;
+    head = new DListNode(0);
+    tail = new DListNode(0);
+
+    head.next = tail;
+    tail.prev = head;
+
+    length = 0;
   }
 
   /**
    * Get the value of the index-th node in the linked list. If the index is invalid, return -1.
    */
   public int get(int index) {
-    if (head == null) {
+    if (index >= length) {
       return -1;
     }
 
-    ListNode p = head;
+    DListNode p = head.next;
     int count = 0;
-
-    while (p != null && count < index) {
+    while (p != tail && count < index) {
       p = p.next;
       count++;
     }
 
-    return p == null ? -1 : p.value;
+    return p.value;
   }
 
   /**
@@ -69,34 +74,28 @@ public class DesignLinkedList_707 {
    * new node will be the first node of the linked list.
    */
   public void addAtHead(int val) {
+    DListNode newNode = new DListNode(val);
 
-    if (head == null) {
-      head = new ListNode(val);
-      tail = head;
-      return;
-    }
+    newNode.next = head.next;
+    newNode.prev = head;
+    head.next.prev = newNode;
+    head.next = newNode;
 
-    ListNode newHead = new ListNode(val);
-    head.prev = newHead;
-    newHead.next = head;
-
-    head = newHead;
+    length++;
   }
 
   /**
    * Append a node of value val to the last element of the linked list.
    */
   public void addAtTail(int val) {
-    if (tail == null) {
-      tail = new ListNode(val);
-      head = tail;
-      return;
-    }
-    ListNode newTail = new ListNode(val);
-    tail.next = newTail;
-    newTail.prev = tail;
+    DListNode newNode = new DListNode(val);
 
-    tail = newTail;
+    newNode.next = tail;
+    newNode.prev = tail.prev;
+    tail.prev.next = newNode;
+    tail.prev = newNode;
+
+    length++;
   }
 
   /**
@@ -105,94 +104,63 @@ public class DesignLinkedList_707 {
    * than the length, the node will not be inserted.
    */
   public void addAtIndex(int index, int val) {
-    if (head == null) {
-      addAtHead(val);
+
+    if (index > length) {
       return;
     }
 
-    ListNode p = head;
+    DListNode newNode = new DListNode(val);
+    DListNode p = head.next;
     int count = 0;
-
-    while (p != null && count < index) {
+    while (p != tail && count < index) {
       p = p.next;
       count++;
     }
 
-    if (p == null && count == index) {
-      addAtTail(val);
-      return;
-    }
+    newNode.next = p;
+    newNode.prev = p.prev;
+    p.prev.next = newNode;
+    p.prev = newNode;
 
-    if (p != null) {
-      ListNode newNode = new ListNode(val);
-
-      if (p.prev != null) {
-        p.prev.next = newNode;
-      }
-
-      newNode.prev = p.prev;
-      newNode.next = p;
-      p.prev = newNode;
-    }
-
+    length++;
   }
 
   /**
    * Delete the index-th node in the linked list, if the index is valid.
    */
   public void deleteAtIndex(int index) {
-    ListNode p = head;
-    int count = 0;
+    if (index < 0 || index >= length) {
+      return;
+    }
 
-    while (p != null && count < index) {
+    DListNode p = head.next;
+    int count = 0;
+    while (p != tail && count < index) {
       p = p.next;
       count++;
     }
 
-    if (p == null) {
-      return;
-    }
-
-    if (p == head) {
-      head = head.next;
-      if (head == null) {
-        tail = null;
-      } else {
-        head.prev = null;
-      }
-      return;
-    }
-
-    if (p == tail) {
-      tail = tail.prev;
-      if (tail == null) {
-        head = null;
-      } else {
-        tail.next = null;
-      }
-      return;
-    }
-
-    if (p.prev != null) {
+    if (p != tail) {
       p.prev.next = p.next;
-    }
-
-    if (p.next != null) {
       p.next.prev = p.prev;
+
+      p.next = null;
+      p.prev = null;
     }
 
+    length--;
   }
 
-  private class ListNode {
+  public class DListNode {
 
-    ListNode prev;
-    ListNode next;
+    public DListNode prev;
+    public DListNode next;
+    public int value;
 
-    int value;
-
-    ListNode(int val) {
-      value = val;
+    DListNode(int val) {
+      this.value = val;
+      prev = null;
+      next = null;
     }
   }
-
 }
