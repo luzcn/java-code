@@ -9,7 +9,7 @@ public class Addition {
       return a;
     }
 
-    int sum = a ^ b; // Add without include carries.
+    int sum = a ^ b; // XOR is adding without include carries.
     int carry = (a & b) << 1;   // carry, but not added yet.
 
     return plus(sum, carry);

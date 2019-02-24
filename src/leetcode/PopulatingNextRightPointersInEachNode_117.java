@@ -41,9 +41,9 @@ public class PopulatingNextRightPointersInEachNode_117 {
     }
 
     TreeLinkNode current = node.left;
-    // if left and right, make left.next = right
+    // if left != null and right != null, make left.next = right
     // and point current to right
-    // if !left, move current to right
+    // if left == null, move current to right
     if (node.left != null && node.right != null) {
       node.left.next = node.right;
       current = node.right;
@@ -52,17 +52,17 @@ public class PopulatingNextRightPointersInEachNode_117 {
     }
 
     TreeLinkNode p = node.next;
-    while (p != null && (p.left == null && p.right == null)) {
-      p = p.next;
-    }
-
-    if (p != null) {
+    while (p != null) {
       if (p.left != null) {
         current.next = p.left;
-      } else {
-        current.next = p.right;
+        break;
       }
 
+      if (p.right != null) {
+        current.next = p.right;
+        break;
+      }
+      p = p.next;
     }
 
     dfs(node.right);
