@@ -39,6 +39,10 @@ public class IntersectionOfTwoArrays_350 {
         return v - 1;
       });
 
+      // if (map.getOrDefault(n, 0) > 0) {
+      //   res.add(n);
+      //   map.put(n, map.get(n) - 1);
+      // }
     }
 
     return res.stream().mapToInt(x -> x).toArray();
