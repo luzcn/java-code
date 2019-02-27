@@ -42,6 +42,7 @@ public class DeleteAndEarn_740 {
   private int res = 0;
 
   // TLE
+  // O(2^n) time
   private void dfs(int[] nums, int index, int sum, HashMap<Integer, Integer> used) {
     res = Math.max(res, sum);
 

@@ -29,10 +29,11 @@ package leetcode;
 // Output:
 //
 // 2
-public class LongestUnivaluePath {
+public class LongestUnivaluePath_687 {
 
   private int ans = 0;
 
+  // bottom-up dfs solution
   public int longestUnivaluePath(TreeNode root) {
 
     dfs(root);
