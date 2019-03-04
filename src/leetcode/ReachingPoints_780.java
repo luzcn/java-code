@@ -1,6 +1,8 @@
 package leetcode;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
 // A move consists of taking a point (x, y) and transforming it to either (x, x+y) or (x+y, y).
 //
@@ -78,7 +80,8 @@ public class ReachingPoints_780 {
 
     set.add(node);
 
-    return dfs(new int[]{node[0] + node[1], node[1]}, end, set) && dfs(new int[]{node[0], node[0] + node[1]}, end, set);
+    return dfs(new int[]{node[0] + node[1], node[1]}, end, set) || dfs(
+        new int[]{node[0], node[0] + node[1]}, end, set);
   }
 
 
@@ -89,6 +92,7 @@ public class ReachingPoints_780 {
   // O(max(tx,ty))
   private boolean backwardsMove(int sx, int sy, int tx, int ty) {
     while (tx >= sx && ty >= sy) {
+
       if (tx == sx && ty == sy) {
         return true;
       }
@@ -101,5 +105,37 @@ public class ReachingPoints_780 {
     }
 
     return false;
+  }
+
+
+  // O(log(max(tx, ty))
+  private boolean backwardsMove2(int sx, int sy, int tx, int ty) {
+
+    while (tx >= sx && ty >= sy) {
+      if (tx == ty) {
+        break;
+      }
+
+      //  When both tx > ty and ty > sy,
+      //  we can perform all these parent operations in one step,
+      //  replacing "while tx > ty: tx -= ty" with tx %= ty.
+      if (tx > ty) {
+        if (ty > sy) {
+          tx %= ty;
+        } else {
+          // otherwise, ty == sy
+          // now, we need to check if the distance tx-sx is the multiple times of ty.
+          return (tx - sx) % ty == 0;
+        }
+      } else {
+
+        if (tx > sx) {
+          ty %= tx;
+        } else {
+          return (ty - sy) % tx == 0;
+        }
+      }
+    }
+    return (tx == sx && ty == sy);
   }
 }

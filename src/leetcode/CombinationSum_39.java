@@ -21,10 +21,10 @@ import java.util.List;
 // [2, 2, 3]
 // ]
 ///
-public class CombinationSum {
+public class CombinationSum_39 {
 
-  private List<List<Integer>> result = new ArrayList<>();
-  private List<Integer> current = new ArrayList<>();
+  private final List<List<Integer>> result = new ArrayList<>();
+  private final List<Integer> current = new ArrayList<>();
 
 
   // recursive + backtracking
@@ -34,16 +34,16 @@ public class CombinationSum {
     }
 
     if (sum == target) {
-      this.result.add(new ArrayList<>(this.current));
+      result.add(new ArrayList<>(current));
       return;
     }
 
     for (int i = index; i < candidates.length; i++) {
-      this.current.add(candidates[i]);
+      current.add(candidates[i]);
 
       dfs(candidates, target, i, sum + candidates[i]);
 
-      this.current.remove(this.current.size() - 1);
+      current.remove(current.size() - 1);
     }
   }
 

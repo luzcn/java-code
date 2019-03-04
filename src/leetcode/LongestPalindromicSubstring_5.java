@@ -1,16 +1,15 @@
 package leetcode;
 
-/**
- * Given a string s, find the longest palindromic substring in s. You may assume that the maximum
- * length of s is 1000.
- *
- * Input: "babad"
- *
- * Output: "bab"
- *
- * Note: "aba" is also a valid answer.
- */
-public class LongestPalindromicSubstring {
+// Given a string s, find the longest palindromic substring in s. You may assume that the maximum
+// length of s is 1000.
+//
+// Input: "babad"
+//
+// Output: "bab"
+//
+// Note: "aba" is also a valid answer.
+///
+public class LongestPalindromicSubstring_5 {
 
   // brute force solution takes O(n^3) time complexity
   // DP solution is O(n^2) time and O(n^2) space

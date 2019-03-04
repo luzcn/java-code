@@ -14,7 +14,7 @@ package leetcode;
 public class ShortestPalindrome_214 {
 
   // Thought:
-  // Since the problem asks us to add characters infront of the input string,
+  // Since the problem asks us to add characters in front of the input string,
   // we can find the longest palindrome substring starting from index 0.
   // - Using KMP solution to compute the failure table of string "s + reverse(s)"
   // - or comparing with the reverse of the string, rev.substring(i) == s.substring(0, n - i), which takes O(n^2) time
