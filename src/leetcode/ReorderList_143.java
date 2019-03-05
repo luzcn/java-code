@@ -11,7 +11,7 @@ package leetcode;
  *
  * Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
  */
-public class ReorderList {
+public class ReorderList_143 {
 
 
 /*    private ListNode newHead = new ListNode(-1);
@@ -62,33 +62,55 @@ public class ReorderList {
     return prev;
   }
 
+  // private void merge(ListNode head1, ListNode head2) {
+  //   boolean isFirst = true;
+  //
+  //   ListNode prev = head1;
+  //   ListNode p = head1.next;
+  //   ListNode q = head2;
+  //
+  //   while (p != null && q != null) {
+  //
+  //     if (isFirst) {
+  //       prev.next = q;
+  //       q = q.next;
+  //
+  //     } else {
+  //       prev.next = p;
+  //       p = p.next;
+  //     }
+  //     prev = prev.next;
+  //     isFirst = !isFirst;
+  //   }
+  //
+  //   if (q == null) {
+  //     prev.next = p;
+  //   }
+  //
+  //   if (p == null) {
+  //     prev.next = q;
+  //   }
+  // }
+
   private void merge(ListNode head1, ListNode head2) {
     boolean isFirst = true;
 
-    ListNode prev = head1;
-    ListNode p = head1.next;
+    ListNode p = head1;
     ListNode q = head2;
 
     while (p != null && q != null) {
-
       if (isFirst) {
-        prev.next = q;
-        q = q.next;
+        ListNode next = p.next;
 
+        p.next = q;
+        p = next;
       } else {
-        prev.next = p;
-        p = p.next;
+        ListNode next = q.next;
+        q.next = p;
+        q = next;
       }
-      prev = prev.next;
+
       isFirst = !isFirst;
-    }
-
-    if (q == null) {
-      prev.next = p;
-    }
-
-    if (p == null) {
-      prev.next = q;
     }
   }
 

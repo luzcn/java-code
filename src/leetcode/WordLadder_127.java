@@ -32,11 +32,6 @@ public class WordLadder_127 {
   public int ladderLength(String beginWord, String endWord, List<String> wordList) {
     Set<String> wordSet = new HashSet<>(wordList);
 
-    // the leeecode needs to check if the endword in the word list
-    if (!wordSet.contains(endWord)) {
-      return 0;
-    }
-
     // use a queue to save the candidate words
     Queue<String> candidates = new LinkedList<>();
     candidates.add(beginWord);
@@ -51,18 +46,18 @@ public class WordLadder_127 {
 
       String current = candidates.poll();
 
+      if (current.equals(endWord)) {
+        return map.get(current);
+      }
+
       for (int i = 0; i < current.length(); i++) {
         for (char c = 'a'; c <= 'z'; c++) {
 
-          if (c == current.charAt(i)) {
-            continue;
-          }
+          // if (c == current.charAt(i)) {
+          //   continue;
+          // }
 
           String newWord = current.substring(0, i) + c + current.substring(i + 1);
-
-          if (newWord.equals(endWord)) {
-            return map.get(current) + 1;
-          }
 
           if (wordSet.contains(newWord) && !map.containsKey(newWord)) {
             candidates.add(newWord);
