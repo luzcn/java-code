@@ -33,6 +33,7 @@ public class ReverseNodesInkGroup {
     return dfs(head, k, length);
   }
 
+  // bottom up recursive
   private ListNode dfs(ListNode head, int k, int size) {
 
     if (size < k) {
@@ -62,6 +63,31 @@ public class ReverseNodesInkGroup {
       prev = q;
       q = temp;
     }
+
+    return prev;
+  }
+
+  // top-down recursive
+  private ListNode dfs2(ListNode head, int k, int size) {
+    if (head == null) {
+      return null;
+    }
+
+    if (size < k) {
+      return head;
+    }
+
+    ListNode p = head;
+    ListNode prev = null;
+    int count = 0;
+    while (p != null && count++ < k) {
+      ListNode next = p.next;
+      p.next = prev;
+      prev = p;
+      p = next;
+    }
+
+    head.next = dfs(p, k, size - k);
 
     return prev;
   }
