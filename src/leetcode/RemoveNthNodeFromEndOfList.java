@@ -43,9 +43,11 @@ public class RemoveNthNodeFromEndOfList {
     }
 
     // now q.next is the element need to remove
-    ListNode toRemove = q.next;
-    q.next = toRemove.next;
-    toRemove.next = null;
+    // ListNode toRemove = q.next;
+    // q.next = toRemove.next;
+    // toRemove.next = null;
+
+    q.next = q.next.next;
 
     return head;
   }

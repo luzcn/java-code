@@ -40,16 +40,18 @@ public class stringToInteger {
         break;
       }
 
+      int value = Character.getNumericValue(c);
+
       // if res > int_max/10, then res*10 must > int_max, so overflow
       // if res == int_max/10 but ths s[i] is larger than int_max % 10,
       //  res*10+s[i] should larger than int_max.
       if (res > Integer.MAX_VALUE / 10 ||
           (res == Integer.MAX_VALUE / 10
-              && Character.getNumericValue(c) > Integer.MAX_VALUE % 10)) {
+              && value > Integer.MAX_VALUE % 10)) {
         return isNegative ? Integer.MIN_VALUE : Integer.MAX_VALUE;
       }
 
-      res = res * 10 + Character.getNumericValue(c);
+      res = res * 10 + value;
 
       i++;
     }

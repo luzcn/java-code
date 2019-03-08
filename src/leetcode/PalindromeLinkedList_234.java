@@ -1,11 +1,18 @@
 package leetcode;
 
-/**
- * Given a singly linked list, determine if it is a palindrome.
- *
- * Follow up: Could you do it in O(n) time and O(1) space?
- */
-public class PalindromeLinkedList {
+// Given a singly linked list, determine if it is a palindrome.
+//
+// Example 1:
+//
+// Input: 1->2
+// Output: false
+// Example 2:
+//
+// Input: 1->2->2->1
+// Output: true
+//
+// Follow up: Could you do it in O(n) time and O(1) space?
+public class PalindromeLinkedList_234 {
 
   private ListNode head;
 
@@ -18,11 +25,11 @@ public class PalindromeLinkedList {
 
     boolean result = dfs(node.next);
 
-    if (this.head.val != node.val) {
+    if (head.val != node.val) {
       return false;
     }
 
-    this.head = this.head.next;
+    head = head.next;
     return result;
 
   }

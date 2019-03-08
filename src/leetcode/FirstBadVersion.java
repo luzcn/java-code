@@ -44,7 +44,7 @@ public class FirstBadVersion {
       }
     }
 
-    return left;
+    return left; // return right, is also working, since the look break condition is left == right
   }
 }
 
