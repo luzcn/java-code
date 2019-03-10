@@ -32,7 +32,7 @@ public class CountPrimes {
       // update the dp array
       // all 2*i, 3*i,4*i....are not primes
       for (int j = 2; j * i < n; j++) {
-        isPrime[j] = false;
+        isPrime[j * i] = false;
       }
     }
 

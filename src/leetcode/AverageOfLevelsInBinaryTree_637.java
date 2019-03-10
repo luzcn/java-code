@@ -2,6 +2,7 @@ package leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Given a non-empty binary tree, return the average value of the nodes on each level in the form of
@@ -44,10 +45,6 @@ public class AverageOfLevelsInBinaryTree_637 {
   public List<Double> averageOfLevels(TreeNode root) {
     dfs(root, 0);
 
-    List<Double> averages = new ArrayList<>();
-
-    res.forEach(x -> averages.add((x[0] / x[1])));
-
-    return averages;
+    return res.stream().map(x -> x[0] / x[1]).collect(Collectors.toList());
   }
 }

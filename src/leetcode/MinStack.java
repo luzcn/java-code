@@ -1,7 +1,7 @@
 package leetcode;
 
-import java.util.NoSuchElementException;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 // Design a dataStack that supports push, pop, top, and retrieving the minimum element in constant startTime.
 // push(x) -- Push element x onto dataStack.
@@ -11,48 +11,39 @@ import java.util.Stack;
 //
 public class MinStack {
 
-  private Stack<Integer> dataStack;
-  private Stack<Integer> minStack;
+  private Deque<Integer> dataStack;
+  private Deque<Integer> minStack;
 
-  /////
   // initialize your data structure here.
-  ///
   public MinStack() {
 
-    dataStack = new Stack<>();
-    minStack = new Stack<>();
+    dataStack = new ArrayDeque<>();
+    minStack = new ArrayDeque<>();
   }
 
   public void push(int x) {
 
-    dataStack.push(x);
+    dataStack.addLast(x);
 
-    if (minStack.isEmpty() || minStack.peek() >= x) {
-      minStack.push(x);
+    if (minStack.isEmpty() || minStack.getLast() <= x) {
+      minStack.addLast(x);
     }
   }
 
   public void pop() {
-    int data = dataStack.pop();
+    int value = dataStack.getLast();
+    dataStack.removeLast();
 
-    if (data == minStack.peek()) {
-      minStack.pop();
+    if (value == getMin()) {
+      minStack.removeLast();
     }
   }
 
   public int top() {
-    if (dataStack.isEmpty()) {
-      throw new NoSuchElementException();
-    }
-
-    return dataStack.peek();
+    return dataStack.getLast();
   }
 
   public int getMin() {
-    if (minStack.isEmpty()) {
-      throw new NoSuchElementException();
-    }
-
-    return minStack.peek();
+    return minStack.getLast();
   }
 }
