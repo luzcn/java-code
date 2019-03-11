@@ -57,4 +57,31 @@ public class OneEditDistance {
     // check if these two string length difference is 1
     return Math.abs(m - n) == 1;
   }
+
+
+  public boolean isOneEditDistance2(String s, String t) {
+    if (Math.abs(s.length() - t.length()) > 1) {
+      return false;
+    }
+
+    if (s.equals(t)) {
+      return false;
+    }
+
+    int i = 0;
+    int j = 0;
+    while (i < s.length() && j < t.length()) {
+      if (s.charAt(i) != t.charAt(j)) {
+
+        return s.substring(i).equals(t.substring(j + 1)) // insert
+            || s.substring(i + 1).equals(t.substring(j))  // delete
+            || s.substring(i + 1).equals(t.substring(j + 1)); // replace
+      }
+
+      i++;
+      j++;
+    }
+
+    return i == s.length() || j == t.length();
+  }
 }

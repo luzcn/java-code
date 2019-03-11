@@ -7,12 +7,13 @@ import java.util.HashMap;
 // For example, Given s = “eceba”,
 //
 // T is "ece" which its length is 3.
-public class LongestSubstringwithAtMostTwoDistinctCharacters {
+public class LongestSubstringwithAtMostKDistinctCharacters_340 {
 
-  public int lengthOfLongestSubstringTwoDistinct(String s, int k) {
+  public int lengthOfLongestSubstringKDistinct(String s, int k) {
 
-    HashMap<Character, Integer> map = new HashMap<>();
-    int begin = 0, end = 0;
+    final HashMap<Character, Integer> map = new HashMap<>();
+    int begin = 0;
+    int end = 0;
     int maxLength = 0;
     int counter = 0;
 
@@ -21,24 +22,22 @@ public class LongestSubstringwithAtMostTwoDistinctCharacters {
       char c = s.charAt(end);
 
       // must use getOrDefault here, because the frequency can be decreased.
-      if (map.getOrDefault(c, 0) == 0) {
+      // use map.size() to indicate there are at most k distinct chars
+      map.put(c, map.getOrDefault(c, 0) + 1);
+      if (map.size() > k) {
         counter++;
-        map.put(c, 1);
-      } else {
-        map.put(c, map.get(c) + 1);
       }
 
-      while (counter > k) {
+      while (counter > 0) {
         // --map[s[begin++]] == 0
-        char first = s.charAt(begin);
-
-        if (map.get(first) == 1) {
-          counter--;
-        }
-
+        char first = s.charAt(begin++);
         map.put(first, map.get(first) - 1);
-        begin++;
 
+        if (map.get(first) == 0) {
+          // removed a distinct character
+          counter--;
+          map.remove(first);
+        }
       }
 
       maxLength = Math.max(maxLength, end - begin + 1);

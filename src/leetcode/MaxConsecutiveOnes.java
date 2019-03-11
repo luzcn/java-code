@@ -14,10 +14,39 @@ import java.util.HashMap;
  */
 public class MaxConsecutiveOnes {
 
+  // Two pointer + counting
+  public int findMaxConsecutiveOnes(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return 0;
+    }
+
+    int n = nums.length;
+    int begin = 0;
+    int end = 0;
+    int res = 0;
+
+    while (end < n) {
+      if (nums[end] != 1) {
+
+        res = Math.max(res, end - begin);
+        // nums[end] is not 1, reset begin to end + 1
+        begin = end + 1;
+      }
+      end++;
+    }
+
+    // don't forget the last consecutive '1's
+    if (end > begin) {
+      res = Math.max(res, end - begin);
+    }
+
+    return res;
+  }
+
 
   // counting, use index "last" to indicate the previous position of "0"
   // for each i, i
-  public int findMaxConsecutiveOnes(int[] nums) {
+  public int findMaxConsecutiveOnes3(int[] nums) {
     int lastZero = -1;
     int current = 0;
     int maxLength = 0;
