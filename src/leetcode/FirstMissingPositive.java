@@ -38,4 +38,27 @@ public class FirstMissingPositive {
 
     return result == -1 ? n + 1 : result;
   }
+
+
+  // o(n) space
+  private int firstMissingPositiveBF(int[] nums) {
+    int n = nums.length;
+
+    boolean[] seen = new boolean[n + 1];
+
+    for (int num : nums) {
+      if (num <= 0 || num > n) {
+        continue;
+      }
+
+      seen[num] = true;
+    }
+
+    int i = 1;
+    while (i <= n && seen[i]) {
+      i++;
+    }
+
+    return i;
+  }
 }
