@@ -13,8 +13,15 @@ import java.util.PriorityQueue;
 // Given n online courses represented by pairs (t,d), your task is to find the maximal number of
 // courses that can be taken.
 //
-// Example: Input: [[100, 200], [200, 1300], [1000, 1250], [2000, 3200]] Output: 3 Explanation:
-// There're totally 4 courses, but you can take 3 courses at most: First, take the 1st course, it
+// Example:
+//
+// Input: [[100, 200], [200, 1300], [1000, 1250], [2000, 3200]]
+// Output: 3
+//
+// Explanation:
+// There're totally 4 courses, but you can take 3 courses at most:
+//
+// First, take the 1st course, it
 // costs 100 days so you will finish it on the 100th day, and ready to take the next course on the
 // 101st day.
 //
@@ -31,6 +38,7 @@ public class CourseSchedule3 {
   // for each course, we choose take or not take
   // https://leetcode.com/problems/course-schedule-iii/solution/
 
+  // MLE in leetcode
   private int dfs(int[][] course, int index, int currentTime, int[][] memo) {
     if (index > course.length) {
       return 0;
@@ -42,7 +50,7 @@ public class CourseSchedule3 {
 
     int take = 0;
     if (currentTime + course[index][0] <= course[index][1]) {
-      take = dfs(course, index + 1, currentTime + course[index][0], memo);
+      take = dfs(course, index + 1, currentTime + course[index][0], memo) + 1;
     }
     int notTake = dfs(course, index + 1, currentTime, memo);
 
@@ -56,9 +64,9 @@ public class CourseSchedule3 {
     Arrays.sort(courses, Comparator.comparingInt(x -> x[1]));
 
     int m = courses.length;
-    int closeTime = courses[m - 1][1];
+    int latestCloseTime = courses[m - 1][1];
 
-    int[][] memo = new int[m + 1][closeTime + 1];
+    int[][] memo = new int[m + 1][latestCloseTime + 1];
 
     return dfs(courses, 0, 0, memo);
   }
@@ -93,6 +101,15 @@ public class CourseSchedule3 {
         queue.offer(course[0]);
       }
     }
+
+    // for (int[] course : courses) {
+    //   time += course[0];
+    //   queue.offer(course[0]);
+    //
+    //   if (time > course[1]) {
+    //     time -= queue.poll();
+    //   }
+    // }
 
     return queue.size();
   }
