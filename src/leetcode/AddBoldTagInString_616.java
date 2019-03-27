@@ -25,7 +25,54 @@ import java.util.List;
 // "<b>aaabbc</b>c"
 public class AddBoldTagInString_616 {
 
+  // brute force with help array bold[]
+  // if substring t needs to be bold, then mark all characters in bold as true
+  // find the all the continuous subarray in bold with true
   public String addBoldTag(String s, String[] dict) {
+
+    int n = s.length();
+    boolean[] bold = new boolean[n];
+
+    for (int i = 0; i < n; i++) {
+      for (String word : dict) {
+        if (i + word.length() > n) {
+          continue;
+        }
+
+        boolean isSubString = true;
+        for (int j = 0; j < word.length(); j++) {
+          if (s.charAt(i + j) != word.charAt(j)) {
+            isSubString = false;
+            break;
+          }
+        }
+
+        if (isSubString) {
+          for (int x = 0; x < word.length(); x++) {
+            bold[i + x] = true;
+          }
+        }
+      }
+    }
+
+    StringBuilder res = new StringBuilder();
+    for (int i = 0; i < n; i++) {
+      if (bold[i] && (i == 0 || !bold[i - 1])) {
+        res.append("<b>");
+      }
+
+      res.append(s.charAt(i));
+
+      if (bold[i] && (i == n - 1 || !bold[i + 1])) {
+        res.append("</b>");
+      }
+    }
+
+    return res.toString();
+  }
+
+
+  private String addBoldTagMergeInterval(String s, String[] dict) {
 
     // brute force
 
