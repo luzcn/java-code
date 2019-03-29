@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.HashMap;
+
 /**
  * Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is
  * surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
@@ -60,12 +62,58 @@ public class NumberOfIslands {
 
   // follow up, if the bord is large, cannot fit in memory
   // thought: we can load the bord row by row and use union-find
-  public int countIslands2(char[][] grid) {
+  public int countIslandsUnionFind(char[][] grid) {
     int count = 0;
     int m = grid.length;
     int n = grid[0].length;
 
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+
+        if (grid[i][j] == '1') {
+          count++;
+          int id = i * n + j;
+
+          map.put(id, id);
+
+          for (int[] dir : dirs) {
+            int x = i + dir[0];
+            int y = j + dir[1];
+
+            if (x < 0 || y < 0 || x >= m || y >= n || grid[x][y] == '0') {
+              continue;
+            }
+
+            int neighborId = x * n + y;
+            if (map.get(neighborId) == null) {
+              // the char is 1 but not visited yet
+              continue;
+            }
+
+            int neighborRoot = getRoot(neighborId);
+
+            if (neighborRoot != getRoot(id)) {
+              count--;
+
+              map.put(getRoot(id), neighborRoot);
+            }
+          }
+        }
+      }
+    }
+
     return count;
+  }
+
+  private HashMap<Integer, Integer> map = new HashMap<>();
+
+  private int getRoot(int id) {
+    int i = id;
+    while (i != map.get(i)) {
+      i = map.get(i);
+    }
+
+    return i;
   }
 
 }
