@@ -7,14 +7,15 @@ import java.util.Map;
 //
 // You start at any tree of your choice, then repeatedly perform the following steps:
 //
-// Add one piece of fruit from this tree to your baskets.
-//  - If you cannot, stop.
-// Move to the next tree to the right of the current tree.
-//  - If there is no tree to the right, stop.
+// - Add one piece of fruit from this tree to your baskets. If you cannot, stop.
+
+// - Move to the next tree to the right of the current tree. If there is no tree to the right, stop.
+
 // Note that you do not have any choice after the initial choice of starting tree:
 // you must perform step 1, then step 2, then back to step 1, then step 2, and so on until you stop.
 //
-// You have two baskets, and each basket can carry any quantity of fruit, but you want each basket to only carry one type of fruit each.
+// You have two baskets, and each basket can carry any quantity of fruit,
+// but you want each basket to only carry one type of fruit each.
 //
 // What is the total amount of fruit you can collect with this procedure?
 //
@@ -58,27 +59,33 @@ public class FruitIntoBaskets_904 {
     int maxLength = 0;
     int begin = 0;
     int end = 0;
+
+    // how many distinct types of fruit we have picked
     int count = 0;
 
     while (end < nums.length) {
 
       int c = nums[end];
-
-      if (map.get(c) == null || map.get(c) == 0) {
+      map.put(c, map.getOrDefault(c, 0) + 1);
+      if (map.get(c) == 1) {
+        // add a distinct number into the sliding window
         count++;
-        map.put(c, 1);
-      } else {
-        map.put(c, map.get(c) + 1);
       }
+
+      // if (map.get(c) == null || map.get(c) == 0) {
+      //   count++;
+      //   map.put(c, 1);
+      // } else {
+      //   map.put(c, map.get(c) + 1);
+      // }
 
       while (count > 2) {
 
-        int first = nums[begin];
+        int first = nums[begin++];
         map.put(first, map.get(first) - 1);
         if (map.get(first) == 0) {
           count--;
         }
-        begin++;
       }
 
       maxLength = Math.max(maxLength, end - begin + 1);

@@ -8,33 +8,30 @@ import java.util.HashMap;
 // Return a deep copy of the list.
 public class CopyListWithRandomPointer {
 
-  // use hash map to save the mapping of original node and new copied node
-  private HashMap<RandomListNode, RandomListNode> map = new HashMap<>();
-
-  public RandomListNode copyRandomList(RandomListNode head) {
+  public Node copyRandomList(Node head) {
     if (head == null) {
       return null;
     }
 
-    RandomListNode p = head;
-    while (p != null) {
-      // RandomListNode newNode = new RandomListNode(p.label);
-      // map.putIfAbsent(p, newNode);
+    // use hash map to save the mapping of original node and new copied node
+    HashMap<Node, Node> map = new HashMap<>();
+    Node p = head;
+    Node prev = null;
 
-      map.put(p, new RandomListNode(p.label));
-      p = p.next;
-    }
-
-    p = head;
     while (p != null) {
 
-      if (p.next != null) {
-        map.get(p).next = map.get(p.next);
+      map.putIfAbsent(p, new Node(p.val));
+
+      if (prev != null) {
+        map.get(prev).next = map.get(p);
       }
+
       if (p.random != null) {
+        map.putIfAbsent(p.random, new Node(p.random.val));
         map.get(p).random = map.get(p.random);
       }
 
+      prev = p;
       p = p.next;
     }
 
@@ -42,16 +39,16 @@ public class CopyListWithRandomPointer {
   }
 
   // O(1) space
-  public RandomListNode copyRandomList2(RandomListNode head) {
+  public Node copyRandomList2(Node head) {
     if (head == null) {
       return null;
     }
 
-    RandomListNode p = head;
+    Node p = head;
     while (p != null) {
-      RandomListNode newNode = new RandomListNode(p.label);
+      Node newNode = new Node(p.val);
 
-      RandomListNode temp = p.next;
+      Node temp = p.next;
 
       // make the new copied node next pointing to p next
       newNode.next = temp;
@@ -63,7 +60,7 @@ public class CopyListWithRandomPointer {
       p = temp;
     }
 
-    RandomListNode newHead = head.next;
+    Node newHead = head.next;
 
     //  construct the random pointer in copied list
     p = head;
@@ -77,7 +74,7 @@ public class CopyListWithRandomPointer {
     // rebuild the original list next pinters
     p = head;
     while (p != null) {
-      RandomListNode copiedNode = p.next;
+      Node copiedNode = p.next;
 
       if (copiedNode != null) {
         p.next = copiedNode.next;
@@ -89,14 +86,17 @@ public class CopyListWithRandomPointer {
     return newHead;
   }
 
-  private class RandomListNode {
+  private class Node {
 
-    int label;
-    RandomListNode next;
-    RandomListNode random;
+    public int val;
+    public Node next;
+    public Node random;
 
-    RandomListNode(int x) {
-      this.label = x;
+    public Node() {
+    }
+
+    public Node(int _val) {
+      val = _val;
       next = null;
       random = null;
     }

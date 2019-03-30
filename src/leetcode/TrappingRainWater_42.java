@@ -1,6 +1,7 @@
 package leetcode;
 
-import java.util.PriorityQueue;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 // Given n non-negative integers representing an elevation map where the width of each bar is 1,
 // compute how much water it is able to trap after raining.
@@ -49,82 +50,35 @@ public class TrappingRainWater_42 {
     return sum;
   }
 
-  // 407. Trapping Rain Water II
-  // Given an m x n matrix of positive integers representing the height of each unit cell in a 2D elevation map,
-  // compute the volume of water it is able to trap after raining.
-  //
-  // Note:
-  // Both m and n are less than 110. The height of each unit cell is greater than 0 and is less than 20,000.
-  //
-  // Example:
-  //
-  // Given the following 3x6 height map:
-  // [
-  //   [1,4,3,1,3,2],
-  //   [3,2,1,3,2,4],
-  //   [2,3,3,2,3,1]
-  // ]
-  //
-  // Return 4.
-  public int trapRainWater(int[][] heightMap) {
 
-    // use bfs, each cell of edges cannot trap any water,
-    // so starting searching from these cells;
+  // using stack
+  private int trapStack(int[] height) {
+    int index = 0;
+    int sum = 0;
+    int n = height.length;
 
-    // use a priority queue to save the unvisited cells and each time start from the cell with minimum height
+    Deque<Integer> stack = new ArrayDeque<>();
 
-    int res = 0;
-    int m = heightMap.length;
-    if (m == 0) {
-      return 0;
-    }
+    while (index < n) {
 
-    int n = heightMap[0].length;
-    int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    boolean[][] visited = new boolean[m][n];
+      while (!stack.isEmpty() && height[stack.getLast()] < height[index]) {
 
-    // x[0] is the row index, x[1] is column index and x[2] is height
-    PriorityQueue<int[]> queue = new PriorityQueue<>((x, y) -> x[2] - y[2]);
+        int current = stack.getLast();
+        stack.removeLast();
 
-    for (int i = 0; i < m; i++) {
-      for (int j = 0; j < n; j++) {
-        // all edge cells cannot hold water,
-        // starting bfs search from here.
-        if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
-          queue.add(new int[]{i, j, heightMap[i][j]});
-          visited[i][j] = true;
+        if (stack.isEmpty()) {
+          break;
         }
+
+        int left = stack.getLast();
+
+        int dis = index - left - 1;
+        sum += dis * (Math.min(height[left], height[index]) - height[current]);
       }
+
+      stack.addLast(index++);
     }
 
-    int maxHeight = 0;
-
-    while (!queue.isEmpty()) {
-      int[] cell = queue.poll();
-
-      int i = cell[0];
-      int j = cell[1];
-      int h = cell[2];
-      maxHeight = Math.max(maxHeight, h);
-
-      for (int[] dir : dirs) {
-        int x = i + dir[0];
-        int y = j + dir[1];
-
-        if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y]) {
-          continue;
-        }
-
-        queue.add(new int[]{x, y, heightMap[x][y]});
-        visited[x][y] = true;
-
-        if (heightMap[x][y] < maxHeight) {
-          res += maxHeight - heightMap[x][y];
-        }
-      }
-    }
-
-    return res;
+    return sum;
   }
-
 }

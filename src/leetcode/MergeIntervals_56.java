@@ -26,6 +26,9 @@ public class MergeIntervals_56 {
 
       // if overlap, need to merge.
       if (first.start <= second.end && first.end >= second.start) {
+
+        // since the given intervals are sorted by start time,
+        // first.start <= second.start
         first.start = Math.min(first.start, second.start);
         first.end = Math.max(first.end, second.end);
       } else {
