@@ -21,34 +21,24 @@ import java.util.PriorityQueue;
 public class TopKFrequentElements {
 
   public List<Integer> topKFrequent(int[] nums, int k) {
-    List<Integer> result = new ArrayList<>();
-    Map<Integer, Integer> map = new HashMap<>();
-    PriorityQueue<Integer> minHeap = new PriorityQueue<>(Comparator.comparingInt(map::get));
+    HashMap<Integer, Integer> map = new HashMap<>();
 
     for (int n : nums) {
       map.put(n, map.getOrDefault(n, 0) + 1);
     }
 
-    // for (int n : map.keySet()) {
-    //     minHeap.offer(n);
-    //
-    //     if (minHeap.size() > k) {
-    //         minHeap.poll();
-    //     }
-    // }
+    // min heap
+    PriorityQueue<Integer> queue = new PriorityQueue<>((x, y) -> map.get(x) - map.get(y));
 
-    minHeap.addAll(map.keySet());
-    while (minHeap.size() > k) {
-      minHeap.poll();
+    for (int n : map.keySet()) {
+      queue.add(n);
+
+      if (queue.size() > k) {
+        queue.poll();
+      }
     }
 
-    while (!minHeap.isEmpty()) {
-      result.add(minHeap.poll());
-    }
-
-    Collections.reverse(result);
-
-    return result;
+    return new ArrayList<>(queue);
   }
 
   // bucket sort, we know the frequency should be nums.length as maximum

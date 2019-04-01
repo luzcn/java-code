@@ -37,4 +37,22 @@ public class CoinChange_322 {
 
     return dp[m] == Integer.MAX_VALUE - 1 ? -1 : dp[m];
   }
+
+
+  // dfs solution
+  private int dfs(int[] coins, int index, int target) {
+    if (target == 0) {
+      return 0;
+    }
+
+    if (target < 0) {
+      return Integer.MAX_VALUE - 1;
+    }
+
+    if (index >= coins.length) {
+      return Integer.MAX_VALUE - 1;
+    }
+
+    return Math.min(dfs(coins, index + 1, target), dfs(coins, index, target - coins[index]) + 1);
+  }
 }
