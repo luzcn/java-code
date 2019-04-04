@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.HashMap;
+
 /**
  * Given an integer array with all positive numbers and no duplicates, find the number of possible
  * combinations that add up to a positive integer target.
@@ -19,7 +21,9 @@ package leetcode;
  */
 public class CombinationSum4 {
 
-  private int dfs(int[] nums, int target) {
+
+  // recursive + memoization
+  private int dfs(int[] nums, int target, HashMap<Integer, Integer> memo) {
     if (target < 0) {
       return 0;
     }
@@ -28,11 +32,16 @@ public class CombinationSum4 {
       return 1;
     }
 
-    int res = 0;
-    for (int i = 0; i < nums.length; i++) {
-      res += dfs(nums, target - nums[i]);
+    if (memo.get(target) != null) {
+      return memo.get(target);
     }
 
+    int res = 0;
+    for (int i = 0; i < nums.length; i++) {
+      res += dfs(nums, target - nums[i], memo);
+    }
+
+    memo.put(target, res);
     return res;
   }
 
@@ -41,6 +50,21 @@ public class CombinationSum4 {
       return 0;
     }
 
-    return 0;
+    // dp solution
+    int n = nums.length;
+
+    int[] dp = new int[target + 1];
+
+    dp[0] = 1;
+
+    for (int j = 1; j <= target; j++) {
+      for (int i = 0; i < n; i++) {
+        if (j >= nums[i]) {
+          dp[j] += dp[j - nums[i]];
+        }
+      }
+    }
+
+    return dp[target];
   }
 }
