@@ -86,8 +86,8 @@ public class CourseSchedule2_210 {
     }
 
     while (!queue.isEmpty()) {
-      int node = queue.getLast();
-      queue.removeLast();
+      int node = queue.getFirst();
+      queue.removeFirst();
 
       res[count++] = node;
 

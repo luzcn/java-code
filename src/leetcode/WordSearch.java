@@ -21,7 +21,7 @@ package leetcode;
 //
 public class WordSearch {
 
-  private int[][] dirs = {{1, 0}};
+  private int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
   private boolean dfs(char[][] board, String word, int index, int i, int j) {
     if (index >= word.length()) {
