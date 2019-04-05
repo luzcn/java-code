@@ -47,4 +47,38 @@ public class AverageOfLevelsInBinaryTree_637 {
 
     return res.stream().map(x -> x[0] / x[1]).collect(Collectors.toList());
   }
+
+
+  private List<Double> averageOfLevelsBFS(TreeNode root) {
+
+    List<Double> result = new ArrayList<>();
+    if (root == null) {
+      return result;
+    }
+
+    List<TreeNode> level = new ArrayList<>();
+    level.add(root);
+
+    while (!level.isEmpty()) {
+
+      List<TreeNode> temp = new ArrayList<>();
+
+      double sum = level.stream().mapToDouble(x -> x.val).sum();
+      result.add( sum / level.size());
+
+      for (TreeNode node : level) {
+        if (node.left != null) {
+          temp.add(node.left);
+        }
+
+        if (node.right != null) {
+          temp.add(node.right);
+        }
+      }
+
+      level = temp;
+    }
+
+    return result;
+  }
 }
