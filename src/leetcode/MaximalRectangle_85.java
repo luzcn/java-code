@@ -1,6 +1,6 @@
 package leetcode;
 
-public class MaximalRectangle {
+public class MaximalRectangle_85 {
 
   // Use DP idea, pre-process the input matrix
   // - Create a 2D table with the same size of input matrix.
