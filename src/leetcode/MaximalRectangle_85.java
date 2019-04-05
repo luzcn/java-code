@@ -33,7 +33,7 @@ public class MaximalRectangle_85 {
       for (int j = 0; j < n; j++) {
         if (matrix[i][j] == '1') {
           int length = dp[i][j];
-          for (int k = i - 1; k >= 0; k--) {
+          for (int k = i; k >= 0; k--) {
             if (dp[k][j] == 0) {
               break;
             }
