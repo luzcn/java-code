@@ -81,4 +81,30 @@ public class TrappingRainWater_42 {
 
     return sum;
   }
+
+  // O(1) space
+  private int trap2(int[] height) {
+
+    int sum = 0;
+    int bound = 0;
+    int left = 0;
+    int right = height.length - 1;
+
+    while (left < right) {
+      if (height[left] < height[right]) {
+        bound = Math.max(bound, height[left]);
+
+        sum += bound - height[left];
+        left++;
+      } else {
+        bound = Math.max(bound, height[right]);
+
+        sum += bound - height[right];
+
+        right--;
+      }
+    }
+
+    return sum;
+  }
 }
