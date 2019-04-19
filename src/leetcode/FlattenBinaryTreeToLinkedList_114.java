@@ -24,7 +24,7 @@ import java.util.Stack;
 //            5
 //             \
 //              6
-public class FlattenBinaryTreeToLinkedList {
+public class FlattenBinaryTreeToLinkedList_114 {
 
   private void preorder(TreeNode root) {
     // pre-order non recursive

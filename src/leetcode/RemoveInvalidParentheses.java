@@ -107,7 +107,7 @@ public class RemoveInvalidParentheses {
 
       if (isValid(current)) {
         // always save the longest string
-        if (this.result.isEmpty() || current.length() == this.result.get(this.result.size() - 1)
+        if (result.isEmpty() || current.length() == result.get(result.size() - 1)
             .length()) {
           result.add(current);
         }
